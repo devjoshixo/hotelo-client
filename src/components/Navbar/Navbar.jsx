@@ -4,6 +4,7 @@ import classes from './Navbar.module.css';
 import LogoSection from './Sections/LogoSection';
 import Rewards from './Sections/Rewards';
 import AuthContext from '../../context/AuthContext';
+import Account from './Sections/Account';
 
 const Navbar = () => {
   const [modal, setModal] = useState(false);
@@ -32,7 +33,7 @@ const Navbar = () => {
             setModal(false);
           }}
         >
-          <p className={classes.rightbar}>Sign in</p>
+          <Account classes={classes.rightbar} />
         </div>
       </header>
     </div>
