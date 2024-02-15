@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   flex-flow: row nowrap;
-  max-width: 78rem;
+  max-width: 72.5rem;
   background-color: #2f5b85;
   color: white;
   gap: 1rem;
@@ -14,7 +14,7 @@
 .header {
   font-weight: 500;
   font-size: 2rem;
-  /* padding-left: 2rem; */
+  margin-left: 1rem;
   line-height: 2.2rem;
   max-inline-size: 19rem;
 }
