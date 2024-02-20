@@ -1,6 +1,5 @@
 .lodging {
-  max-width: 72.5rem;
-  margin: 1rem auto;
+  margin: 1rem 0;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -25,6 +24,10 @@
   align-items: center;
 }
 
+.wrapper:hover {
+  filter: brightness(0.8);
+}
+
 .icon {
   width: 4.5rem;
   height: 4.5rem;
@@ -34,6 +37,10 @@
   margin-bottom: 0.4rem;
   align-items: center;
   justify-content: center;
+}
+
+.icon:hover {
+  background-color: rgba(98, 98, 98, 0.149);
 }
 
 .icon i {
