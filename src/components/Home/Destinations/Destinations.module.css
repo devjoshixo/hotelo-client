@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  margin: 2rem auto 20rem auto;
+  margin: 2rem auto 2rem auto;
   display: flex;
   flex-flow: column nowrap;
 }

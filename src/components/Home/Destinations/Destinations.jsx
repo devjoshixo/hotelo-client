@@ -60,7 +60,6 @@ const Destinations = () => {
     } else if (name == 'right') {
       elementRef.current.scrollLeft += move;
     }
-    console.log(elementRef.current.scrollLeft);
   };
 
   return (
@@ -76,7 +75,7 @@ const Destinations = () => {
       <div className={classes.list} ref={elementRef}>
         {DESTINATION_ARRAY.map((item) => {
           return (
-            <div className={classes.wrapper}>
+            <div className={classes.wrapper} key={item.name}>
               <img src={item.link} alt={item.name} />
               <div className={classes.name}>
                 <h3>{item.name}</h3>

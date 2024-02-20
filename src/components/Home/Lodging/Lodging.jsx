@@ -38,13 +38,17 @@ const Lodging = () => {
       <div className={classes.list}>
         {LIST_ICONS.map((icon, index) => {
           return (
-            <div className={classes.wrapper}>
+            <div className={classes.wrapper} key={icon}>
               <div className={classes.icon}>
                 <i className={`fa-solid fa-${icon}`}></i>
               </div>
               <div>
                 {SUBTEXT[index].map((i) => {
-                  return <p className={classes.subtext}>{i}</p>;
+                  return (
+                    <p className={classes.subtext} key={i}>
+                      {i}
+                    </p>
+                  );
                 })}
               </div>
             </div>
