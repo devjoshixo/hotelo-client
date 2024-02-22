@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import classes from './Search.module.css';
+import useOutsideClick from '../../../hooks/UseOutsideClick';
 
 const Search = () => {
   const [details, setDetails] = useState({
     destination: '',
     checkInDate: new Date(),
-    checkOutDate: '',
+    checkOutDate: new Date(),
     travellers: { adults: 1, children: [] },
     total: 1,
   });
 
-  const [modal, setModal] = useState({
-    search: false,
-    date: false,
-    travel: false,
-  });
+  const [searchRef, search, setSearch] = useOutsideClick();
+  const [durationRef, duration, setDuration] = useOutsideClick();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,17 +23,6 @@ const Search = () => {
 
     return () => clearTimeout(timer);
   }, [details.destination]);
-
-  const modalOpener = (event) => {
-    const name = event.target.getAttribute('name');
-    setModal((prevState) => {
-      console.log(prevState[`${name}`]);
-      return { ...prevState, [name]: !prevState[`${name}`] };
-    });
-    setDetails((prevState) => {
-      return { ...prevState, destination: '' };
-    });
-  };
 
   return (
     <div className={classes.wrapper}>
@@ -48,12 +35,18 @@ const Search = () => {
             <header
               className={`${classes.inputbox} ${classes.searchbox}`}
               name='search'
-              onMouseEnter={modalOpener}
-              onMouseLeave={modalOpener}
+              ref={searchRef}
+              onClick={() => {
+                setSearch(true);
+              }}
             >
               <i className='fa-solid fa-location-dot'></i>Going to
-              {modal.search && (
-                <div className={classes.searchfloat} name='search'>
+              {search && (
+                <div
+                  className={classes.searchfloat}
+                  name='search'
+                  onMouseDown={() => modalOpener(false)}
+                >
                   {/* Floating Search */}
                   <input
                     type='text'
@@ -69,8 +62,13 @@ const Search = () => {
               )}
             </header>
           </div>
-          <input type='text' className={classes.inputbox} />
-          <div className={`${classes.inputbox} ${classes.passenger}`}>
+          {/* // */}
+
+          {/* // */}
+          <div
+            className={`${classes.inputbox} ${classes.passenger}`}
+            ref={durationRef}
+          >
             <i className='fa-solid fa-user'></i>
             <div>
               <h5>Travellers</h5>
