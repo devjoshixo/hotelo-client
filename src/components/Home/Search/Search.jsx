@@ -4,14 +4,13 @@ import useOutsideClick from '../../../hooks/UseOutsideClick';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import Travellers from './Travellers/Travellers';
 
 const Search = () => {
-  const [details, setDetails] = useState({
-    destination: '',
-    travellers: { adults: 1, children: [] },
+  const [rooms, setRooms] = useState({
+    travellers: { adults: 6, children: [] },
     total: 1,
   });
-
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
@@ -19,6 +18,7 @@ const Search = () => {
       key: 'selection',
     },
   ]);
+  const [destination, setDestination] = useState('');
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
@@ -26,13 +26,13 @@ const Search = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (details.destination.trim() !== '') {
-        console.log(details.destination);
+      if (destination.trim() !== '') {
+        console.log(destination);
       }
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [details.destination]);
+  }, [destination]);
 
   const dateFormatter = (date) => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -67,13 +67,9 @@ const Search = () => {
                   {/* Floating Search */}
                   <input
                     type='text'
-                    value={details.destination}
+                    value={destination}
                     placeholder='Going to'
-                    onChange={(e) =>
-                      setDetails((prevState) => {
-                        return { ...prevState, destination: e.target.value };
-                      })
-                    }
+                    onChange={(e) => setDestination(e.target.value)}
                   />
                 </div>
               )}
@@ -132,10 +128,11 @@ const Search = () => {
               <p></p>
             </div>
             {passenger && (
-              <div
-                className={classes.floatingpassenger}
-                ref={passengerRef}
-              ></div>
+              <Travellers
+                rooms={rooms}
+                setRooms={setRooms}
+                passengerRef={passengerRef}
+              />
             )}
           </div>
 

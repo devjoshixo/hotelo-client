@@ -137,17 +137,6 @@
   justify-content: flex-start;
 }
 
-.floatingpassenger {
-  background-color: blue;
-  position: absolute;
-  width: 20rem;
-  height: 10rem;
-  top: 120%;
-  left: 5%;
-  border-radius: 20px;
-  z-index: 99;
-}
-
 .action {
   border-radius: 30px;
   width: 6rem;
