@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import classes from './Search.module.css';
 import useOutsideClick from '../../../hooks/UseOutsideClick';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const Search = () => {
   const [details, setDetails] = useState({
@@ -10,6 +13,14 @@ const Search = () => {
     travellers: { adults: 1, children: [] },
     total: 1,
   });
+
+  const [dates, setDates] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection',
+    },
+  ]);
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
@@ -23,6 +34,13 @@ const Search = () => {
 
     return () => clearTimeout(timer);
   }, [details.destination]);
+
+  const dateFormatter = (date) => {
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayIndex = date.getDay();
+    const currentDate = date.getDate();
+    return [daysOfWeek[dayIndex], currentDate];
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -63,6 +81,35 @@ const Search = () => {
             </header>
           </div>
           {/* // */}
+          <div className={classes.datePicker}>
+            <i className='fa-solid fa-calendar-day'></i>
+            <div className={classes.dateFleX}>
+              <h5>Dates</h5>
+              {dates.map((d) => {
+                const formatted = dateFormatter(d.startDate);
+                return (
+                  <div>
+                    <h5>
+                      {formatted[1]} {formatted[0]} -
+                    </h5>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {duration && (
+            <div className={classes.calenderwrapper} ref={durationRef}>
+              <DateRange
+                editableDateInputs={true}
+                className={classes.calender}
+                dateDisplayFormat='iii, dd MMM'
+                onChange={(item) => setDates([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={dates}
+              />
+            </div>
+          )}
 
           {/* // */}
           <div

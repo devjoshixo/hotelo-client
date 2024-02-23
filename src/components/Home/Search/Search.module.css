@@ -11,10 +11,6 @@
   align-items: flex-start;
 }
 
-.rbc-calendar {
-  height: 600px;
-}
-
 .header {
   font-size: 2.3rem;
   font-weight: 500;
@@ -73,6 +69,51 @@
   border-radius: 10px 10px 0 0;
   height: 4rem;
   outline: none;
+}
+
+.datePicker {
+  display: flex;
+  flex-flow: row no-wrap;
+  align-items: center;
+  width: 19rem;
+  gap: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.516);
+  cursor: pointer;
+  padding-left: 1rem;
+  border-radius: 10px;
+}
+
+.datePicker h5 {
+  margin: 0;
+}
+
+.datePicker i {
+  scale: 1.4;
+}
+
+.dateFlex {
+  display: flex;
+  flex-flow: column;
+}
+
+.calenderwrapper {
+  position: absolute;
+  width: 25rem;
+  height: 30rem;
+  background-color: blue;
+  z-index: 99;
+}
+
+.calender {
+}
+
+.calender div {
+  border-radius: 10px;
+}
+
+.calender span {
+  font-size: 0.8rem;
+  color: black;
 }
 
 .passenger {
