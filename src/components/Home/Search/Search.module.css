@@ -73,6 +73,7 @@
 
 .datePicker {
   display: flex;
+  position: relative;
   flex-flow: row no-wrap;
   align-items: center;
   width: 19rem;
@@ -84,6 +85,10 @@
 }
 
 .datePicker h5 {
+  margin: 0;
+}
+
+.datePicker p {
   margin: 0;
 }
 
@@ -100,11 +105,17 @@
   position: absolute;
   width: 25rem;
   height: 30rem;
-  background-color: blue;
+  top: -10%;
+  left: -3%;
+  background-color: white;
   z-index: 99;
 }
 
 .calender {
+  border-radius: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.13);
+  height: 25rem;
+  width: 40rem;
 }
 
 .calender div {
@@ -112,15 +123,40 @@
 }
 
 .calender span {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: black;
 }
 
 .passenger {
   display: flex;
+  position: relative;
   flex-flow: row;
   align-items: center;
   gap: 0.5rem;
   padding-left: 1rem;
   justify-content: flex-start;
+}
+
+.floatingpassenger {
+  background-color: blue;
+  position: absolute;
+  width: 20rem;
+  height: 10rem;
+  top: 120%;
+  left: 5%;
+  border-radius: 20px;
+  z-index: 99;
+}
+
+.action {
+  border-radius: 30px;
+  width: 6rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background-color: #1668e3;
+  border: none;
+}
+
+.action:hover {
+  background-color: #1655b5;
 }

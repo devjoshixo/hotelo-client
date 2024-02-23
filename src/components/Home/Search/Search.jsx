@@ -8,8 +8,6 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 const Search = () => {
   const [details, setDetails] = useState({
     destination: '',
-    checkInDate: new Date(),
-    checkOutDate: new Date(),
     travellers: { adults: 1, children: [] },
     total: 1,
   });
@@ -17,13 +15,14 @@ const Search = () => {
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
-      endDate: null,
+      endDate: new Date(+1),
       key: 'selection',
     },
   ]);
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
+  const [passengerRef, passenger, setPassenger] = useOutsideClick();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -81,48 +80,66 @@ const Search = () => {
             </header>
           </div>
           {/* // */}
-          <div className={classes.datePicker}>
+          <div
+            className={classes.datePicker}
+            onClick={() => {
+              setDuration(true);
+            }}
+          >
             <i className='fa-solid fa-calendar-day'></i>
             <div className={classes.dateFleX}>
               <h5>Dates</h5>
               {dates.map((d) => {
-                const formatted = dateFormatter(d.startDate);
+                const formattedStart = dateFormatter(d.startDate);
+                const formattedEnd = dateFormatter(d.endDate);
                 return (
                   <div>
-                    <h5>
-                      {formatted[1]} {formatted[0]} -
-                    </h5>
+                    <p>
+                      {formattedStart[1]} {formattedStart[0]} -{' '}
+                      {formattedEnd[1]} {formattedEnd[0]}
+                    </p>
                   </div>
                 );
               })}
             </div>
+
+            {duration && (
+              <div className={classes.calenderwrapper} ref={durationRef}>
+                <DateRange
+                  editableDateInputs={true}
+                  className={classes.calender}
+                  dateDisplayFormat='iii, dd MMM'
+                  onChange={(item) => setDates([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  months={2}
+                  direction='horizontal'
+                  ranges={dates}
+                />
+              </div>
+            )}
           </div>
-
-          {duration && (
-            <div className={classes.calenderwrapper} ref={durationRef}>
-              <DateRange
-                editableDateInputs={true}
-                className={classes.calender}
-                dateDisplayFormat='iii, dd MMM'
-                onChange={(item) => setDates([item.selection])}
-                moveRangeOnFirstSelection={false}
-                ranges={dates}
-              />
-            </div>
-          )}
-
           {/* // */}
+
           <div
             className={`${classes.inputbox} ${classes.passenger}`}
-            ref={durationRef}
+            onClick={() => {
+              setPassenger(true);
+            }}
           >
             <i className='fa-solid fa-user'></i>
             <div>
               <h5>Travellers</h5>
               <p></p>
             </div>
+            {passenger && (
+              <div
+                className={classes.floatingpassenger}
+                ref={passengerRef}
+              ></div>
+            )}
           </div>
-          <button>Search</button>
+
+          <button className={classes.action}>Search</button>
         </div>
       </header>
     </div>
