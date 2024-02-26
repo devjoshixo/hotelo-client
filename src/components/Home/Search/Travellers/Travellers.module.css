@@ -1,11 +1,39 @@
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  gap: 0rem;
+}
+
 .heading {
-  font-weight: 400;
+  /* font-weight: 500; */
+  margin: 0;
+  font-size: 0.8rem;
 }
 
 .row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  /* margin: -3rem 0; */
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.switch input {
+  pointer-events: none;
+  background-color: white;
+  color: black;
+  font-size: 0.9rem;
+  text-align: center;
+  width: 1rem;
+  border: none;
 }
 
 .icon {
@@ -14,11 +42,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .icon i {
   scale: 0.6;
+}
+
+.hidden {
+  filter: opacity(0.5);
+  cursor: not-allowed;
 }
 /* .adultChoice; */

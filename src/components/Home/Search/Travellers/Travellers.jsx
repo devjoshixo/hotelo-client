@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Travellers.module.css';
 const Travellers = (props) => {
+  //
   //Changing the number of adults in the room according the icon selected
   const changeAdultHandler = (value) => {
     console.log('first');
@@ -32,49 +33,74 @@ const Travellers = (props) => {
     });
   };
 
+  //
   //Changing the number of children in the room according the icon selected
   const changeChildrenHandler = () => {
     console.log('first');
   };
 
   return (
-    <>
+    <div className={classes.wrapper}>
       <p>Room 1</p>
       {/*  */}
       {/* Adult Selection Row */}
       <div className={classes.row}>
         <h4 className={classes.heading}>Adults</h4>
-        <div
-          className={classes.icon}
-          onClick={() => {
-            changeAdultHandler(-1);
-          }}
-        >
-          <i className='fa-solid fa-minus' />
-        </div>
-        <p name='adults'>{props.rooms.adults}</p>
-        <div
-          className={classes.icon}
-          onClick={() => {
-            changeAdultHandler(1);
-          }}
-        >
-          <i className='fa-solid fa-plus' />
+        <div className={classes.switch}>
+          <div
+            className={`${classes.icon} ${
+              props.rooms.adults > 0 ? '' : classes.hidden
+            }`}
+            onClick={() => {
+              changeAdultHandler(-1);
+            }}
+          >
+            <i className={`fa-solid fa-minus`} />
+          </div>
+          <input type='text' value={props.rooms.adults} />
+          <div
+            className={`${classes.icon} ${
+              props.rooms.adults > 13 ? classes.hidden : ''
+            }`}
+            onClick={() => {
+              changeAdultHandler(1);
+            }}
+          >
+            <i className={`fa-solid fa-plus`} />
+          </div>
         </div>
       </div>
       {/* Adult Row Ends */}
       {/*  */}
+
+      {/*  */}
+      {/* Children Row Section */}
       <div className={classes.row}>
-        <h4 className={classes.heading}>Children</h4>
-        <div className={classes.icon}>
-          <i className='fa-solid fa-minus' />
+        <div>
+          <h4 className={classes.heading}>Children</h4>
+          <p className={classes.heading}>Ages 0 to 17</p>
         </div>
-        <p name='adults'>{props.rooms.children.length}</p>
-        <div className={classes.icon}>
-          <i className='fa-solid fa-plus' />
+        <div className={classes.switch}>
+          <div
+            className={`${classes.icon} ${
+              props.rooms.children.length < 1 ? classes.hidden : ''
+            }`}
+          >
+            <i className='fa-solid fa-minus' />
+          </div>
+          <input type='text' value={props.rooms.children.length} />
+          <div
+            className={`${classes.icon} ${
+              props.rooms.children.length > 5 ? classes.hidden : ''
+            }`}
+          >
+            <i className='fa-solid fa-plus' />
+          </div>
         </div>
       </div>
-    </>
+      {/* Children Section Ends  */}
+      {/*  */}
+    </div>
   );
 };
 
