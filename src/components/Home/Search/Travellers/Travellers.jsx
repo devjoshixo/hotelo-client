@@ -1,36 +1,80 @@
 import React from 'react';
 import classes from './Travellers.module.css';
 const Travellers = (props) => {
+  //Changing the number of adults in the room according the icon selected
+  const changeAdultHandler = (value) => {
+    console.log('first');
+    props.setRooms((prevState) => {
+      const newTravellers = prevState.travellers.map((item, index) => {
+        if (index == props.index) {
+          let newAdults;
+          if (value > 0) {
+            if (item.adults == 14) {
+              newAdults = 14;
+            } else {
+              newAdults = item.adults + 1;
+            }
+          } else {
+            if (item.adults == 0) {
+              newAdults = 0;
+            } else {
+              newAdults = item.adults - 1;
+            }
+          }
+          return { ...item, adults: newAdults };
+        }
+        return item;
+      });
+      return {
+        ...prevState,
+        travellers: newTravellers,
+      };
+    });
+  };
+
+  //Changing the number of children in the room according the icon selected
+  const changeChildrenHandler = () => {
+    console.log('first');
+  };
+
   return (
-    <div className={classes.floatingpassenger} ref={props.passengerRef}>
+    <>
       <p>Room 1</p>
-      <div className={classes.adultChoice}>
-        Adults
-        <i
-          class='fa-solid fa-minus'
-          onClick={(event) => {
-            props.setRooms((prevState) => {
-              const newValue = prevState.travellers.adults - 1;
-              console.log(newValue);
-              return {
-                ...prevState,
-                travellers: {
-                  ...prevState.travellers,
-                  adults: newValue,
-                },
-              };
-            });
-          }}
-        ></i>
-        <p name='adults'>{props.rooms.travellers.adults}</p>
-        <i
-          className='fa-solid fa-plus'
+      {/*  */}
+      {/* Adult Selection Row */}
+      <div className={classes.row}>
+        <h4 className={classes.heading}>Adults</h4>
+        <div
+          className={classes.icon}
           onClick={() => {
-            props.rooms((prevState) => {});
+            changeAdultHandler(-1);
           }}
-        ></i>
+        >
+          <i className='fa-solid fa-minus' />
+        </div>
+        <p name='adults'>{props.rooms.adults}</p>
+        <div
+          className={classes.icon}
+          onClick={() => {
+            changeAdultHandler(1);
+          }}
+        >
+          <i className='fa-solid fa-plus' />
+        </div>
       </div>
-    </div>
+      {/* Adult Row Ends */}
+      {/*  */}
+      <div className={classes.row}>
+        <h4 className={classes.heading}>Children</h4>
+        <div className={classes.icon}>
+          <i className='fa-solid fa-minus' />
+        </div>
+        <p name='adults'>{props.rooms.children.length}</p>
+        <div className={classes.icon}>
+          <i className='fa-solid fa-plus' />
+        </div>
+      </div>
+    </>
   );
 };
 

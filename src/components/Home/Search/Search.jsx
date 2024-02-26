@@ -5,11 +5,13 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
+import uniqid from 'uniqid';
 
 const Search = () => {
   const [rooms, setRooms] = useState({
-    travellers: { adults: 6, children: [] },
+    travellers: [{ adults: 6, children: [] }],
     total: 1,
+    totalRoom: 1,
   });
   const [dates, setDates] = useState([
     {
@@ -23,7 +25,7 @@ const Search = () => {
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
   const [passengerRef, passenger, setPassenger] = useOutsideClick();
-
+  // console.log(rooms);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (destination.trim() !== '') {
@@ -89,7 +91,7 @@ const Search = () => {
                 const formattedStart = dateFormatter(d.startDate);
                 const formattedEnd = dateFormatter(d.endDate);
                 return (
-                  <div>
+                  <div key={d.startDate}>
                     <p>
                       {formattedStart[1]} {formattedStart[0]} -{' '}
                       {formattedEnd[1]} {formattedEnd[0]}
@@ -128,11 +130,19 @@ const Search = () => {
               <p></p>
             </div>
             {passenger && (
-              <Travellers
-                rooms={rooms}
-                setRooms={setRooms}
-                passengerRef={passengerRef}
-              />
+              <div className={classes.floatingpassenger} ref={passengerRef}>
+                {rooms.travellers.map((item, index) => {
+                  return (
+                    <Travellers
+                      key={uniqid()}
+                      rooms={item}
+                      setRooms={setRooms}
+                      index={index}
+                      passengerRef={passengerRef}
+                    />
+                  );
+                })}
+              </div>
             )}
           </div>
 
