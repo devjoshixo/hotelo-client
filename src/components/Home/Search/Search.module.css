@@ -141,7 +141,7 @@
   background-color: #ffffff;
   position: absolute;
   width: 17rem;
-  height: 15rem;
+  min-height: 15rem;
   gap: 1rem;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.13);
   top: 120%;
@@ -149,6 +149,45 @@
   padding: 0 2rem;
   border-radius: 20px;
   z-index: 99;
+}
+
+.another {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: 1rem;
+  color: #0c57c6;
+  font-weight: 800;
+  margin: 1rem 0;
+}
+
+.another div {
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11rem;
+  height: 2rem;
+}
+
+.another div:hover {
+  background-color: #1668e32b;
+  color: #094196;
+}
+
+.another button {
+  border-radius: 30px;
+  width: 6rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background-color: #1668e3;
+  cursor: pointer;
+  border: none;
+}
+
+.another button:hover {
+  background-color: #1255ba;
 }
 
 .action {

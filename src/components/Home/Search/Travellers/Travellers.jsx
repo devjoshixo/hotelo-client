@@ -4,10 +4,9 @@ const Travellers = (props) => {
   //
   //Changing the number of adults in the room according the icon selected
   const changeAdultHandler = (value) => {
-    console.log('first');
     props.setRooms((prevState) => {
       const newTravellers = prevState.travellers.map((item, index) => {
-        if (index == props.index) {
+        if (index == props.index - 1) {
           let newAdults;
           if (value > 0) {
             if (item.adults == 14) {
@@ -41,7 +40,7 @@ const Travellers = (props) => {
 
   return (
     <div className={classes.wrapper}>
-      <p>Room 1</p>
+      <p className={classes.heading}>Room {props.index}</p>
       {/*  */}
       {/* Adult Selection Row */}
       <div className={classes.row}>
@@ -49,7 +48,7 @@ const Travellers = (props) => {
         <div className={classes.switch}>
           <div
             className={`${classes.icon} ${
-              props.rooms.adults > 0 ? '' : classes.hidden
+              props.rooms.adults > 1 ? '' : classes.hidden
             }`}
             onClick={() => {
               changeAdultHandler(-1);
@@ -57,7 +56,8 @@ const Travellers = (props) => {
           >
             <i className={`fa-solid fa-minus`} />
           </div>
-          <input type='text' value={props.rooms.adults} />
+          {/* <div>{props.rooms.adults}</div> */}
+          <input type='text' placeholder={props.rooms.adults} readOnly={true} />
           <div
             className={`${classes.icon} ${
               props.rooms.adults > 13 ? classes.hidden : ''
@@ -88,7 +88,11 @@ const Travellers = (props) => {
           >
             <i className='fa-solid fa-minus' />
           </div>
-          <input type='text' value={props.rooms.children.length} />
+          <input
+            type='text'
+            value={props.rooms.children.length}
+            readOnly={true}
+          />
           <div
             className={`${classes.icon} ${
               props.rooms.children.length > 5 ? classes.hidden : ''

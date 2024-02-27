@@ -7,9 +7,11 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
 import uniqid from 'uniqid';
 
+const DEFAULT_ROOM = { adults: 1, children: [] };
+
 const Search = () => {
   const [rooms, setRooms] = useState({
-    travellers: [{ adults: 6, children: [] }],
+    travellers: [{ adults: 4, children: [] }],
     total: 1,
     totalRoom: 1,
   });
@@ -25,7 +27,7 @@ const Search = () => {
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
   const [passengerRef, passenger, setPassenger] = useOutsideClick();
-  // console.log(rooms);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (destination.trim() !== '') {
@@ -41,6 +43,13 @@ const Search = () => {
     const dayIndex = date.getDay();
     const currentDate = date.getDate();
     return [daysOfWeek[dayIndex], currentDate];
+  };
+
+  const addingAnotherRoom = () => {
+    setRooms((prevState) => {
+      const newTravellers = [...prevState.travellers, DEFAULT_ROOM];
+      return { ...prevState, travellers: newTravellers };
+    });
   };
 
   return (
@@ -120,8 +129,12 @@ const Search = () => {
 
           <div
             className={`${classes.inputbox} ${classes.passenger}`}
-            onClick={() => {
-              setPassenger(true);
+            onClick={(event) => {
+              if (event.target.getAttribute('name') == 'done') {
+                setPassenger(false);
+              } else {
+                setPassenger(true);
+              }
             }}
           >
             <i className='fa-solid fa-user'></i>
@@ -137,11 +150,15 @@ const Search = () => {
                       key={uniqid()}
                       rooms={item}
                       setRooms={setRooms}
-                      index={index}
+                      index={index + 1}
                       passengerRef={passengerRef}
                     />
                   );
                 })}
+                <section className={classes.another}>
+                  <div onClick={addingAnotherRoom}>Add another room</div>
+                  <button name='done'>Done</button>
+                </section>
               </div>
             )}
           </div>
