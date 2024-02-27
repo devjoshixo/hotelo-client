@@ -137,6 +137,22 @@
   justify-content: flex-start;
 }
 
+.subpassenger {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+}
+
+.subpassenger p {
+  margin: 0;
+  margin-left: 0.3rem;
+}
+
+.subpassenger h5 {
+  margin: 0;
+}
+
 .floatingpassenger {
   background-color: #ffffff;
   position: absolute;

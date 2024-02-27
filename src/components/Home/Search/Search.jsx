@@ -11,9 +11,9 @@ const DEFAULT_ROOM = { adults: 1, children: [] };
 
 const Search = () => {
   const [rooms, setRooms] = useState({
-    travellers: [{ adults: 4, children: [] }],
+    travellers: [{ adults: 1, children: [] }],
     total: 1,
-    totalRoom: 1,
+    totalRooms: 1,
   });
   const [dates, setDates] = useState([
     {
@@ -45,11 +45,27 @@ const Search = () => {
     return [daysOfWeek[dayIndex], currentDate];
   };
 
+  useEffect(() => {
+    console.log('first');
+    setRooms((prevState) => {
+      let count = 0;
+      prevState.travellers.map((item) => {
+        count += item.adults + item.children.length;
+      });
+      return { ...prevState, total: count };
+    });
+  }, [rooms.travellers]);
+
   const addingAnotherRoom = () => {
     setRooms((prevState) => {
       const newTravellers = [...prevState.travellers, DEFAULT_ROOM];
-      return { ...prevState, travellers: newTravellers };
+      return {
+        travellers: newTravellers,
+        total: prevState.total + 1,
+        totalRooms: prevState.totalRooms + 1,
+      };
     });
+    console.log(rooms);
   };
 
   return (
@@ -138,9 +154,11 @@ const Search = () => {
             }}
           >
             <i className='fa-solid fa-user'></i>
-            <div>
+            <div className={classes.subpassenger}>
               <h5>Travellers</h5>
-              <p></p>
+              <p>
+                {rooms.total} travellers, {rooms.totalRooms} room
+              </p>
             </div>
             {passenger && (
               <div className={classes.floatingpassenger} ref={passengerRef}>
@@ -152,6 +170,7 @@ const Search = () => {
                       setRooms={setRooms}
                       index={index + 1}
                       passengerRef={passengerRef}
+                      totalRooms={rooms.totalRooms}
                     />
                   );
                 })}

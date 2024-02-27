@@ -100,6 +100,7 @@ const Travellers = (props) => {
       </div>
       {/* Children Section Ends  */}
       {/*  */}
+      {props.totalRooms.length && <div>hello</div>}
     </div>
   );
 };
