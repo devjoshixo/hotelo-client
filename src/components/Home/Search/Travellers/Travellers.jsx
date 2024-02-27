@@ -15,8 +15,8 @@ const Travellers = (props) => {
               newAdults = item.adults + 1;
             }
           } else {
-            if (item.adults == 0) {
-              newAdults = 0;
+            if (item.adults == 1) {
+              newAdults = 1;
             } else {
               newAdults = item.adults - 1;
             }
@@ -57,7 +57,7 @@ const Travellers = (props) => {
             <i className={`fa-solid fa-minus`} />
           </div>
           {/* <div>{props.rooms.adults}</div> */}
-          <input type='text' placeholder={props.rooms.adults} readOnly={true} />
+          <input type='text' value={props.rooms.adults} />
           <div
             className={`${classes.icon} ${
               props.rooms.adults > 13 ? classes.hidden : ''
@@ -88,11 +88,7 @@ const Travellers = (props) => {
           >
             <i className='fa-solid fa-minus' />
           </div>
-          <input
-            type='text'
-            value={props.rooms.children.length}
-            readOnly={true}
-          />
+          <input type='text' value={props.rooms.children.length} />
           <div
             className={`${classes.icon} ${
               props.rooms.children.length > 5 ? classes.hidden : ''
