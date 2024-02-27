@@ -56,4 +56,26 @@
   filter: opacity(0.5);
   cursor: not-allowed;
 }
+
+.remove {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.3rem;
+}
+
+.remove div {
+  border-radius: 20px;
+  display: flex;
+  color: #1a59b8;
+  font-weight: 700;
+  justify-content: center;
+  align-items: center;
+  width: 11rem;
+  height: 2rem;
+}
+
+.remove div:hover {
+  background-color: #1668e32b;
+  color: #094196;
+}
 /* .adultChoice; */

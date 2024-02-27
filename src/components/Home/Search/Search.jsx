@@ -46,13 +46,13 @@ const Search = () => {
   };
 
   useEffect(() => {
-    console.log('first');
     setRooms((prevState) => {
       let count = 0;
       prevState.travellers.map((item) => {
         count += item.adults + item.children.length;
       });
-      return { ...prevState, total: count };
+      let countRoom = prevState.travellers.length;
+      return { ...prevState, total: count, totalRooms: countRoom };
     });
   }, [rooms.travellers]);
 
@@ -65,7 +65,6 @@ const Search = () => {
         totalRooms: prevState.totalRooms + 1,
       };
     });
-    console.log(rooms);
   };
 
   return (

@@ -38,6 +38,18 @@ const Travellers = (props) => {
     console.log('first');
   };
 
+  const removeRoom = () => {
+    props.setRooms((prevState) => {
+      const newTravellers = prevState.travellers.filter((item, index) => {
+        if (index == props.index - 1) {
+        } else {
+          return item;
+        }
+      });
+
+      return { ...prevState, travellers: newTravellers };
+    });
+  };
   return (
     <div className={classes.wrapper}>
       <p className={classes.heading}>Room {props.index}</p>
@@ -100,7 +112,13 @@ const Travellers = (props) => {
       </div>
       {/* Children Section Ends  */}
       {/*  */}
-      {props.totalRooms.length && <div>hello</div>}
+      {props.totalRooms > 1 ? (
+        <div className={classes.remove} onClick={removeRoom}>
+          <div>Remove room</div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
