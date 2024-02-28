@@ -11,7 +11,7 @@ const DEFAULT_ROOM = { adults: 1, children: [] };
 
 const Search = () => {
   const [rooms, setRooms] = useState({
-    travellers: [{ adults: 1, children: [] }],
+    travellers: [{ adults: 1, children: [{ age: '' }] }],
     total: 1,
     totalRooms: 1,
   });

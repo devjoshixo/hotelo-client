@@ -1,5 +1,29 @@
 import React from 'react';
 import classes from './Travellers.module.css';
+
+const child_option = [
+  'Under 1',
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+];
+
+const DEFAULT_CHILDREN = { age: '' };
+
 const Travellers = (props) => {
   //
   //Changing the number of adults in the room according the icon selected
@@ -34,9 +58,48 @@ const Travellers = (props) => {
 
   //
   //Changing the number of children in the room according the icon selected
-  const changeChildrenHandler = () => {
-    console.log('first');
+  const changeChildrenHandler = (value) => {
+    props.setRooms((prevState) => {
+      const newTravellers = prevState.travellers.map((item, index) => {
+        if (index == props.index - 1) {
+          let newChildren = item.children;
+          if (value > 0) {
+            if (item.children.length < 6) {
+              newChildren.push(DEFAULT_CHILDREN);
+            }
+          } else {
+            if (item.children.length > 0) {
+              newChildren = newChildren.slice(0, -1);
+            }
+          }
+          return { ...item, children: newChildren };
+        }
+        return item;
+      });
+      return { ...prevState, travellers: newTravellers };
+    });
   };
+
+  const fillSelectedValue = (event) => {
+    props.setRooms((prevState) => {
+      const newTravellers = prevState.travellers.map((item, index) => {
+        if (index == props.index - 1) {
+          const newChildren = item.children.map((child, childIndex) => {
+            let newChild = child;
+            if (childIndex == event.target.name) {
+              newChild = { age: event.target.value };
+            }
+            return newChild;
+          });
+          return { ...item, children: newChildren };
+        }
+        return item;
+      });
+      return { ...prevState, travellers: newTravellers };
+    });
+  };
+
+  console.log(props.rooms);
 
   const removeRoom = () => {
     props.setRooms((prevState) => {
@@ -97,6 +160,9 @@ const Travellers = (props) => {
             className={`${classes.icon} ${
               props.rooms.children.length < 1 ? classes.hidden : ''
             }`}
+            onClick={() => {
+              changeChildrenHandler(-1);
+            }}
           >
             <i className='fa-solid fa-minus' />
           </div>
@@ -105,13 +171,45 @@ const Travellers = (props) => {
             className={`${classes.icon} ${
               props.rooms.children.length > 5 ? classes.hidden : ''
             }`}
+            onClick={() => {
+              changeChildrenHandler(1);
+            }}
           >
             <i className='fa-solid fa-plus' />
           </div>
         </div>
       </div>
+      {props.rooms.children.length > 0 ? (
+        <div className={classes.childrenbox}>
+          {props.rooms.children.map((child, index) => {
+            return (
+              <select
+                className={classes.ageselector}
+                key={index}
+                name={index}
+                defaultValue={child.age}
+                onChange={fillSelectedValue}
+              >
+                <option value='selector' selected disabled>
+                  Child {index + 1} age
+                </option>
+                {child_option.map((age) => {
+                  return (
+                    <option value={age} key={age}>
+                      {age}
+                    </option>
+                  );
+                })}
+              </select>
+            );
+          })}
+        </div>
+      ) : (
+        ''
+      )}
       {/* Children Section Ends  */}
       {/*  */}
+
       {props.totalRooms > 1 ? (
         <div className={classes.remove} onClick={removeRoom}>
           <div>Remove room</div>
