@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Account.module.css';
 import useOutSideClick from '../../../hooks/UseOutsideClick';
+import AuthContext from '../../../context/AuthContext';
 
 const Account = (props) => {
   const [signInref, signIn, setSignIn] = useOutSideClick();
+  const ctx = useContext(AuthContext);
   return (
     <div
       className={classes.navtitle}
@@ -12,7 +14,9 @@ const Account = (props) => {
         setSignIn(true);
       }}
     >
-      <p className={props.classes}>Sign in</p>
+      <p className={props.classes}>
+        {ctx.login.loggedIn ? 'Log Out' : 'Sign in'}
+      </p>
       {signIn && (
         <div className={classes.floating} ref={signInref}>
           <div
