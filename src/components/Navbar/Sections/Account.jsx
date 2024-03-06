@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Account.module.css';
+import useOutSideClick from '../../../hooks/UseOutsideClick';
+
 const Account = (props) => {
-  const [modal, setModal] = useState(false);
+  const [signInref, signIn, setSignIn] = useOutSideClick();
   return (
     <div
       className={classes.navtitle}
-      onMouseEnter={() => {
-        setModal(true);
-      }}
-      onMouseLeave={() => {
-        setModal(false);
+      onClick={() => {
+        setSignIn(true);
       }}
     >
       <p className={props.classes}>Sign in</p>
-      {modal && (
-        <div className={classes.floating}>
+      {signIn && (
+        <div className={classes.floating} ref={signInref}>
           <div
-            className={`${classes.loggedout} ${modal ? '' : classes.hidden}`}
+            className={`${classes.loggedout} ${signIn ? '' : classes.hidden}`}
           >
             <h2 className={classes.offer}>
               Save an average of 15% on thousands of hotels when you're signed
               in
             </h2>
             <Link to='/account/login'>
-              <button className={classes.signInAction} href={'/account/signin'}>
+              <button className={classes.signInAction} href={'/account/signIn'}>
                 Sign in
               </button>
             </Link>
