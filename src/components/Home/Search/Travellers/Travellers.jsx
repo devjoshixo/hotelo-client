@@ -22,7 +22,7 @@ const child_option = [
   17,
 ];
 
-const DEFAULT_CHILDREN = { age: '' };
+const DEFAULT_CHILDREN = { age: 'Child' };
 
 const Travellers = (props) => {
   //
@@ -65,7 +65,7 @@ const Travellers = (props) => {
           let newChildren = item.children;
           if (value > 0) {
             if (item.children.length < 6) {
-              newChildren.push(DEFAULT_CHILDREN);
+              newChildren.push({ age: 0 });
             }
           } else {
             if (item.children.length > 0) {
@@ -98,8 +98,6 @@ const Travellers = (props) => {
       return { ...prevState, travellers: newTravellers };
     });
   };
-
-  console.log(props.rooms);
 
   const removeRoom = () => {
     props.setRooms((prevState) => {
@@ -187,10 +185,10 @@ const Travellers = (props) => {
                 className={classes.ageselector}
                 key={index}
                 name={index}
-                defaultValue={child.age}
+                value={child.age}
                 onChange={fillSelectedValue}
               >
-                <option value='selector' selected disabled>
+                <option value={0} selected disabled hidden>
                   Child {index + 1} age
                 </option>
                 {child_option.map((age) => {

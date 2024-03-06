@@ -28,7 +28,7 @@ const SUBTEXT = [
   ['Pet', 'friendly'],
   ['Hot tub'],
   ['Sea view'],
-  ['Family friendly'],
+  [['Family'], ['friendly']],
 ];
 
 const Lodging = () => {

@@ -11,7 +11,7 @@ const DEFAULT_ROOM = { adults: 1, children: [] };
 
 const Search = () => {
   const [rooms, setRooms] = useState({
-    travellers: [{ adults: 1, children: [{ age: '' }] }],
+    travellers: [{ adults: 1, children: [] }],
     total: 1,
     totalRooms: 1,
   });
@@ -39,10 +39,9 @@ const Search = () => {
   }, [destination]);
 
   const dateFormatter = (date) => {
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const dayIndex = date.getDay();
+    const shortMonthName = date.toLocaleString('default', { month: 'short' });
     const currentDate = date.getDate();
-    return [daysOfWeek[dayIndex], currentDate];
+    return [shortMonthName, currentDate];
   };
 
   useEffect(() => {
@@ -65,6 +64,15 @@ const Search = () => {
         totalRooms: prevState.totalRooms + 1,
       };
     });
+  };
+
+  const closingCalender = (event) => {
+    const name = event.target.getAttribute('name');
+    if (name == 'closer') {
+      setDuration(false);
+    } else if (name == 'open') {
+      setDuration(true);
+    }
   };
 
   return (
@@ -102,11 +110,12 @@ const Search = () => {
             </header>
           </div>
           {/* // */}
+
+          {/* Date Picker  */}
           <div
             className={classes.datePicker}
-            onClick={() => {
-              setDuration(true);
-            }}
+            name='open'
+            onClick={closingCalender}
           >
             <i className='fa-solid fa-calendar-day'></i>
             <div className={classes.dateFleX}>
@@ -134,9 +143,17 @@ const Search = () => {
                   onChange={(item) => setDates([item.selection])}
                   moveRangeOnFirstSelection={false}
                   months={2}
+                  minDate={new Date()}
                   direction='horizontal'
                   ranges={dates}
                 />
+                <button
+                  className={classes.calenderbutton}
+                  name='closer'
+                  onClick={closingCalender}
+                >
+                  Done
+                </button>
               </div>
             )}
           </div>

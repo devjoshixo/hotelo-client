@@ -103,18 +103,22 @@
 
 .calenderwrapper {
   position: absolute;
-  width: 25rem;
-  height: 30rem;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  width: 40rem;
+  height: 29rem;
   top: -10%;
   left: -3%;
   background-color: white;
   z-index: 99;
+  border-radius: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.13);
 }
 
 .calender {
-  border-radius: 20px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.13);
-  height: 25rem;
+  border-radius: 20px 20px 0 0;
+  height: 24rem;
   width: 40rem;
 }
 
@@ -125,6 +129,21 @@
 .calender span {
   font-size: 1rem;
   color: black;
+}
+
+.calenderbutton {
+  border-radius: 30px;
+  width: 7rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  background-color: #1668e3;
+  border: none;
+  margin-right: 3rem;
+}
+
+.calenderbutton:hover {
+  background-color: #1655b5;
 }
 
 .passenger {
