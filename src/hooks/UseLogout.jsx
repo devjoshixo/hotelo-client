@@ -4,8 +4,8 @@ import AuthContext from '../context/AuthContext';
 const UseLogout = () => {
   const ctx = useContext(AuthContext);
   const logout = (event) => {
-    event.preventDefault();
     window.location.reload();
+    event.preventDefault();
     localStorage.removeItem('user');
     ctx.setLogin({ user: null, loggedIn: false });
   };

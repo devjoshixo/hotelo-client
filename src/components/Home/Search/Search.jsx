@@ -23,6 +23,7 @@ const Search = () => {
     },
   ]);
   const [destination, setDestination] = useState('');
+  const inputRef = useRef();
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
@@ -54,6 +55,12 @@ const Search = () => {
       return { ...prevState, total: count, totalRooms: countRoom };
     });
   }, [rooms.travellers]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [search]);
 
   const addingAnotherRoom = () => {
     setRooms((prevState) => {
@@ -89,10 +96,10 @@ const Search = () => {
               ref={searchRef}
               onClick={() => {
                 setSearch(true);
-                inputRef.current.focus();
               }}
             >
-              <i className='fa-solid fa-location-dot'></i>Going to
+              <i className='fa-solid fa-location-dot'></i>Search places, hotels,
+              and more
               {search && (
                 <div className={classes.searchfloat} name='search'>
                   {/* Floating Search */}
@@ -100,6 +107,7 @@ const Search = () => {
                     type='text'
                     value={destination}
                     placeholder='Going to'
+                    ref={inputRef}
                     onChange={(e) => setDestination(e.target.value)}
                   />
                 </div>
