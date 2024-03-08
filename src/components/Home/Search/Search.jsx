@@ -89,15 +89,12 @@ const Search = () => {
               ref={searchRef}
               onClick={() => {
                 setSearch(true);
+                inputRef.current.focus();
               }}
             >
               <i className='fa-solid fa-location-dot'></i>Going to
               {search && (
-                <div
-                  className={classes.searchfloat}
-                  name='search'
-                  onMouseDown={() => modalOpener(false)}
-                >
+                <div className={classes.searchfloat} name='search'>
                   {/* Floating Search */}
                   <input
                     type='text'
