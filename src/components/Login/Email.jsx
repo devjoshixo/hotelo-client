@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import classes from './Email.module.css';
 import google from '../../assets/Google.svg';
 import { useCheckemail } from '../../hooks/UseCheckemail';
+import buttonloader from '../../assets/infinite-spinner.svg';
 
 const Email = (props) => {
+  const [showLoader, setShowLoader] = useState(false);
   const formDetailChangeHandler = (event) => {
     props.onFormChange(event);
   };
@@ -11,11 +13,13 @@ const Email = (props) => {
   const { checkEmailHook, error } = useCheckemail();
 
   const submitEmailHandler = async (event) => {
+    setShowLoader(true);
     event.preventDefault();
     const done = await checkEmailHook(props.formDetails.email);
     if (done) {
       props.setEmailPage(false);
     }
+    setShowLoader(false);
   };
 
   return (
@@ -43,7 +47,11 @@ const Email = (props) => {
       />
       <p>{error}</p>
       <button className={classes.action} type='submit'>
-        Continue
+        {showLoader ? (
+          <img src={buttonloader} className={classes.loader} />
+        ) : (
+          'Continue'
+        )}
       </button>
     </form>
   );
