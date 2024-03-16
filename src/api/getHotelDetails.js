@@ -1,6 +1,7 @@
 const getHotelDetails = async () => {
   var requestOptions = {
     method: 'GET',
+    headers: { 'api-key': import.meta.env.VITE_REACT_APP_API_KEY },
     redirect: 'follow',
   };
 

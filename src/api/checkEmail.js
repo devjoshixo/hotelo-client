@@ -8,7 +8,10 @@ const checkEmail = async (email) => {
 
   var requestOptions = {
     method: 'POST',
-    headers: myHeaders,
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': import.meta.env.VITE_REACT_APP_API_KEY,
+    },
     body: raw,
     redirect: 'follow',
   };

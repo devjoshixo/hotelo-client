@@ -1,12 +1,12 @@
 const loginUser = async (user) => {
-  var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-
   var raw = JSON.stringify(user);
 
   var requestOptions = {
     method: 'POST',
-    headers: myHeaders,
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': import.meta.env.VITE_REACT_APP_API_KEY,
+    },
     body: raw,
     redirect: 'follow',
   };

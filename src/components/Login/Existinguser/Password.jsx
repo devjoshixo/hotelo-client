@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import classes from './Password.module.css';
 import AuthContext from '../../../context/AuthContext';
 import useLogin from '../../../hooks/UseLogin';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import buttonloader from '../../../assets/infinite-spinner.svg';
 
 const Password = (props) => {
+  const [showLoader, setShowLoader] = useState(false);
   const ctx = useContext(AuthContext);
   const { error, login } = useLogin();
   const history = useHistory();
@@ -15,11 +17,13 @@ const Password = (props) => {
 
   const submitEmailHandler = async (event) => {
     event.preventDefault();
+    setShowLoader(true);
     const done = await login(props.formDetails);
 
     if (done) {
       history.push('/');
     }
+    setShowLoader(false);
   };
   return (
     <form className={classes.form} onSubmit={submitEmailHandler}>
@@ -35,7 +39,13 @@ const Password = (props) => {
         className={classes.password}
         onChange={formDetailChangeHandler}
       />
-      <button className={classes.action}>Continue</button>
+      <button className={classes.action}>
+        {showLoader ? (
+          <img src={buttonloader} className={classes.loader} />
+        ) : (
+          ' Continue'
+        )}
+      </button>
     </form>
   );
 };
