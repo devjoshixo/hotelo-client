@@ -36,7 +36,7 @@ const Email = (props) => {
   };
 
   return (
-    <div className={classes.form}>
+    <div className={classes.wrapper}>
       <h4 className={classes.heading}>Sign in or create an account</h4>
       <p className={classes.offer}>
         Save an average of 15% on thousands of hotels as a member—it’s always
@@ -50,7 +50,7 @@ const Email = (props) => {
       </div>
       <p className={`${classes.or} ${classes.offer}`}>or</p>
 
-      <form onSubmit={submitEmailHandler}>
+      <form className={classes.form} onSubmit={submitEmailHandler}>
         <input
           type='email'
           placeholder='Email'
