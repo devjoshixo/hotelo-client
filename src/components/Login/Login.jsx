@@ -31,7 +31,6 @@ const Login = () => {
     setFormDetails((prevState) => {
       return { ...prevState, [event.target.name]: event.target.value };
     });
-    console.log(formDetails);
   };
 
   return (

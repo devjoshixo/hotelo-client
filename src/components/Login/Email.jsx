@@ -5,9 +5,13 @@ import { useCheckemail } from '../../hooks/UseCheckemail';
 import buttonloader from '../../assets/infinite-spinner.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import * as JWT from 'jwt-decode';
+import useGoogleSignIn from '../../hooks/UseGoogleSignIn';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 const Email = (props) => {
   const [showLoader, setShowLoader] = useState(false);
+  const { googleSignIn } = useGoogleSignIn();
+  const history = useHistory();
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       const token = credentialResponse['access_token'];
@@ -15,7 +19,9 @@ const Email = (props) => {
         'https://www.googleapis.com/oauth2/v3/userinfo?access_token=' + token
       );
       const credential = await response.json();
-      console.log(credential);
+
+      const newJson = await googleSignIn(credential);
+      history.push('/');
       // console.log(JWT.jwtDecode(token));
     },
   });

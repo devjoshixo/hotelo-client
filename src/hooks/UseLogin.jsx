@@ -32,7 +32,7 @@ const useLogin = () => {
       return false;
     }
   };
-  return { error, login };
+  return { error, setError, login };
 };
 
 export default useLogin;

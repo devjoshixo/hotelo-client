@@ -1,4 +1,4 @@
-const signupUser = async (user) => {
+const googleUser = async (user) => {
   var raw = JSON.stringify(user);
 
   var requestOptions = {
@@ -12,10 +12,10 @@ const signupUser = async (user) => {
   };
 
   const response = await fetch(
-    import.meta.env.VITE_REACT_APP_API_URL + '/api/user/signup',
+    import.meta.env.VITE_REACT_APP_API_URL + '/api/user/googlesignin',
     requestOptions
   );
   return response;
 };
 
-export default signupUser;
+export default googleUser;
