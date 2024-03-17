@@ -5,9 +5,13 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import uniqid from 'uniqid';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
+let defaultdate = new Date();
+let newDate = new Date(defaultdate);
+newDate.setDate(defaultdate.getDate() + 2);
 
 const Search = () => {
   const [rooms, setRooms] = useState({
@@ -17,13 +21,14 @@ const Search = () => {
   });
   const [dates, setDates] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(+1),
+      startDate: defaultdate,
+      endDate: newDate,
       key: 'selection',
     },
   ]);
   const [destination, setDestination] = useState('');
   const inputRef = useRef();
+  const history = useHistory();
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
@@ -82,6 +87,12 @@ const Search = () => {
     }
   };
 
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+
+    history.push('/search?' + 'startdate=' + dates[0].startDate);
+  };
+
   return (
     <div className={classes.wrapper}>
       <header className={classes.section}>
@@ -94,12 +105,23 @@ const Search = () => {
               className={`${classes.inputbox} ${classes.searchbox}`}
               name='search'
               ref={searchRef}
-              onClick={() => {
-                setSearch(true);
+              onClick={(event) => {
+                if (event.target.getAttribute('name') == 'searching') {
+                  setSearch(false);
+                } else {
+                  setSearch(true);
+                }
               }}
             >
-              <i className='fa-solid fa-location-dot'></i>Search places, hotels,
-              and more
+              {destination.trim() == '' ? (
+                <>
+                  {' '}
+                  <i className='fa-solid fa-location-dot'></i>Search places,
+                  hotels, and more
+                </>
+              ) : (
+                destination
+              )}
               {search && (
                 <div className={classes.searchfloat} name='search'>
                   {/* Floating Search */}
@@ -110,6 +132,13 @@ const Search = () => {
                     ref={inputRef}
                     onChange={(e) => setDestination(e.target.value)}
                   />
+                  <button
+                    className={classes.destinationbutton}
+                    name='searching'
+                  >
+                    <i class='fa-solid fa-magnifying-glass'></i> Search for "
+                    {destination}"
+                  </button>
                 </div>
               )}
             </header>
@@ -203,7 +232,9 @@ const Search = () => {
             )}
           </div>
 
-          <button className={classes.action}>Search</button>
+          <button className={classes.action} onClick={formSubmitHandler}>
+            Search
+          </button>
         </div>
       </header>
     </div>
