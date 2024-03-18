@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import classes from './Password.module.css';
 import AuthContext from '../../../context/AuthContext';
 import useLogin from '../../../hooks/UseLogin';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom';
 import buttonloader from '../../../assets/infinite-spinner.svg';
 
 const Password = (props) => {

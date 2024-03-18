@@ -6,7 +6,7 @@ import buttonloader from '../../assets/infinite-spinner.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import * as JWT from 'jwt-decode';
 import useGoogleSignIn from '../../hooks/UseGoogleSignIn';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Email = (props) => {
   const [showLoader, setShowLoader] = useState(false);

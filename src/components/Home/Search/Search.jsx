@@ -5,7 +5,8 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+
 import uniqid from 'uniqid';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
@@ -26,9 +27,11 @@ const Search = () => {
       key: 'selection',
     },
   ]);
+
   const [destination, setDestination] = useState('');
   const inputRef = useRef();
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useHistory();
 
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
@@ -82,16 +85,27 @@ const Search = () => {
     const name = event.target.getAttribute('name');
     if (name == 'closer') {
       setDuration(false);
-    } else if (name == 'open') {
+    } else {
       setDuration(true);
     }
   };
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-
-    history.push('/search?' + 'startdate=' + dates[0].startDate);
+    const obj = [
+      ['startdate=', finalFormatDate(dates[0].startDate)],
+      ['endDate=', finalFormatDate(dates[0].endDate)],
+      ['destination=', destination],
+    ];
+    navigate.push('/search?asd=4_1,3_4');
   };
+
+  function finalFormatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -115,7 +129,6 @@ const Search = () => {
             >
               {destination.trim() == '' ? (
                 <>
-                  {' '}
                   <i className='fa-solid fa-location-dot'></i>Search places,
                   hotels, and more
                 </>
@@ -136,8 +149,8 @@ const Search = () => {
                     className={classes.destinationbutton}
                     name='searching'
                   >
-                    <i class='fa-solid fa-magnifying-glass'></i> Search for "
-                    {destination}"
+                    <i className='fa-solid fa-magnifying-glass'></i> Search for
+                    "{destination}"
                   </button>
                 </div>
               )}
