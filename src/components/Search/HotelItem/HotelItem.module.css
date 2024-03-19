@@ -1,9 +1,11 @@
 .wrapper {
   display: flex;
-  background-color: blue;
-  flex-flow: column nowrap;
+  border: 1px solid rgba(34, 34, 34, 0.132);
+  flex-flow: row nowrap;
   border-radius: 20px;
-  height: 12rem;
+  height: 14rem;
+  gap: 1rem;
+  width: 100%;
 }
 
 .imagediv {
@@ -11,8 +13,19 @@
 }
 
 .imagediv img {
-  height: 12rem;
-  width: 18rem;
+  height: 14rem;
+  width: 19rem;
   border-radius: 20px 0 0 20px;
   object-fit: cover;
+}
+
+.details {
+  margin-top: 0.5rem;
+}
+
+.name {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 450;
+  font-family: 'Montserrat';
 }
