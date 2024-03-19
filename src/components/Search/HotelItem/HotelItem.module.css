@@ -21,11 +21,32 @@
 
 .details {
   margin-top: 0.5rem;
+  display: flex;
+  flex-flow: column;
+  gap: 4.5rem;
 }
 
 .name {
   font-size: 1.4rem;
   margin: 0;
-  font-weight: 450;
+  font-weight: 500;
   font-family: 'Montserrat';
+}
+
+.district {
+  margin: 0;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.ratingbox {
+  width: 1.9rem;
+  border-radius: 5px;
+  height: 1.9rem;
+  padding: 0.2rem;
+  padding-top: 0.4rem;
+  color: white;
+  text-align: center;
+  align-items: center;
+  background-color: green;
 }

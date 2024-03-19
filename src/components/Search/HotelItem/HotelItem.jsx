@@ -9,8 +9,15 @@ const HotelItem = (props) => {
         <img src={hotel.propertyImage.image.url} />
       </div>
       <div className={classes.details}>
-        <h3 className={classes.name}>{hotel.name}</h3>
-        <p>{hotel.neighborhood.name}</p>
+        <div>
+          <h3 className={classes.name}>{hotel.name}</h3>
+          <p className={classes.district}>{hotel.neighborhood.name}</p>
+        </div>
+        <div>
+          <div className={classes.rating}>
+            <div className={classes.ratingbox}>{hotel.reviews.score}</div>
+          </div>
+        </div>
       </div>
     </div>
   );
