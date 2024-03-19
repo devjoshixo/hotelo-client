@@ -1,0 +1,17 @@
+.wrapper {
+  display: flex;
+  background-color: blue;
+  flex-flow: column nowrap;
+  border-radius: 20px;
+  min-height: 5rem;
+  height: auto;
+}
+
+.imagediv {
+  height: 100%;
+}
+
+.imagediv img {
+  height: auto;
+  width: 16rem;
+}

@@ -1,3 +1,22 @@
+.wrapper {
+  margin: 5rem auto 2rem auto;
+  height: auto;
+  width: 50%;
+}
+
 .wrapper span {
-  background-color: #eadab6;
+  background-color: #b6cdea;
+  /* background-color: #eadab6; */
+}
+
+.loaders {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.hotellist {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
 }
