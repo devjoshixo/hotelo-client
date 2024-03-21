@@ -33,7 +33,7 @@ const Search = () => {
       {hotels.length > 0 ? (
         <div className={classes.hotellist}>
           {hotels.map((hotel) => {
-            return <HotelItem hotel={hotel.property} key={hotel.id} />;
+            return <HotelItem hotel={hotel.property} key={uniqid()} />;
           })}
         </div>
       ) : (

@@ -3,8 +3,9 @@
   border: 1px solid rgba(34, 34, 34, 0.132);
   flex-flow: row nowrap;
   border-radius: 20px;
-  height: 14rem;
+  height: 15rem;
   gap: 1rem;
+  padding-right: 1rem;
   width: 100%;
 }
 
@@ -13,7 +14,7 @@
 }
 
 .imagediv img {
-  height: 14rem;
+  height: 15rem;
   width: 19rem;
   border-radius: 20px 0 0 20px;
   object-fit: cover;
@@ -23,12 +24,13 @@
   margin-top: 0.5rem;
   display: flex;
   flex-flow: column;
+  width: 100%;
   justify-content: space-between;
-  gap: 4.5rem;
+  gap: 1.5rem;
 }
 
 .name {
-  font-size: 1.4rem;
+  font-size: 1.28rem;
   margin: 0;
   font-weight: 500;
   font-family: 'Montserrat';
@@ -40,18 +42,55 @@
   font-size: 0.9rem;
 }
 
+.lowerdetails {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .rating {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
   margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .ratingbox {
   width: 1.9rem;
   border-radius: 5px;
-  height: 1.9rem;
-  padding: 0.2rem;
-  padding-top: 0.4rem;
+  height: 1.3rem;
+  padding: 0.3rem;
   color: white;
   text-align: center;
-  align-items: center;
   background-color: green;
+}
+
+.rating p {
+  margin: 0;
+}
+
+.price {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.offer {
+  position: absolute;
+  left: 0%;
+  top: -50%;
+}
+
+.strikeout {
+  text-decoration-line: underline;
+  font-size: 0.9rem;
+}
+
+.perday {
+  font-size: 1.2rem;
+  font-weight: 500;
 }

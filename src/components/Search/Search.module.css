@@ -1,7 +1,7 @@
 .wrapper {
   margin: 5rem auto 2rem auto;
   height: auto;
-  width: 50%;
+  width: 50rem;
 }
 
 .wrapper span {
@@ -18,5 +18,5 @@
 .hotellist {
   display: flex;
   flex-flow: column nowrap;
-  gap: 1rem;
+  gap: 1.5rem;
 }
