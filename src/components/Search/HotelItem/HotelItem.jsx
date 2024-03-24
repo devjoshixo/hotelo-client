@@ -105,7 +105,7 @@ const HotelItem = (props) => {
     <header className={classes.wrapper}>
       {/* Hotel Image */}
       <div className={classes.imagediv}>
-        <img src={hotel.propertyImage.image.url} />
+        <img src={hotel.propertyImage.image.url} draggable='false' />
       </div>
       {/* Hotel Image */}
 
@@ -127,6 +127,8 @@ const HotelItem = (props) => {
           </div>
 
           <div className={classes.priceWrapper}>
+            {/*  */}
+            {/* offer tag  */}
             {scoreWord.offer ? (
               <div className={classes.offer}>
                 <p
@@ -149,12 +151,16 @@ const HotelItem = (props) => {
                   ) : (
                     ''
                   )}
-                  {scoreWord.offer.primary} {scoreWord.offer.secondary}{' '}
+
+                  {scoreWord.offer.primary}
+                  {scoreWord.offer.secondary}
                 </p>
               </div>
             ) : (
               ''
             )}
+            {/* offer tag  */}
+            {/*  */}
             {/* Hotel Pricing */}
             <div className={classes.price}>
               {hotel.price.strikeOut ? (
