@@ -3,6 +3,7 @@ import classes from './HotelItem.module.css';
 
 const HotelItem = (props) => {
   const [scoreWord, setScoreWord] = useState({});
+  const [price, setPrice] = useState({});
   const hotel = props.hotel;
 
   useEffect(() => {
@@ -66,25 +67,26 @@ const HotelItem = (props) => {
     //
     ////
 
+    //
     //Squeeze out the offer details from the offerBadge key
     const offerBadge = () => {
       let obj = {};
-      if (!(hotel.offerBadge == null)) {
-        if (!(hotel.offerBadge.secondary == null)) {
-          obj = {
-            secondary: hotel.offerBadge.secondary.text,
-            type: hotel.offerBadge.secondary.theme_temp,
-          };
-          if (!(obj.secondary[0] == 'W')) {
-            if (!(hotel.offerBadge.primary == null)) {
-              if (hotel.offerBadge.primary.theme_temp == 'DEAL_MEMBER') {
-                obj = {
-                  ...obj,
-                  primary: hotel.offerBadge.primary.text,
-                  type: hotel.offerBadge.primary.theme_temp,
-                };
-              }
-            }
+      if (
+        !(hotel.offerBadge == null) &&
+        !(hotel.offerBadge.secondary == null)
+      ) {
+        obj = {
+          secondary: hotel.offerBadge.secondary.text,
+          type: hotel.offerBadge.secondary.theme_temp,
+        };
+
+        if (!(obj.secondary[0] == 'W') && !(hotel.offerBadge.primary == null)) {
+          if (hotel.offerBadge.primary.theme_temp == 'DEAL_MEMBER') {
+            obj = {
+              ...obj,
+              primary: hotel.offerBadge.primary.text,
+              type: hotel.offerBadge.primary.theme_temp,
+            };
           }
         }
       }
@@ -95,9 +97,37 @@ const HotelItem = (props) => {
         });
       }
     };
+    //
+    ////
+
+    //
+    //Taking out all the pricing needs
+    const priceMapper = () => {
+      let price = { formatted: '', strikeOut: '', total: '', taxes: '' };
+      hotel.price.displayMessages.map((messages) => {
+        messages.lineItems.map((item) => {
+          if (item.price != null) {
+            if (item.role == 'STRIKEOUT') {
+              price.strikeOut = item.price.formatted;
+            } else if (item.role == 'LEAD') {
+              price.formatted = item.price.formatted;
+            }
+          } else if (item.state != null) {
+            if (item.state == 'BREAKOUT_TYPE_SECONDARY_PRICE') {
+              price.total = item.value;
+            } else if (item.state == 'BREAKOUT_TYPE_TAX_AND_FEE_CLARIFY') {
+              price.taxes = item.value;
+            }
+          }
+          console.log(price);
+        });
+      });
+      setPrice(price);
+    };
 
     scoreWordFormer();
     offerBadge();
+    priceMapper();
     formatNumberIndian(hotel.reviews.total);
   }, []);
 
@@ -151,9 +181,7 @@ const HotelItem = (props) => {
                   ) : (
                     ''
                   )}
-
-                  {scoreWord.offer.primary}
-                  {scoreWord.offer.secondary}
+                  {scoreWord.offer.primary} {scoreWord.offer.secondary}
                 </p>
               </div>
             ) : (
@@ -165,13 +193,16 @@ const HotelItem = (props) => {
             <div className={classes.price}>
               {hotel.price.strikeOut ? (
                 <p className={classes.strikeout}>
-                  <s>{hotel.price.strikeOut.formatted}</s>
+                  <s>{price.strikeOut}</s>
                 </p>
               ) : (
                 ''
               )}
-              <p className={classes.perday}>{hotel.price.lead.formatted}</p>
+
+              <p className={classes.perday}>{price.formatted}</p>
             </div>
+            <p style={{ 'font-size': '0.89rem' }}>{price.total}</p>
+            <p style={{ 'font-size': '0.88rem' }}>{price.taxes}</p>
             {/* Hotel Pricing  */}
           </div>
         </section>
