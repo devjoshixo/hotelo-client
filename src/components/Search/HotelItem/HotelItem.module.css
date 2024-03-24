@@ -72,25 +72,54 @@
   margin: 0;
 }
 
+.priceWrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
 .price {
   display: flex;
-  position: relative;
+  /* position: relative; */
   align-items: center;
   gap: 0.5rem;
+  justify-content: flex-end;
+  width: 8rem;
 }
 
 .offer {
-  position: absolute;
-  left: 0%;
-  top: -50%;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 10rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+}
+
+.offer p {
+  border-radius: 5px;
+  margin: 0;
+}
+
+.memberOffer {
+  background-color: #7b1fa2;
+  padding: 0.2rem 0.3rem;
+}
+
+.generalOffer {
+  background-color: #e61e43;
+  padding: 0.2rem 0.5rem;
 }
 
 .strikeout {
   text-decoration-line: underline;
   font-size: 0.9rem;
+  margin: 0;
 }
 
 .perday {
   font-size: 1.2rem;
   font-weight: 500;
+  margin: 0;
 }

@@ -6,6 +6,8 @@ const HotelItem = (props) => {
   const hotel = props.hotel;
 
   useEffect(() => {
+    //
+    //Gives word review according to review score
     const scoreWordFormer = () => {
       const score = hotel.reviews.score * 10;
       let score_word = '';
@@ -24,7 +26,11 @@ const HotelItem = (props) => {
         return { ...prevState, score_word };
       });
     };
+    //
+    ////
 
+    //
+    //Putting comma after thousandth place
     const formatNumberIndian = (number) => {
       const numberString = String(number);
       const parts = numberString.split('.');
@@ -57,20 +63,36 @@ const HotelItem = (props) => {
         return { ...prevState, total: formattedInteger + decimalPart };
       });
     };
+    //
+    ////
 
+    //Squeeze out the offer details from the offerBadge key
     const offerBadge = () => {
+      let obj = {};
       if (!(hotel.offerBadge == null)) {
         if (!(hotel.offerBadge.secondary == null)) {
-          setScoreWord((prevState) => {
-            return {
-              ...prevState,
-              offer: {
-                text: hotel.offerBadge.secondary.text,
-                type: hotel.offerBadge.secondary.theme_temp,
-              },
-            };
-          });
+          obj = {
+            secondary: hotel.offerBadge.secondary.text,
+            type: hotel.offerBadge.secondary.theme_temp,
+          };
+          if (!(obj.secondary[0] == 'W')) {
+            if (!(hotel.offerBadge.primary == null)) {
+              if (hotel.offerBadge.primary.theme_temp == 'DEAL_MEMBER') {
+                obj = {
+                  ...obj,
+                  primary: hotel.offerBadge.primary.text,
+                  type: hotel.offerBadge.primary.theme_temp,
+                };
+              }
+            }
+          }
         }
+      }
+
+      if (Object.keys(obj).length > 0) {
+        setScoreWord((prevState) => {
+          return { ...prevState, offer: obj };
+        });
       }
     };
 
@@ -104,23 +126,48 @@ const HotelItem = (props) => {
             </div>
           </div>
 
-          {/* Hotel Pricing */}
-          <div className={classes.price}>
-            {hotel.price.strikeOut ? (
-              <p className={classes.strikeout}>
-                <s>{hotel.price.strikeOut.formatted}</s>
-              </p>
-            ) : (
-              ''
-            )}
-            <p className={classes.perday}>{hotel.price.lead.formatted}</p>
+          <div className={classes.priceWrapper}>
             {scoreWord.offer ? (
-              <div className={classes.offer}>{scoreWord.offer.text}</div>
+              <div className={classes.offer}>
+                <p
+                  className={`${
+                    scoreWord.offer.type == 'DEAL_MEMBER'
+                      ? classes.memberOffer
+                      : classes.generalOffer
+                  }`}
+                >
+                  {scoreWord.offer.type == 'DEAL_MEMBER' ? (
+                    <i
+                      className='fa-solid fa-tag'
+                      style={{
+                        color: '#ffff',
+                        'margin-right': '0.5rem',
+                        'margin-left': '0.3rem',
+                        scale: '1.4',
+                      }}
+                    />
+                  ) : (
+                    ''
+                  )}
+                  {scoreWord.offer.primary} {scoreWord.offer.secondary}{' '}
+                </p>
+              </div>
             ) : (
               ''
             )}
+            {/* Hotel Pricing */}
+            <div className={classes.price}>
+              {hotel.price.strikeOut ? (
+                <p className={classes.strikeout}>
+                  <s>{hotel.price.strikeOut.formatted}</s>
+                </p>
+              ) : (
+                ''
+              )}
+              <p className={classes.perday}>{hotel.price.lead.formatted}</p>
+            </div>
+            {/* Hotel Pricing  */}
           </div>
-          {/* Hotel Pricing  */}
         </section>
       </section>
       {/* Details Section  */}
