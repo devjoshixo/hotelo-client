@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import classes from './HotelItem.module.css';
+import uniqid from 'uniqid';
 
 const HotelItem = (props) => {
   const [scoreWord, setScoreWord] = useState({});
   const [price, setPrice] = useState({});
+  const [offer, setOffer] = useState({});
+  const [saved, setSaved] = useState(false);
   const hotel = props.hotel;
-
   useEffect(() => {
     //
     //Gives word review according to review score
@@ -91,10 +93,20 @@ const HotelItem = (props) => {
         }
       }
 
-      if (Object.keys(obj).length > 0) {
-        setScoreWord((prevState) => {
-          return { ...prevState, offer: obj };
+      if (hotel.offerSummary) {
+        let extra = [];
+        hotel.offerSummary.messages.map((item) => {
+          if (item.type == 'LOYALTY_EARN') {
+            obj.loyalty = true;
+          } else {
+            extra.push(item.message);
+          }
         });
+        obj.extra = extra;
+      }
+
+      if (Object.keys(obj).length > 0) {
+        setOffer({ ...obj });
       }
     };
     //
@@ -119,7 +131,6 @@ const HotelItem = (props) => {
               price.taxes = item.value;
             }
           }
-          console.log(price);
         });
       });
       setPrice(price);
@@ -131,11 +142,22 @@ const HotelItem = (props) => {
     formatNumberIndian(hotel.reviews.total);
   }, []);
 
+  const propertySaver = () => {
+    setSaved((prevState) => !prevState);
+  };
+
   return (
     <header className={classes.wrapper}>
       {/* Hotel Image */}
       <div className={classes.imagediv}>
         <img src={hotel.propertyImage.image.url} draggable='false' />
+        <div className={classes.heart} onClick={propertySaver}>
+          {saved ? (
+            <i class='fa-solid fa-heart' />
+          ) : (
+            <i class='fa-regular fa-heart' />
+          )}
+        </div>
       </div>
       {/* Hotel Image */}
 
@@ -146,42 +168,75 @@ const HotelItem = (props) => {
           <p className={classes.district}>{hotel.neighborhood.name}</p>
         </div>
         <section className={classes.lowerdetails}>
-          <div className={classes.rating}>
-            <div className={classes.ratingbox}>{hotel.reviews.score}</div>
+          <div className={classes.leftside}>
             <div>
-              <p>{scoreWord.score_word}</p>
-              <p style={{ fontSize: '0.8rem', fontWeight: '400' }}>
-                {scoreWord.total} review
-              </p>
+              {offer.extra && offer.extra.length > 0 ? (
+                <div>
+                  {offer.extra.map((item) => {
+                    return (
+                      <p
+                        key={uniqid()}
+                        style={{
+                          color: '#227950',
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                          margin: '0.4rem 0',
+                        }}
+                      >
+                        {item}
+                      </p>
+                    );
+                  })}
+                </div>
+              ) : (
+                ''
+              )}
+              {offer.loyalty ? (
+                <div className={classes.loyalty}>
+                  <i className='fa-solid fa-moon' />
+                  <p>Collect Stamps</p>
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={classes.rating}>
+              <div className={classes.ratingbox}>{hotel.reviews.score}</div>
+              <div>
+                <p>{scoreWord.score_word}</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: '400' }}>
+                  {scoreWord.total} review
+                </p>
+              </div>
             </div>
           </div>
 
           <div className={classes.priceWrapper}>
             {/*  */}
             {/* offer tag  */}
-            {scoreWord.offer ? (
+            {offer.type ? (
               <div className={classes.offer}>
                 <p
                   className={`${
-                    scoreWord.offer.type == 'DEAL_MEMBER'
+                    offer.type == 'DEAL_MEMBER'
                       ? classes.memberOffer
                       : classes.generalOffer
                   }`}
                 >
-                  {scoreWord.offer.type == 'DEAL_MEMBER' ? (
+                  {offer.type == 'DEAL_MEMBER' ? (
                     <i
                       className='fa-solid fa-tag'
                       style={{
                         color: '#ffff',
-                        'margin-right': '0.5rem',
-                        'margin-left': '0.3rem',
+                        marginRight: '0.5rem',
+                        marginLeft: '0.3rem',
                         scale: '1.4',
                       }}
                     />
                   ) : (
                     ''
                   )}
-                  {scoreWord.offer.primary} {scoreWord.offer.secondary}
+                  {offer.primary} {offer.secondary}
                 </p>
               </div>
             ) : (
@@ -201,8 +256,8 @@ const HotelItem = (props) => {
 
               <p className={classes.perday}>{price.formatted}</p>
             </div>
-            <p style={{ 'font-size': '0.89rem' }}>{price.total}</p>
-            <p style={{ 'font-size': '0.88rem' }}>{price.taxes}</p>
+            <p style={{ fontSize: '0.89rem' }}>{price.total}</p>
+            <p style={{ fontSize: '0.88rem' }}>{price.taxes}</p>
             {/* Hotel Pricing  */}
           </div>
         </section>
