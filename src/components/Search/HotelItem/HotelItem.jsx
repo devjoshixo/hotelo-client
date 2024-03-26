@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './HotelItem.module.css';
 import uniqid from 'uniqid';
+import postSaveProperty from '../../../api/postSaveProperty';
 
 const HotelItem = (props) => {
   const [scoreWord, setScoreWord] = useState({});
@@ -136,14 +137,19 @@ const HotelItem = (props) => {
       setPrice(price);
     };
 
+    const savedProperty = () => {
+      setSaved(hotel.saved ? true : false);
+    };
+
     scoreWordFormer();
     offerBadge();
     priceMapper();
     formatNumberIndian(hotel.reviews.total);
   }, []);
 
-  const propertySaver = () => {
-    setSaved((prevState) => !prevState);
+  const propertySaver = async () => {
+    const liked = await props.propertySaver(hotel);
+    setSaved(liked);
   };
 
   return (
@@ -153,9 +159,9 @@ const HotelItem = (props) => {
         <img src={hotel.propertyImage.image.url} draggable='false' />
         <div className={classes.heart} onClick={propertySaver}>
           {saved ? (
-            <i class='fa-solid fa-heart' />
+            <i className='fa-solid fa-heart' />
           ) : (
-            <i class='fa-regular fa-heart' />
+            <i className='fa-regular fa-heart' />
           )}
         </div>
       </div>

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import getSearch from '../../api/getSearch';
 import Skeleton from '@mui/material/Skeleton';
 import classes from './Search.module.css';
 import HotelItem from './HotelItem/HotelItem';
 import uniqid from 'uniqid';
+import AuthContext from '../../context/AuthContext';
+import postSaveProperty from '../../api/postSaveProperty';
 
 const Search = () => {
   const [hotels, setHotels] = useState([]);
@@ -23,17 +25,28 @@ const Search = () => {
     const getSearchHotel = async () => {
       const hotelsData = await getSearch();
       setHotels(hotelsData);
-      console.log(hotels);
     };
     getSearchHotel();
   }, []);
+
+  const ctx = useContext(AuthContext);
+  const propertySaver = async (hotel) => {
+    const response = await postSaveProperty(ctx.login.user.email, hotel);
+    return response;
+  };
 
   return (
     <div className={classes.wrapper}>
       {hotels.length > 0 ? (
         <div className={classes.hotellist}>
           {hotels.map((hotel) => {
-            return <HotelItem hotel={hotel.property} key={uniqid()} />;
+            return (
+              <HotelItem
+                hotel={hotel.property}
+                key={uniqid()}
+                propertySaver={propertySaver}
+              />
+            );
           })}
         </div>
       ) : (
