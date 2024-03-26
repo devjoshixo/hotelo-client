@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import classes from './HotelItem.module.css';
 import uniqid from 'uniqid';
 import postSaveProperty from '../../../api/postSaveProperty';
+import AuthContext from '../../../context/AuthContext';
+import Loader from '../../UI/Loader';
 
 const HotelItem = (props) => {
   const [scoreWord, setScoreWord] = useState({});
   const [price, setPrice] = useState({});
   const [offer, setOffer] = useState({});
   const [saved, setSaved] = useState(false);
+  const [loader, setLoader] = useState(false);
   const hotel = props.hotel;
   useEffect(() => {
     //
@@ -147,13 +150,19 @@ const HotelItem = (props) => {
     formatNumberIndian(hotel.reviews.total);
   }, []);
 
+  const ctx = useContext(AuthContext);
   const propertySaver = async () => {
+    setLoader(true);
     const liked = await props.propertySaver(hotel);
-    setSaved(liked);
+    await setSaved((prevState) => {
+      return liked;
+    });
+    setLoader(false);
   };
 
   return (
     <header className={classes.wrapper}>
+      {loader && <Loader />}
       {/* Hotel Image */}
       <div className={classes.imagediv}>
         <img src={hotel.propertyImage.image.url} draggable='false' />

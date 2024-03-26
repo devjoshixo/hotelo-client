@@ -6,6 +6,7 @@ import HotelItem from './HotelItem/HotelItem';
 import uniqid from 'uniqid';
 import AuthContext from '../../context/AuthContext';
 import postSaveProperty from '../../api/postSaveProperty';
+import Loader from '../UI/Loader';
 
 const Search = () => {
   const [hotels, setHotels] = useState([]);
@@ -25,14 +26,17 @@ const Search = () => {
     const getSearchHotel = async () => {
       const hotelsData = await getSearch();
       setHotels(hotelsData);
+      console.log('first');
     };
     getSearchHotel();
   }, []);
 
+  //
+  //To like a hotel and save it
   const ctx = useContext(AuthContext);
   const propertySaver = async (hotel) => {
     const response = await postSaveProperty(ctx.login.user.email, hotel);
-    return response;
+    return response.liked;
   };
 
   return (

@@ -11,6 +11,7 @@ const AuthState = (props) => {
       setLogin({ user: user, loggedIn: true });
     }
   }, []);
+
   return (
     <AuthContext.Provider
       value={{ login, setLogin, userExists, setUserExists }}
