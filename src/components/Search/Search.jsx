@@ -7,9 +7,12 @@ import uniqid from 'uniqid';
 import AuthContext from '../../context/AuthContext';
 import postSaveProperty from '../../api/postSaveProperty';
 import Loader from '../UI/Loader';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Search = () => {
   const [hotels, setHotels] = useState([]);
+  const navigation = useLocation();
+  const history = useHistory();
   let loaders = [];
   for (let i = 0; i < 5; i++) {
     loaders.push(
@@ -35,8 +38,16 @@ const Search = () => {
   //To like a hotel and save it
   const ctx = useContext(AuthContext);
   const propertySaver = async (hotel) => {
-    const response = await postSaveProperty(ctx.login.user.email, hotel);
-    return response.liked;
+    if (ctx.login.loggedIn) {
+      const response = await postSaveProperty(ctx.login.user.email, hotel);
+      return response.liked;
+    } else {
+      sessionStorage.setItem(
+        'redirect',
+        JSON.stringify({ redirect: location.pathname + location.search })
+      );
+      history.push('/account/login');
+    }
   };
 
   return (

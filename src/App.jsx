@@ -8,22 +8,32 @@ import AuthContext from './context/AuthContext';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SearchPage from './pages/SearchPage';
+import HoteloLoader from './components/UI/HoteloLoader';
 
 function App() {
   const [hidden, setHidden] = useState(false);
+  const [loader, setLoader] = useState(true);
   const ctx = useContext(AuthContext);
   const location = useLocation();
 
   useEffect(() => {
+    setLoader(true);
     if (location.pathname == '/account/login') {
       setHidden(true);
     } else {
       setHidden(false);
     }
+    const timer = setTimeout(() => {
+      setLoader(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, [location]);
 
   return (
     <>
+      {loader && <HoteloLoader />}
+
       {!hidden && <Navbar />}
       <Switch>
         <Route path='/' exact>
