@@ -6,8 +6,9 @@
   background-color: white;
 }
 
-.wrapper h1 {
+.wrapper h2 {
   margin-bottom: 0;
+  margin-left: 0.4rem;
 }
 
 .header {
@@ -21,30 +22,39 @@
 
 .heading {
   display: flex;
-  font-size: 2.3rem;
+  font-size: 2.1rem;
   font-family: 'Montserrat';
   font-weight: 700;
+  height: auto;
   margin-top: 1rem;
   color: #203e5a;
+  align-items: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
 .com {
-  font-size: 19px;
+  font-size: 17px;
   font-weight: lighter;
   margin-top: 2.3rem;
 }
 
 .icon {
-  margin: 1.4rem 0.3rem 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   color: #2f5b85;
-  scale: 0.9;
+}
+
+.icon img {
+  margin: 0.8rem 0 0 0;
+  width: 2rem;
+  height: 2rem;
 }
 
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border: 6px solid #63a1db85;
 
   border-bottom-color: #3a70a3;
@@ -67,18 +77,11 @@
   .heading {
     font-size: 2.2rem;
   }
-  .icon {
-    scale: 0.9;
-    margin: 2.3rem 0.5rem 0 1.2rem;
-  }
 }
 
 @media only screen and (max-width: 1100px) {
   .heading h1 {
     display: none;
-  }
-  .icon {
-    margin-top: 0;
   }
 }
 @media only screen and (max-width: 786px) {
@@ -89,10 +92,5 @@
   }
   .heading h1 {
     display: block;
-  }
-  .icon {
-    -webkit-tap-highlight-color: transparent;
-    scale: 1;
-    margin: 2.3rem 0.5rem 0 1.2rem;
   }
 }
