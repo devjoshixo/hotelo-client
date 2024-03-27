@@ -85,6 +85,10 @@
   }
 }
 @media only screen and (max-width: 786px) {
+  .header {
+    top: 22%;
+    left: 25%;
+  }
   .heading {
     -webkit-tap-highlight-color: transparent;
     font-size: 2rem;

@@ -34,19 +34,23 @@ function App() {
     <>
       {loader && <HoteloLoader />}
 
-      {!hidden && <Navbar />}
-      <Switch>
-        <Route path='/' exact>
-          <Homepage />
-        </Route>
-        <Route path='/search'>
-          <SearchPage />
-        </Route>
-        <Route path='/account/login'>
-          <LoginPage />
-        </Route>
-      </Switch>
-      {!hidden && <Footer />}
+      {!loader && (
+        <>
+          {!hidden && <Navbar />}
+          <Switch>
+            <Route path='/' exact>
+              <Homepage />
+            </Route>
+            <Route path='/search'>
+              <SearchPage />
+            </Route>
+            <Route path='/account/login'>
+              <LoginPage />
+            </Route>
+          </Switch>
+          {!hidden && <Footer />}
+        </>
+      )}
     </>
   );
 }
