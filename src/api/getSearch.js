@@ -1,10 +1,10 @@
-const getSearch = async (token, logged_in) => {
+const getSearch = async (token, login) => {
   var requestOptions = {
     method: 'GET',
     headers: {
       'api-key': import.meta.env.VITE_REACT_APP_API_KEY,
       token,
-      logged_in,
+      login,
     },
     redirect: 'follow',
   };

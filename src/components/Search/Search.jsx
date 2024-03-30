@@ -28,15 +28,15 @@ const Search = () => {
   }
   useEffect(() => {
     const getSearchHotel = async () => {
-      let details = { token: false, logged_in: false };
+      let details = { token: false, login: false };
       if (ctx.login.user) {
         details = {
           token: ctx.login.user.token,
-          logged_in: ctx.login.loggedIn,
+          login: ctx.login.loggedIn,
         };
       }
 
-      const hotelsData = await getSearch(details.token, details.logged_in);
+      const hotelsData = await getSearch(details.token, details.login);
       setHotels(hotelsData);
     };
     getSearchHotel();
