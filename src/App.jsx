@@ -18,6 +18,7 @@ function App() {
 
   useEffect(() => {
     setLoader(true);
+    window.scrollTo(0, 0);
     if (location.pathname == '/account/login') {
       setHidden(true);
     } else {
@@ -33,24 +34,19 @@ function App() {
   return (
     <>
       {loader && <HoteloLoader />}
-
-      {!loader && (
-        <>
-          {!hidden && <Navbar />}
-          <Switch>
-            <Route path='/' exact>
-              <Homepage />
-            </Route>
-            <Route path='/search'>
-              <SearchPage />
-            </Route>
-            <Route path='/account/login'>
-              <LoginPage />
-            </Route>
-          </Switch>
-          {!hidden && <Footer />}
-        </>
-      )}
+      {!hidden && <Navbar />}
+      <Switch>
+        <Route path='/' exact>
+          <Homepage />
+        </Route>
+        <Route path='/search'>
+          <SearchPage />
+        </Route>
+        <Route path='/account/login'>
+          <LoginPage />
+        </Route>
+      </Switch>
+      {!hidden && <Footer />}
     </>
   );
 }

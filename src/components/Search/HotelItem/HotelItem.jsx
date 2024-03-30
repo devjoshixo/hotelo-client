@@ -147,6 +147,7 @@ const HotelItem = (props) => {
     scoreWordFormer();
     offerBadge();
     priceMapper();
+    savedProperty();
     formatNumberIndian(hotel.reviews.total);
   }, []);
 

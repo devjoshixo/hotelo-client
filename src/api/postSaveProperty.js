@@ -1,6 +1,7 @@
-const postSaveProperty = async (email, hotel) => {
+const postSaveProperty = async (email, token, hotel) => {
   var raw = JSON.stringify({
     email,
+    token,
     hotel,
   });
 

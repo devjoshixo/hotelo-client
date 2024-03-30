@@ -13,6 +13,7 @@ const Search = () => {
   const [hotels, setHotels] = useState([]);
   const navigation = useLocation();
   const history = useHistory();
+  const ctx = useContext(AuthContext);
   let loaders = [];
   for (let i = 0; i < 5; i++) {
     loaders.push(
@@ -27,19 +28,30 @@ const Search = () => {
   }
   useEffect(() => {
     const getSearchHotel = async () => {
-      const hotelsData = await getSearch();
+      let details = { token: false, logged_in: false };
+      if (ctx.login.user) {
+        details = {
+          token: ctx.login.user.token,
+          logged_in: ctx.login.loggedIn,
+        };
+      }
+
+      const hotelsData = await getSearch(details.token, details.logged_in);
       setHotels(hotelsData);
-      console.log('first');
     };
     getSearchHotel();
   }, []);
 
   //
   //To like a hotel and save it
-  const ctx = useContext(AuthContext);
   const propertySaver = async (hotel) => {
     if (ctx.login.loggedIn) {
-      const response = await postSaveProperty(ctx.login.user.email, hotel);
+      const response = await postSaveProperty(
+        ctx.login.user.email,
+        ctx.login.user.token,
+        hotel
+      );
+
       return response.liked;
     } else {
       sessionStorage.setItem(
@@ -57,7 +69,7 @@ const Search = () => {
           {hotels.map((hotel) => {
             return (
               <HotelItem
-                hotel={hotel.property}
+                hotel={{ ...hotel.property, saved: hotel.saved ? true : false }}
                 key={uniqid()}
                 propertySaver={propertySaver}
               />
