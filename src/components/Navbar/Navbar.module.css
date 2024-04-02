@@ -5,7 +5,8 @@
   flex-flow: row nowrap;
   justify-content: space-around;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(52, 52, 52, 0.117);
+  border-bottom: 1px solid rgba(52, 52, 52, 0.208);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.07);
   /* background-color: blue; */
 }
 

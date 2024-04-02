@@ -27,6 +27,12 @@ const Login = () => {
     }
   };
 
+  const redirecting = () => {
+    const { redirect } = JSON.parse(sessionStorage.getItem('redirect'));
+    sessionStorage.clear();
+    history.push(redirect);
+  };
+
   const formDetailChangeHandler = (event) => {
     setFormDetails((prevState) => {
       return { ...prevState, [event.target.name]: event.target.value };
@@ -44,9 +50,11 @@ const Login = () => {
           onFormChange={formDetailChangeHandler}
           formDetails={formDetails}
           setEmailPage={setEmailPage}
+          redirecting={redirecting}
         />
       ) : ctx.userExists ? (
         <Password
+          redirecting={redirecting}
           onFormChange={formDetailChangeHandler}
           formDetails={formDetails}
         />

@@ -21,7 +21,7 @@ const Password = (props) => {
     const done = await login(props.formDetails);
 
     if (done) {
-      history.push('/');
+      props.redirecting();
     }
     setShowLoader(false);
   };

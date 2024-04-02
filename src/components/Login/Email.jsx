@@ -21,7 +21,7 @@ const Email = (props) => {
       const credential = await response.json();
 
       const newJson = await googleSignIn(credential);
-      history.push('/');
+      props.redirecting();
       // console.log(JWT.jwtDecode(token));
     },
   });

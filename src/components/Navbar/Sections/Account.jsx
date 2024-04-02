@@ -4,11 +4,23 @@ import classes from './Account.module.css';
 import useOutSideClick from '../../../hooks/UseOutsideClick';
 import AuthContext from '../../../context/AuthContext';
 import UseLogout from '../../../hooks/UseLogout';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom';
 
 const Account = (props) => {
   const [signInref, signIn, setSignIn] = useOutSideClick();
   const ctx = useContext(AuthContext);
   const logout = UseLogout();
+  const location = useLocation();
+  const history = useHistory();
+
+  const redirectLogin = () => {
+    sessionStorage.setItem(
+      'redirect',
+      JSON.stringify({ redirect: location.pathname + location.search })
+    );
+
+    history.push('/account/login');
+  };
 
   return (
     <div
@@ -39,17 +51,14 @@ const Account = (props) => {
                 Save an average of 15% on thousands of hotels when you're signed
                 in
               </h2>
-              <Link to='/account/login'>
-                <button
-                  className={classes.signInAction}
-                  href={'/account/signIn'}
-                >
-                  Sign in
-                </button>
-              </Link>
-              <Link to='/account/login' className={classes.link}>
+
+              <button className={classes.signInAction} onClick={redirectLogin}>
+                Sign in
+              </button>
+
+              <p onClick={redirectLogin} className={classes.link}>
                 Sign up, it's free
-              </Link>
+              </p>
             </div>
           )}
         </div>

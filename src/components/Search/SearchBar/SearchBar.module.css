@@ -1,5 +1,6 @@
 .wrapper {
   /* display: flex; */
+  margin-top: 1rem;
   padding: 0.7rem 0.5rem 1rem 0.5rem;
 }
 
@@ -26,7 +27,6 @@
 
 .inputbox {
   background-color: white;
-  position: relative;
   width: 21rem;
   height: 2.8rem;
   border: 1px solid rgba(0, 0, 0, 0.516);
@@ -56,6 +56,7 @@
   border-radius: 10px;
   width: 21.5rem;
   height: 22rem;
+  z-index: 99;
 }
 
 .searchfloat input {
@@ -70,17 +71,6 @@
   border-radius: 10px 10px 0 0;
   height: 4rem;
   outline: none;
-}
-
-.errorinput {
-  box-shadow: inset 0 0 0 1px #a7183c;
-}
-
-.error {
-  position: absolute;
-  margin: 0;
-  top: 100%;
-  color: #a7183c;
 }
 
 .destinationbutton {

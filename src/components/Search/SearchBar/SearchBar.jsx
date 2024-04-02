@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import classes from './Search.module.css';
+import classes from './SearchBar.module.css';
 import useOutsideClick from '../../../hooks/UseOutsideClick';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -14,9 +14,9 @@ let defaultdate = new Date();
 let newDate = new Date(defaultdate);
 newDate.setDate(defaultdate.getDate() + 2);
 
-const Search = () => {
+const SearchBar = () => {
   const [rooms, setRooms] = useState({
-    travellers: [{ adults: 2, children: [] }],
+    travellers: [{ adults: 1, children: [] }],
     total: 1,
     totalRooms: 1,
   });
@@ -27,8 +27,6 @@ const Search = () => {
       key: 'selection',
     },
   ]);
-
-  const [error, setError] = useState(null);
 
   const [destination, setDestination] = useState('');
   const inputRef = useRef();
@@ -94,18 +92,12 @@ const Search = () => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    if (destination.trim() == '') {
-      setError('Please select a destination');
-      return;
-    } else {
-      setError(null);
-    }
     const obj = [
       ['startdate=', finalFormatDate(dates[0].startDate)],
       ['endDate=', finalFormatDate(dates[0].endDate)],
       ['destination=', destination],
     ];
-    navigate.push(`/search?asd=${destination}`);
+    navigate.push('/search?asd=4_1,3_4');
   };
 
   function finalFormatDate(date) {
@@ -118,16 +110,12 @@ const Search = () => {
   return (
     <div className={classes.wrapper}>
       <header className={classes.section}>
-        <h1 className={classes.header}>Where to?</h1>
         <div className={classes.searchbar}>
           <div name='search'>
             {/* // */}
             {/* Going to */}
-
             <header
-              className={`${classes.inputbox} ${classes.searchbox} ${
-                error ? classes.errorinput : ''
-              }`}
+              className={`${classes.inputbox} ${classes.searchbox}`}
               name='search'
               ref={searchRef}
               onClick={(event) => {
@@ -146,7 +134,6 @@ const Search = () => {
               ) : (
                 destination
               )}
-              <p className={classes.error}>{error}</p>
               {search && (
                 <div className={classes.searchfloat} name='search'>
                   {/* Floating Search */}
@@ -266,4 +253,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchBar;

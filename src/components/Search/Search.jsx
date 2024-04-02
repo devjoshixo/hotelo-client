@@ -2,15 +2,17 @@ import React, { useEffect, useState, useContext } from 'react';
 import getSearch from '../../api/getSearch';
 import Skeleton from '@mui/material/Skeleton';
 import classes from './Search.module.css';
-import HotelItem from './HotelItem/HotelItem';
+import HotelItem from './HotelList/HotelItem';
 import uniqid from 'uniqid';
 import AuthContext from '../../context/AuthContext';
 import postSaveProperty from '../../api/postSaveProperty';
 import Loader from '../UI/Loader';
 import { useHistory, useLocation } from 'react-router-dom';
+import SearchBar from './SearchBar/SearchBar';
+import Filter from './Filters/Filter';
 
 const Search = () => {
-  const [hotels, setHotels] = useState([]);
+  const [hotels, setHotels] = useState(null);
   const navigation = useLocation();
   const history = useHistory();
   const ctx = useContext(AuthContext);
@@ -37,6 +39,7 @@ const Search = () => {
       }
 
       const hotelsData = await getSearch(details.token, details.login);
+
       setHotels(hotelsData);
     };
     getSearchHotel();
@@ -63,23 +66,32 @@ const Search = () => {
   };
 
   return (
-    <div className={classes.wrapper}>
-      {hotels.length > 0 ? (
-        <div className={classes.hotellist}>
-          {hotels.map((hotel) => {
-            return (
-              <HotelItem
-                hotel={{ ...hotel.property, saved: hotel.saved ? true : false }}
-                key={uniqid()}
-                propertySaver={propertySaver}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        loaders
-      )}
-    </div>
+    <>
+      <SearchBar />
+      <div className={classes.wrapper}>
+        {hotels && (
+          <Filter filter={hotels.universalSortAndFilter.filterSections} />
+        )}
+        {hotels ? (
+          <div className={classes.hotellist}>
+            {hotels.properties.map((hotel) => {
+              return (
+                <HotelItem
+                  hotel={{
+                    ...hotel,
+                    saved: hotel.saved ? true : false,
+                  }}
+                  key={uniqid()}
+                  propertySaver={propertySaver}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          loaders
+        )}
+      </div>
+    </>
   );
 };
 
