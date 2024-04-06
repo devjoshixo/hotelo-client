@@ -1,8 +1,31 @@
 .filterbar {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
-.filterbar section {
+.filterbar p {
+  margin: 0;
+}
+
+.leftsection {
+  margin-left: 1rem;
+}
+
+.hotellength {
+  font-size: 15px;
+}
+
+.sortwork {
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.sortwork:hover {
+  text-decoration: underline;
+}
+
+.rightsection {
   position: relative;
 }
 
@@ -19,8 +42,8 @@
 
 .sortby {
   position: absolute;
-  top: -17%;
+  top: 3%;
   font-weight: bolder;
-  left: 2%;
+  left: 6%;
   font-size: 14px;
 }

@@ -97,7 +97,7 @@ const SearchBar = () => {
       ['endDate=', finalFormatDate(dates[0].endDate)],
       ['destination=', destination],
     ];
-    navigate.push('/search?asd=4_1,3_4');
+    navigate.replace({ search: 'destination=' + destination });
   };
 
   function finalFormatDate(date) {
@@ -132,7 +132,9 @@ const SearchBar = () => {
                   hotels, and more
                 </>
               ) : (
-                destination
+                <>
+                  <i className='fa-solid fa-location-dot'></i> {destination}
+                </>
               )}
               {search && (
                 <div className={classes.searchfloat} name='search'>

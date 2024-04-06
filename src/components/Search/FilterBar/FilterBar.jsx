@@ -4,8 +4,13 @@ import classes from './FilterBar.module.css';
 const FilterBar = (props) => {
   return (
     <div className={classes.filterbar}>
-      <p className='tw-text-lg'>{props.length} properties</p>
-      <section>
+      <section className={classes.leftsection}>
+        <p className={classes.hotellength}>{props.length} properties</p>
+        <p className={classes.sortwork}>
+          How our sort order works <i className='fa-solid fa-circle-info' />
+        </p>
+      </section>
+      <section className={classes.rightsection}>
         <select className={classes.filterselect}>
           <option value='RECOMMENDED'>Recommended</option>
           <option value='PRICE_LOW_TO_HIGH'>Price: low to high</option>

@@ -29,7 +29,7 @@ function App() {
     }, 1500);
 
     return () => clearTimeout(timer);
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <>
