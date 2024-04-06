@@ -15,6 +15,8 @@ let newDate = new Date(defaultdate);
 newDate.setDate(defaultdate.getDate() + 2);
 
 const SearchBar = () => {
+  //
+  ////States for the search bar
   const [rooms, setRooms] = useState({
     travellers: [{ adults: 1, children: [] }],
     total: 1,
@@ -36,7 +38,11 @@ const SearchBar = () => {
   const [searchRef, search, setSearch] = useOutsideClick();
   const [durationRef, duration, setDuration] = useOutsideClick();
   const [passengerRef, passenger, setPassenger] = useOutsideClick();
+  ////States for the search bar
+  //
 
+  //
+  ////Use effect for delaying destination search
   useEffect(() => {
     const timer = setTimeout(() => {
       if (destination.trim() !== '') {
@@ -46,13 +52,11 @@ const SearchBar = () => {
 
     return () => clearTimeout(timer);
   }, [destination]);
+  ////Use effect for delaying destination search
+  //
 
-  const dateFormatter = (date) => {
-    const shortMonthName = date.toLocaleString('default', { month: 'short' });
-    const currentDate = date.getDate();
-    return [shortMonthName, currentDate];
-  };
-
+  //
+  ////Counting the travellers
   useEffect(() => {
     setRooms((prevState) => {
       let count = 0;
@@ -63,13 +67,27 @@ const SearchBar = () => {
       return { ...prevState, total: count, totalRooms: countRoom };
     });
   }, [rooms.travellers]);
+  ////Counting the travellers
+  //
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [search]);
+    const search = Object.fromEntries(new URLSearchParams(location.search));
 
+    setDestination(search.destination);
+  }, []);
+
+  //
+  ////Date formatting for calender picker display
+  const dateFormatter = (date) => {
+    const shortMonthName = date.toLocaleString('default', { month: 'short' });
+    const currentDate = date.getDate();
+    return [shortMonthName, currentDate];
+  };
+  ////Date formatting for calender picker display
+  //
+
+  //
+  ////Adding another room with default room
   const addingAnotherRoom = () => {
     setRooms((prevState) => {
       const newTravellers = [...prevState.travellers, DEFAULT_ROOM];
@@ -80,14 +98,28 @@ const SearchBar = () => {
       };
     });
   };
+  ////Adding another room with default room
+  //
 
+  //
+  ////Closing calender floater
   const closingCalender = (event) => {
     const name = event.target.getAttribute('name');
     if (name == 'closer') {
       setDuration(false);
+      parameterReplace('dates', dates[0].startDate);
     } else {
       setDuration(true);
     }
+  };
+  ////Closing calender floater
+  //
+
+  const parameterReplace = (name, value) => {
+    let search = location.search;
+    console.log(search);
+    // console.log(queryString(search));
+    navigate.replace({ search: name + '=' + value });
   };
 
   const formSubmitHandler = (event) => {

@@ -100,12 +100,16 @@ const Search = () => {
     } else {
       setError(null);
     }
-    const obj = [
-      ['startdate=', finalFormatDate(dates[0].startDate)],
-      ['endDate=', finalFormatDate(dates[0].endDate)],
-      ['destination=', destination],
-    ];
-    navigate.push(`/search?asd=${destination}`);
+    const obj = {
+      startdate: finalFormatDate(dates[0].startDate),
+      endDate: finalFormatDate(dates[0].endDate),
+      destination: destination,
+    };
+    console.log(new URLSearchParams(obj).toString());
+    navigate.push({
+      pathname: '/search',
+      search: new URLSearchParams(obj).toString(),
+    });
   };
 
   function finalFormatDate(date) {

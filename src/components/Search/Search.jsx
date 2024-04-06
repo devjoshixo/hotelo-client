@@ -16,6 +16,7 @@ const Search = () => {
   const [hotels, setHotels] = useState(null);
   const navigation = useLocation();
   const history = useHistory();
+  const location = useLocation();
   const ctx = useContext(AuthContext);
   let loaders = [];
   for (let i = 0; i < 5; i++) {
@@ -30,6 +31,7 @@ const Search = () => {
     );
   }
   useEffect(() => {
+    setHotels(null);
     const getSearchHotel = async () => {
       let details = { token: false, login: false };
       if (ctx.login.user) {
@@ -44,7 +46,7 @@ const Search = () => {
       setHotels(hotelsData);
     };
     getSearchHotel();
-  }, []);
+  }, [location.search]);
 
   //
   //To like a hotel and save it
