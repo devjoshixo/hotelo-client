@@ -9,7 +9,8 @@ import postSaveProperty from '../../api/postSaveProperty';
 import Loader from '../UI/Loader';
 import { useHistory, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
-import Filter from './Filters/Filter';
+import Filter from './FiltersSide/Filter';
+import FilterBar from './FilterBar/FilterBar';
 
 const Search = () => {
   const [hotels, setHotels] = useState(null);
@@ -39,7 +40,7 @@ const Search = () => {
       }
 
       const hotelsData = await getSearch(details.token, details.login);
-
+      // console.log(hotelsData.universalSortAndFilter.filterSections);
       setHotels(hotelsData);
     };
     getSearchHotel();
@@ -54,7 +55,6 @@ const Search = () => {
         ctx.login.user.token,
         hotel
       );
-
       return response.liked;
     } else {
       sessionStorage.setItem(
@@ -69,26 +69,29 @@ const Search = () => {
     <>
       <SearchBar />
       <div className={classes.wrapper}>
-        {hotels && (
+        {/* {hotels && (
           <Filter filter={hotels.universalSortAndFilter.filterSections} />
-        )}
+        )} */}
         {hotels ? (
-          <div className={classes.hotellist}>
-            {hotels.properties.map((hotel) => {
-              return (
-                <HotelItem
-                  hotel={{
-                    ...hotel,
-                    saved: hotel.saved ? true : false,
-                  }}
-                  key={uniqid()}
-                  propertySaver={propertySaver}
-                />
-              );
-            })}
+          <div className={classes.hotels}>
+            <FilterBar length={hotels.properties.length} />
+            <div className={classes.hotellist}>
+              {hotels.properties.map((hotel) => {
+                return (
+                  <HotelItem
+                    hotel={{
+                      ...hotel,
+                      saved: hotel.saved ? true : false,
+                    }}
+                    key={uniqid()}
+                    propertySaver={propertySaver}
+                  />
+                );
+              })}
+            </div>
           </div>
         ) : (
-          loaders
+          <div className={classes.loaderlist}>{loaders}</div>
         )}
       </div>
     </>
