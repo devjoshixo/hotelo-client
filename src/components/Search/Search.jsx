@@ -14,8 +14,8 @@ import FilterBar from './FilterBar/FilterBar';
 
 const Search = () => {
   const [hotels, setHotels] = useState({});
-  const [changed, setChanged] = useState(false);
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState('asd');
+  console.log(filter);
   const [showLoaders, setShowLoaders] = useState(true);
   const navigation = useLocation();
   const history = useHistory();
@@ -35,13 +35,6 @@ const Search = () => {
   }
 
   useEffect(() => {
-    setChanged((prevState) => {
-      console.log(true);
-      return true;
-    });
-  }, []);
-
-  useEffect(() => {
     setShowLoaders(true);
     const getSearchHotel = async () => {
       let details = { token: false, login: false };
@@ -53,8 +46,11 @@ const Search = () => {
       }
 
       const hotelsData = await getSearch(details.token, details.login);
-      setFilter(hotelsData.universalSortAndFilter.filterSections);
       setHotels(hotelsData);
+      setFilter((prevState) => {
+        console.log(prevState);
+        return hotelsData.universalSortAndFilter.filterSections;
+      });
       setShowLoaders(false);
     };
     getSearchHotel();
@@ -83,7 +79,8 @@ const Search = () => {
     <section className={classes.bodywrapper}>
       <SearchBar />
       <div className={classes.wrapper}>
-        {filter && <FilterSide filter={filter} setFilter={setFilter} />}
+        {/* {filter && <FilterSide filter={filter} setFilter={setFilter} />} */}
+        <FilterSide filter={filter} setFilter={setFilter} />
         {!showLoaders && (
           <div className={classes.hotels}>
             <FilterBar length={hotels.properties.length} />
