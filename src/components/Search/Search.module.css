@@ -1,8 +1,15 @@
+.bodywrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 70%;
+  margin: 1rem auto 2rem auto;
+}
+
 .wrapper {
   display: flex;
   margin: 1rem auto 2rem auto;
   height: auto;
-  width: 50rem;
+  max-width: 90%;
 }
 
 .wrapper span {

@@ -246,10 +246,11 @@
 }
 
 .action {
-  border-radius: 30px;
-  width: 6rem;
+  border-radius: 50%;
+  width: 3rem;
   font-size: 1.1rem;
   font-weight: 800;
+  color: white;
   background-color: #1668e3;
   border: none;
 }

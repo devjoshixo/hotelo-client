@@ -46,7 +46,7 @@ const SearchBar = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (destination.trim() !== '') {
-        console.log(destination);
+        // console.log(destination);
       }
     }, 500);
 
@@ -72,7 +72,6 @@ const SearchBar = () => {
 
   useEffect(() => {
     const search = Object.fromEntries(new URLSearchParams(location.search));
-
     setDestination(search.destination);
   }, []);
 
@@ -115,21 +114,24 @@ const SearchBar = () => {
   ////Closing calender floater
   //
 
-  const parameterReplace = (name, value) => {
+  const parameterReplace = () => {
     let search = location.search;
-    console.log(search);
-    // console.log(queryString(search));
-    navigate.replace({ search: name + '=' + value });
+    const obj = {
+      startdate: finalFormatDate(dates[0].startDate),
+      endDate: finalFormatDate(dates[0].endDate),
+      destination,
+    };
+    navigate.replace({ search: new URLSearchParams(obj).toString() });
   };
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    const obj = [
-      ['startdate=', finalFormatDate(dates[0].startDate)],
-      ['endDate=', finalFormatDate(dates[0].endDate)],
-      ['destination=', destination],
-    ];
-    navigate.replace({ search: 'destination=' + destination });
+    const obj = {
+      startdate: finalFormatDate(dates[0].startDate),
+      endDate: finalFormatDate(dates[0].endDate),
+      destination,
+    };
+    navigate.replace({ search: new URLSearchParams(obj).toString() });
   };
 
   function finalFormatDate(date) {
@@ -279,7 +281,7 @@ const SearchBar = () => {
           </div>
 
           <button className={classes.action} onClick={formSubmitHandler}>
-            Search
+            <i className='fa-solid fa-magnifying-glass'></i>
           </button>
         </div>
       </header>

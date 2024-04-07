@@ -9,11 +9,14 @@ import postSaveProperty from '../../api/postSaveProperty';
 import Loader from '../UI/Loader';
 import { useHistory, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
-import Filter from './FiltersSide/Filter';
+import FilterSide from './FiltersSide/FilterSide';
 import FilterBar from './FilterBar/FilterBar';
 
 const Search = () => {
-  const [hotels, setHotels] = useState(null);
+  const [hotels, setHotels] = useState({});
+  const [changed, setChanged] = useState(false);
+  const [filter, setFilter] = useState(null);
+  const [showLoaders, setShowLoaders] = useState(true);
   const navigation = useLocation();
   const history = useHistory();
   const location = useLocation();
@@ -30,8 +33,16 @@ const Search = () => {
       </div>
     );
   }
+
   useEffect(() => {
-    setHotels(null);
+    setChanged((prevState) => {
+      console.log(true);
+      return true;
+    });
+  }, []);
+
+  useEffect(() => {
+    setShowLoaders(true);
     const getSearchHotel = async () => {
       let details = { token: false, login: false };
       if (ctx.login.user) {
@@ -42,8 +53,9 @@ const Search = () => {
       }
 
       const hotelsData = await getSearch(details.token, details.login);
-      // console.log(hotelsData.universalSortAndFilter.filterSections);
+      setFilter(hotelsData.universalSortAndFilter.filterSections);
       setHotels(hotelsData);
+      setShowLoaders(false);
     };
     getSearchHotel();
   }, [location.search]);
@@ -68,13 +80,11 @@ const Search = () => {
   };
 
   return (
-    <>
+    <section className={classes.bodywrapper}>
       <SearchBar />
       <div className={classes.wrapper}>
-        {/* {hotels && (
-          <Filter filter={hotels.universalSortAndFilter.filterSections} />
-        )} */}
-        {hotels ? (
+        {filter && <FilterSide filter={filter} setFilter={setFilter} />}
+        {!showLoaders && (
           <div className={classes.hotels}>
             <FilterBar length={hotels.properties.length} />
             <div className={classes.hotellist}>
@@ -92,11 +102,10 @@ const Search = () => {
               })}
             </div>
           </div>
-        ) : (
-          <div className={classes.loaderlist}>{loaders}</div>
         )}
+        {showLoaders && <div className={classes.loaderlist}>{loaders}</div>}
       </div>
-    </>
+    </section>
   );
 };
 
