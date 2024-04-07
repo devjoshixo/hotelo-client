@@ -14,7 +14,7 @@ import FilterBar from './FilterBar/FilterBar';
 
 const Search = () => {
   const [hotels, setHotels] = useState({});
-  const [filter, setFilter] = useState('asd');
+  const [filter, setFilter] = useState(null);
   console.log(filter);
   const [showLoaders, setShowLoaders] = useState(true);
   const navigation = useLocation();
@@ -48,7 +48,6 @@ const Search = () => {
       const hotelsData = await getSearch(details.token, details.login);
       setHotels(hotelsData);
       setFilter((prevState) => {
-        console.log(prevState);
         return hotelsData.universalSortAndFilter.filterSections;
       });
       setShowLoaders(false);
@@ -79,8 +78,7 @@ const Search = () => {
     <section className={classes.bodywrapper}>
       <SearchBar />
       <div className={classes.wrapper}>
-        {/* {filter && <FilterSide filter={filter} setFilter={setFilter} />} */}
-        <FilterSide filter={filter} setFilter={setFilter} />
+        {filter && <FilterSide filter={filter} setFilter={setFilter} />}
         {!showLoaders && (
           <div className={classes.hotels}>
             <FilterBar length={hotels.properties.length} />

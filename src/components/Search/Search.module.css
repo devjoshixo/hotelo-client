@@ -1,15 +1,16 @@
 .bodywrapper {
   display: flex;
   flex-flow: column nowrap;
-  width: 70%;
+  justify-content: center;
   margin: 1rem auto 2rem auto;
 }
 
 .wrapper {
   display: flex;
-  margin: 1rem auto 2rem auto;
+  margin: 1rem 3rem 2rem 13.5rem;
+  width: 70%;
+  gap: 1.2rem;
   height: auto;
-  max-width: 90%;
 }
 
 .wrapper span {
@@ -20,8 +21,11 @@
 .loaders {
   margin: 1rem 0;
   display: flex;
-
   gap: 1rem;
+}
+
+.hotels {
+  width: 72%;
 }
 
 .hotellist {

@@ -1,5 +1,3 @@
 .section {
-  background-color: blue;
-  width: 40%;
-  z-index: 9999;
+  min-width: 19%;
 }
