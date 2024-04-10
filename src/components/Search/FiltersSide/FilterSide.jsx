@@ -1,14 +1,43 @@
 import React, { useState } from 'react';
 import classes from './FilterSide.module.css';
+import uniqid from 'uniqid';
+import MultiStacked from './Filters/MultiStacked';
+import MultiSelection from './Filters/MultiSelection';
+import SelectionField from './Filters/SelectionField';
+import MultiTile from './Filters/MultiTile';
+import RangeField from './Filters/RangeField';
 
 const FilterSide = (props) => {
   const [filter, setFilter] = useState(props.filter[1]);
-  filter.fields[0].multiSelectionOptions.map((item) =>
-    console.log(item.primary)
-  );
+
   return (
     <section className={classes.section}>
       <header className={classes.header}>{filter.title}</header>
+      {filter.fields.map((item) => {
+        //
+        ////
+        const filterNames = {
+          ShoppingMultiSelectionField: (
+            <MultiSelection item={item} key={uniqid()} />
+          ),
+          ShoppingRangeField: <RangeField item={item} key={uniqid()} />,
+          ShoppingSelectionField: <SelectionField item={item} key={uniqid()} />,
+          ShoppingMultiSelectionStackedTileField: (
+            <MultiStacked item={item} key={uniqid()} />
+          ),
+          ShoppingMultiSelectionTileField: (
+            <MultiTile item={item} key={uniqid()} />
+          ),
+        };
+        //
+        ////
+        return (
+          <>
+            <h2 key={uniqid()}>{item.primary}</h2>
+            {filterNames[item.__typename]}
+          </>
+        );
+      })}
     </section>
   );
 };

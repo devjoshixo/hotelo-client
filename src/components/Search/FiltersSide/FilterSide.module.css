@@ -1,5 +1,6 @@
 .section {
-  min-width: 19%;
+  max-width: 22%;
+  /* background-color: blue; */
 }
 
 .header {

@@ -2,14 +2,16 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  align-items: center;
   margin: 1rem auto 2rem auto;
 }
 
 .wrapper {
   display: flex;
-  margin: 1rem 3rem 2rem 13.5rem;
-  width: 70%;
-  gap: 1.2rem;
+  flex-flow: row;
+  justify-content: center;
+  width: 81%;
+  gap: 0.5rem;
   height: auto;
 }
 
@@ -22,10 +24,11 @@
   margin: 1rem 0;
   display: flex;
   gap: 1rem;
+  width: 50rem;
 }
 
 .hotels {
-  width: 72%;
+  /* width: 72%; */
 }
 
 .hotellist {
