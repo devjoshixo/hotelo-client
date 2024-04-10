@@ -13,6 +13,8 @@ const FilterSide = (props) => {
   return (
     <section className={classes.section}>
       <header className={classes.header}>{filter.title}</header>
+      {/*    */}
+      {/* Filter Headers and subcomponent render  */}
       {filter.fields.map((item) => {
         //
         ////
@@ -33,11 +35,14 @@ const FilterSide = (props) => {
         ////
         return (
           <>
-            <h2 key={uniqid()}>{item.primary}</h2>
+            <p className={classes.filterHeading} key={uniqid()}>
+              {item.primary}
+            </p>
             {filterNames[item.__typename]}
           </>
         );
       })}
+      {/*     */}
     </section>
   );
 };
