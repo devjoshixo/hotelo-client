@@ -5,7 +5,9 @@ const UseLogout = () => {
   const ctx = useContext(AuthContext);
   const logout = (event) => {
     window.location.reload();
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     localStorage.removeItem('user');
     ctx.setLogin({ user: null, loggedIn: false });
   };

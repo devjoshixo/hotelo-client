@@ -1,3 +1,7 @@
 .section {
   min-width: 19%;
 }
+
+.header {
+  font-size: 1.4rem;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AuthContext from './AuthContext';
+import verifyToken from '../api/verifyToken';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 
 const AuthState = (props) => {
@@ -12,10 +13,18 @@ const AuthState = (props) => {
   };
 
   useState(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      setLogin({ user: user, loggedIn: true });
-    }
+    const verify_and_login = async () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        const resposne = await verifyToken(user.token);
+        if (resposne.error) {
+          localStorage.clear('user');
+          return;
+        }
+        setLogin({ user: user, loggedIn: true });
+      }
+    };
+    verify_and_login();
   }, []);
 
   return (

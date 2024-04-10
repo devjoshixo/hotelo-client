@@ -26,7 +26,7 @@ function App() {
     }
     const timer = setTimeout(() => {
       setLoader(false);
-    }, 1500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [location.pathname]);

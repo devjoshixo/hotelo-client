@@ -11,15 +11,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
 import FilterSide from './FiltersSide/FilterSide';
 import FilterBar from './FilterBar/FilterBar';
+import UseLogout from '../../hooks/UseLogout';
 
 const Search = () => {
   const [hotels, setHotels] = useState({});
   const [filter, setFilter] = useState(null);
-  console.log(filter);
   const [showLoaders, setShowLoaders] = useState(true);
   const navigation = useLocation();
   const history = useHistory();
   const location = useLocation();
+  const logout = UseLogout();
   const ctx = useContext(AuthContext);
   let loaders = [];
   for (let i = 0; i < 5; i++) {
@@ -44,8 +45,10 @@ const Search = () => {
           login: ctx.login.loggedIn,
         };
       }
-
       const hotelsData = await getSearch(details.token, details.login);
+      if (hotelsData.error) {
+        logout();
+      }
       setHotels(hotelsData);
       setFilter((prevState) => {
         return hotelsData.universalSortAndFilter.filterSections;
