@@ -13,36 +13,41 @@ const FilterSide = (props) => {
   return (
     <section className={classes.section}>
       <header className={classes.header}>{filter.title}</header>
-      {/*    */}
-      {/* Filter Headers and subcomponent render  */}
-      {filter.fields.map((item) => {
-        //
-        ////
-        const filterNames = {
-          ShoppingMultiSelectionField: (
-            <MultiSelection item={item} key={uniqid()} />
-          ),
-          ShoppingRangeField: <RangeField item={item} key={uniqid()} />,
-          ShoppingSelectionField: <SelectionField item={item} key={uniqid()} />,
-          ShoppingMultiSelectionStackedTileField: (
-            <MultiStacked item={item} key={uniqid()} />
-          ),
-          ShoppingMultiSelectionTileField: (
-            <MultiTile item={item} key={uniqid()} />
-          ),
-        };
-        //
-        ////
-        return (
-          <>
-            <p className={classes.filterHeading} key={uniqid()}>
-              {item.primary}
-            </p>
-            {filterNames[item.__typename]}
-          </>
-        );
-      })}
-      {/*     */}
+      <div className={classes.list}>
+        {/*    */}
+        {/* Filter Headers and subcomponent render  */}
+        {filter.fields.map((item) => {
+          //
+          ////
+          const filterNames = {
+            ShoppingMultiSelectionField: (
+              <MultiSelection item={item} key={uniqid()} />
+            ),
+            ShoppingRangeField: <RangeField item={item} key={uniqid()} />,
+            ShoppingSelectionField: (
+              <SelectionField item={item} key={uniqid()} />
+            ),
+            ShoppingMultiSelectionStackedTileField: (
+              <MultiStacked item={item} key={uniqid()} />
+            ),
+            ShoppingMultiSelectionTileField: (
+              <MultiTile item={item} key={uniqid()} />
+            ),
+          };
+          //
+          ////
+          return (
+            <div key={uniqid()}>
+              <p className={classes.filterHeading} key={uniqid()}>
+                {item.primary}
+              </p>
+              {filterNames[item.__typename]}
+              <br />
+            </div>
+          );
+        })}
+        {/*     */}
+      </div>
     </section>
   );
 };

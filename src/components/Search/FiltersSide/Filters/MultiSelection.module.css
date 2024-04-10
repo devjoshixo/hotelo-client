@@ -1,0 +1,21 @@
+.checkList {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.checkItem p {
+  margin: 0;
+}
+
+.checkItem p {
+  margin: 0;
+}
