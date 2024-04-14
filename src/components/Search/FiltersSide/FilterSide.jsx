@@ -21,17 +21,39 @@ const FilterSide = (props) => {
           ////
           const filterNames = {
             ShoppingMultiSelectionField: (
-              <MultiSelection item={item} key={uniqid()} />
+              <MultiSelection
+                item={item}
+                key={uniqid()}
+                queryAdder={props.queryAdder}
+              />
             ),
-            ShoppingRangeField: <RangeField item={item} key={uniqid()} />,
+            ShoppingRangeField: (
+              <RangeField
+                item={item}
+                key={uniqid()}
+                queryAdder={props.queryAdder}
+              />
+            ),
             ShoppingSelectionField: (
-              <SelectionField item={item} key={uniqid()} />
+              <SelectionField
+                item={item}
+                key={uniqid()}
+                queryAdder={props.queryAdder}
+              />
             ),
             ShoppingMultiSelectionStackedTileField: (
-              <MultiStacked item={item} key={uniqid()} />
+              <MultiStacked
+                item={item}
+                key={uniqid()}
+                queryAdder={props.queryAdder}
+              />
             ),
             ShoppingMultiSelectionTileField: (
-              <MultiTile item={item} key={uniqid()} />
+              <MultiTile
+                item={item}
+                key={uniqid()}
+                queryAdder={props.queryAdder}
+              />
             ),
           };
           //

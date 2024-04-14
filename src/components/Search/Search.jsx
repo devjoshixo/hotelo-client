@@ -37,6 +37,7 @@ const Search = () => {
 
   useEffect(() => {
     setShowLoaders(true);
+    setHotels({});
     const getSearchHotel = async () => {
       let details = { token: false, login: false };
       if (ctx.login.user) {
@@ -76,15 +77,35 @@ const Search = () => {
       history.push('/account/login');
     }
   };
+  //
+  ////
+
+  //
+  ////Adding a new query or replacing value for existing
+  const queryAdder = (name, value) => {
+    let search = Object.fromEntries(new URLSearchParams(location.search));
+    history.replace({
+      search: new URLSearchParams({ ...search, [name]: value }).toString(),
+    });
+  };
 
   return (
     <section className={classes.bodywrapper}>
       <SearchBar />
       <div className={classes.wrapper}>
-        {filter && <FilterSide filter={filter} setFilter={setFilter} />}
-        {!showLoaders && (
-          <div className={classes.hotels}>
-            <FilterBar length={hotels.properties.length} />
+        {filter && (
+          <FilterSide
+            filter={filter}
+            setFilter={setFilter}
+            queryAdder={queryAdder}
+          />
+        )}
+        <div className={classes.hotels}>
+          <FilterBar
+            length={hotels.properties ? hotels.properties.length : false}
+            queryAdder={queryAdder}
+          />
+          {!showLoaders && (
             <div className={classes.hotellist}>
               {hotels.properties.map((hotel) => {
                 return (
@@ -99,9 +120,9 @@ const Search = () => {
                 );
               })}
             </div>
-          </div>
-        )}
-        {showLoaders && <div className={classes.loaderlist}>{loaders}</div>}
+          )}
+          {showLoaders && <div className={classes.loaderlist}>{loaders}</div>}
+        </div>
       </div>
     </section>
   );

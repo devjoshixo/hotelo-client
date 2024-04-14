@@ -10,7 +10,6 @@
   display: flex;
   flex-flow: row;
   justify-content: center;
-  width: 81%;
   gap: 0.5rem;
   height: auto;
 }
@@ -28,7 +27,8 @@
 }
 
 .hotels {
-  /* width: 72%; */
+  display: flex;
+  flex-flow: column;
 }
 
 .hotellist {

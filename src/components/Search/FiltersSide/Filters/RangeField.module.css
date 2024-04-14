@@ -1,0 +1,12 @@
+.price {
+  display: flex;
+  gap: 1rem;
+}
+
+.price input {
+  width: 6rem;
+  font-size: 1.1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 3rem;
+}
