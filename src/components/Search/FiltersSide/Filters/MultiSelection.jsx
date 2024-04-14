@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './MultiSelection.module.css';
 import Checkbox from '@mui/material/Checkbox';
 import uniqid from 'uniqid';
 
 const MultiSelection = (props) => {
+  const [toggleHide, setToggleHide] = useState(true);
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    if (props.item.primary != 'Popular filters') {
+      if (props.item.multiSelectionOptions.length > 4) {
+        setToggleHide(true);
+        setShowButton(true);
+      }
+    }
+  }, []);
+
+  const onToggleList = () => {
+    setToggleHide((prevState) => !prevState);
+  };
   return (
     <div className={classes.checkList}>
-      {props.item.multiSelectionOptions.map((filter) => {
+      {props.item.multiSelectionOptions.map((filter, index) => {
+        if (
+          props.item.primary != 'Popular filters' &&
+          toggleHide &&
+          index > 4
+        ) {
+          return;
+        }
         return (
           <div className={classes.checkItem} key={uniqid()}>
             <Checkbox
@@ -21,6 +43,11 @@ const MultiSelection = (props) => {
           </div>
         );
       })}
+      {showButton && (
+        <div className={classes.buttonText} onClick={onToggleList}>
+          {toggleHide ? 'See more' : 'Hide'}
+        </div>
+      )}
     </div>
   );
 };

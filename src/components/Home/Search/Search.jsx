@@ -104,6 +104,7 @@ const Search = () => {
       startdate: finalFormatDate(dates[0].startDate),
       endDate: finalFormatDate(dates[0].endDate),
       destination: destination,
+      sort: 'RECOMMENDED',
     };
     console.log(new URLSearchParams(obj).toString());
     navigate.push({

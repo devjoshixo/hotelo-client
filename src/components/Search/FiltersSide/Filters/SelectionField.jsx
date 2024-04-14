@@ -55,37 +55,24 @@ const SelectionField = (props) => {
             if (index > 4 && toggleHide) {
               return;
             }
-            // return (
-            //   <FormControlLabel
-            //     value={items.primary}
-            //     control={
-            //       <Radio
-            //         sx={{
-            //           '& .MuiSvgIcon-root': {
-            //             lineHeight: '0.5rem',
-            //             fontSize: 20,
-            //           },
-            //         }}
-            //       />
-            //     }
-            //     label={items.primary}
-            //     key={uniqid()}
-            //   />
-            // );
             return (
-              <label
+              <p
+                className={classes.radio}
                 onClick={radioButtonClick}
                 name={items.primary}
                 key={uniqid()}
               >
-                <input
-                  type='radio'
-                  checked={checkedItem == items.primary}
-                  name={items.primary}
-                  readOnly
-                />
+                <div>
+                  {' '}
+                  <input
+                    type='radio'
+                    checked={checkedItem == items.primary}
+                    name={items.primary}
+                    readOnly
+                  />
+                </div>
                 {items.primary}
-              </label>
+              </p>
             );
           })}
 

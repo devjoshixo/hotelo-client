@@ -1,5 +1,14 @@
-.wrapper span {
-  line-height: 0.5rem;
+.radio {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+  display: flex;
+  margin-bottom: 0.6rem;
+}
+
+.radio input {
+  scale: 1.6;
+  margin-right: 0.6rem;
 }
 
 .buttonText {

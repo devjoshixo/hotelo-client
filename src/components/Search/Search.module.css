@@ -10,8 +10,8 @@
   display: flex;
   flex-flow: row;
   justify-content: center;
-  gap: 0.5rem;
   height: auto;
+  gap: 1rem;
 }
 
 .wrapper span {
