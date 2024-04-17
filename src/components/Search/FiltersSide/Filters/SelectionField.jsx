@@ -12,6 +12,7 @@ const SelectionField = (props) => {
   const [showButton, setShowButton] = useState(false);
   const [queryName, setQueryName] = useState('');
   const [checkedItem, setCheckedItem] = useState(props.item.options[0].primary);
+
   useEffect(() => {
     if (props.item.options.length > 5) {
       setToggleHide(true);
@@ -56,14 +57,13 @@ const SelectionField = (props) => {
               return;
             }
             return (
-              <p
+              <div
                 className={classes.radio}
                 onClick={radioButtonClick}
                 name={items.primary}
                 key={uniqid()}
               >
                 <div>
-                  {' '}
                   <input
                     type='radio'
                     checked={checkedItem == items.primary}
@@ -72,7 +72,7 @@ const SelectionField = (props) => {
                   />
                 </div>
                 {items.primary}
-              </p>
+              </div>
             );
           })}
 

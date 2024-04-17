@@ -36,6 +36,8 @@ const Search = () => {
   }
 
   useEffect(() => {
+    let search = Object.fromEntries(new URLSearchParams(location.search));
+    console.log(search);
     setShowLoaders(true);
     setHotels({});
     const getSearchHotel = async () => {
@@ -84,9 +86,11 @@ const Search = () => {
   ////Adding a new query or replacing value for existing
   const queryAdder = (name, value) => {
     let search = Object.fromEntries(new URLSearchParams(location.search));
+    console.log(value);
     history.replace({
       search: new URLSearchParams({ ...search, [name]: value }).toString(),
     });
+    return;
   };
 
   return (

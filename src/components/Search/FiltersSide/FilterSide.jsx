@@ -60,9 +60,7 @@ const FilterSide = (props) => {
           ////
           return (
             <div key={uniqid()}>
-              <p className={classes.filterHeading} key={uniqid()}>
-                {item.primary}
-              </p>
+              <p className={classes.filterHeading}>{item.primary}</p>
               {filterNames[item.__typename]}
               <br />
             </div>
