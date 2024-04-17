@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import uniqid from 'uniqid';
 import classes from './MultiStacked.module.css';
 
@@ -8,30 +8,33 @@ const MultiStacked = (props) => {
   );
   const [selected, setSelected] = useState({});
 
-  const toggleSelection = (event) => {
-    const name = event.target.getAttribute('name');
-    let flag = true;
-    setSelected((prevState) => {
-      let obj = prevState;
-      if (obj[name]) {
-        delete obj[name];
-        flag = false;
-        return { ...obj };
-      } else {
-        return { ...obj, [name]: true };
-      }
-    });
-
-    if (flag) {
-      console.log(selected);
-      let obj = [];
-      for (let keys in selected) {
-        console.log(keys);
-        console.log('first');
-        obj.push(keys);
-      }
+  useEffect(() => {
+    let obj = [];
+    for (let key in selected) {
+      obj = [...obj, [key]];
+    }
+    if (obj.length > 0) {
       props.queryAdder(query, obj);
     }
+  }, [selected]);
+
+  const toggleSelection = (event) => {
+    const name = event.target.getAttribute('name');
+    setSelected((prevState) => {
+      let obj = {};
+      if (prevState[name]) {
+        for (let key in prevState) {
+          if (key == name) {
+            continue;
+          } else {
+            obj[key] = true;
+          }
+        }
+        return { ...obj };
+      } else {
+        return { ...prevState, [name]: true };
+      }
+    });
   };
 
   return (
