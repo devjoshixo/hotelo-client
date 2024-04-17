@@ -30,7 +30,7 @@ const MultiStacked = (props) => {
         console.log('first');
         obj.push(keys);
       }
-      // props.queryAdder(query, obj);
+      props.queryAdder(query, obj);
     }
   };
 
