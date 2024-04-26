@@ -1,0 +1,99 @@
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  flex-basis: 25rem;
+  gap: 1rem;
+  align-self: center;
+  margin: 2rem auto 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: inherit;
+}
+
+.heading {
+  font-size: 1.6rem;
+  margin-bottom: -1rem;
+  font-weight: 500;
+}
+
+.or {
+  text-align: center;
+}
+
+.offer {
+  font-size: 0.875rem;
+}
+
+.google {
+  position: relative;
+}
+
+.google button {
+  width: 100%;
+  height: 3rem;
+  background-color: #0f56c1;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.google div {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 2%;
+  top: 14%;
+  border-radius: 6px;
+  width: 2.7rem;
+  height: 2.2rem;
+  background-color: white;
+}
+
+.google button:hover {
+  filter: brightness(0.9);
+}
+
+.google img {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.form {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.email {
+  height: 2.7rem;
+  width: 95%;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  padding-left: 1rem;
+  border: 1px solid rgba(44, 44, 44, 0.423);
+}
+
+.action {
+  height: 3rem;
+  width: 100%;
+  background-color: #1661d1;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  border-radius: 25px;
+}
+
+.action:hover {
+  background-color: #094aaa;
+  border: 2px solid #094aaa;
+}
+
+.loader {
+  width: 4rem;
+}
