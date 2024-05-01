@@ -17,7 +17,7 @@ const QueryState = (props) => {
         obj[key] = newArray;
       }
     }
-    console.log(obj);
+
     setParameters(obj);
   }, [location.search]);
 

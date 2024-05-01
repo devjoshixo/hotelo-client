@@ -8,7 +8,7 @@ const MultiTile = (props) => {
   const [toggleHide, setToggleHide] = useState(true);
   const [showButton, setShowButton] = useState(false);
   const ctx = useContext(QueryContext);
-  const [parameter, setParameter] = useState(
+  const [selected, setSelected] = useState(
     ctx.parameters[props.item.tileMultiSelectionOptions[0].id] || []
   );
 
@@ -26,9 +26,20 @@ const MultiTile = (props) => {
   };
 
   const checkedBox = (event, filter) => {
-    console.log(parameter);
     if (event.target.checked) {
-      ctx.queryAdder(filter.id, [...parameter, `${filter.value}`]);
+      ctx.queryAdder(filter.id, [...selected, `${filter.value}`]);
+    } else {
+      const obj = selected.filter((item) => {
+        if (item == filter.value) {
+        } else {
+          return item;
+        }
+      });
+      if (obj.length == 0) {
+        ctx.queryDelete(filter.id);
+        return;
+      }
+      ctx.queryAdder(filter.id, obj);
     }
   };
   return (
@@ -50,7 +61,7 @@ const MultiTile = (props) => {
               onClick={() => {
                 checkedBox(event, filter);
               }}
-              checked={parameter.includes(filter.value)}
+              checked={selected.includes(filter.value)}
               sx={{
                 backgroundColor: 'white',
                 padding: '9px 0',
