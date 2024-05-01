@@ -39,7 +39,7 @@ const MultiSelection = (props) => {
         ctx.queryDelete(filter.id);
         return;
       }
-      ctx.queryAdder(filter.sid, obj);
+      ctx.queryAdder(filter.id, obj);
     }
   };
 
