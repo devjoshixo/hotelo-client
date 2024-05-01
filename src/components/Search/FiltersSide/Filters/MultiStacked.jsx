@@ -1,40 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import uniqid from 'uniqid';
 import classes from './MultiStacked.module.css';
+import QueryContext from '../../../../context/QueryContext';
 
 const MultiStacked = (props) => {
-  const [query, setQuery] = useState(
-    props.item.tileMultiSelectionOptions[0].id
+  const ctx = useContext(QueryContext);
+
+  const [selected, setSelected] = useState(
+    ctx.parameters[props.item.tileMultiSelectionOptions[0].id] || []
   );
-  const [selected, setSelected] = useState({});
 
-  useEffect(() => {
-    let obj = [];
-    for (let key in selected) {
-      obj = [...obj, [key]];
-    }
-    if (obj.length > 0) {
-      props.queryAdder(query, obj);
-    }
-  }, [selected]);
-
-  const toggleSelection = (event) => {
+  const toggleSelection = (event, id) => {
     const name = event.target.getAttribute('name');
-    setSelected((prevState) => {
-      let obj = {};
-      if (prevState[name]) {
-        for (let key in prevState) {
-          if (key == name) {
-            continue;
-          } else {
-            obj[key] = true;
-          }
+    if (selected.includes(name)) {
+      const obj = selected.filter((item) => {
+        if (item == name) {
+        } else {
+          return item;
         }
-        return { ...obj };
-      } else {
-        return { ...prevState, [name]: true };
+      });
+      if (obj.length == 0) {
+        ctx.queryDelete(id);
+        return;
       }
-    });
+      ctx.queryAdder(id, obj);
+    } else {
+      ctx.queryAdder(id, [...selected, name]);
+    }
   };
 
   return (
@@ -43,17 +35,17 @@ const MultiStacked = (props) => {
         return (
           <div
             className={`${classes.box} ${
-              selected[item.primary] ? classes.selected : ''
+              selected.includes(item.value) ? classes.selected : ''
             }`}
             key={uniqid()}
-            name={item.primary}
-            onClick={toggleSelection}
+            name={item.value}
+            onClick={() => toggleSelection(event, item.id)}
           >
             {item.primary}
             {item.icon.id == 'star' ? (
               <i
                 className='fa-solid fa-star'
-                name={item.primary}
+                name={item.value}
                 style={{ transform: 'scale(0.8)' }}
               ></i>
             ) : (

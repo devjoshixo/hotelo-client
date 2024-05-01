@@ -7,8 +7,10 @@ import uniqid from 'uniqid';
 const MultiSelection = (props) => {
   const [toggleHide, setToggleHide] = useState(true);
   const [showButton, setShowButton] = useState(false);
-  const [paramter, setParamter] = useState([]);
   const ctx = useContext(QueryContext);
+  const [parameter, setParameter] = useState(
+    ctx.parameters[props.item.multiSelectionOptions[0].id] || []
+  );
 
   useEffect(() => {
     if (props.item.primary != 'Popular filters') {
@@ -24,13 +26,12 @@ const MultiSelection = (props) => {
   };
 
   const checkedBox = (event, filter) => {
+    console.log(parameter);
     if (event.target.checked) {
-      setParamter((prevState) => {
-        return [...prevState, filter.value];
-      });
-      ctx.queryAdder(filter.id, filter.value);
+      ctx.queryAdder(filter.id, [...parameter, `${filter.value}`]);
     }
   };
+
   return (
     <div className={classes.checkList}>
       {props.item.multiSelectionOptions.map((filter, index) => {
@@ -44,12 +45,14 @@ const MultiSelection = (props) => {
         ) {
           return;
         }
+
         return (
           <div className={classes.checkItem} key={uniqid()}>
             <Checkbox
               onClick={() => {
                 checkedBox(event, filter);
               }}
+              checked={parameter.includes(filter.value)}
               sx={{
                 backgroundColor: 'white',
                 padding: '9px 0',

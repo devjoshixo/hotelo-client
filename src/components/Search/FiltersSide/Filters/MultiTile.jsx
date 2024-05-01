@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import classes from './MultiTile.module.css';
 import uniqid from 'uniqid';
+import QueryContext from '../../../../context/QueryContext';
 
 const MultiTile = (props) => {
   const [toggleHide, setToggleHide] = useState(true);
   const [showButton, setShowButton] = useState(false);
+  const ctx = useContext(QueryContext);
+  const [parameter, setParameter] = useState(
+    ctx.parameters[props.item.tileMultiSelectionOptions[0].id] || []
+  );
 
   useEffect(() => {
     if (props.item.primary != 'Popular filters') {
@@ -21,7 +26,10 @@ const MultiTile = (props) => {
   };
 
   const checkedBox = (event, filter) => {
-    props.queryAdder(filter.id, filter.value);
+    console.log(parameter);
+    if (event.target.checked) {
+      ctx.queryAdder(filter.id, [...parameter, `${filter.value}`]);
+    }
   };
   return (
     <div className={classes.checkList}>
@@ -42,6 +50,7 @@ const MultiTile = (props) => {
               onClick={() => {
                 checkedBox(event, filter);
               }}
+              checked={parameter.includes(filter.value)}
               sx={{
                 backgroundColor: 'white',
                 padding: '9px 0',
