@@ -8,13 +8,13 @@ const RangeField = (props) => {
   const MIN = props.item.range.characteristics.min;
   const MAX = props.item.range.characteristics.max;
   const [minPrice, setMinPrice] = useState({
-    display: '₹0',
+    display: 'Loading',
     value: ctx.parameters['minPrice'] || MIN,
     input: 0,
   });
 
   const [maxPrice, setMaxPrice] = useState({
-    display: '₹28,000+',
+    display: 'Loading',
     value: ctx.parameters['maxPrice'] || MAX,
     input: 0,
   });
@@ -96,7 +96,7 @@ const RangeField = (props) => {
       return;
     }
     if (name == 'max' && input > 28000) {
-      return;
+      input = 28000;
     }
     props.queryAdder(nameTag, input);
     // setPrice((prevState) => {

@@ -13,6 +13,17 @@ const MultiSelection = (props) => {
   );
 
   useEffect(() => {
+    if (props.item.primary == 'Popular filters') {
+      let obj = [];
+      props.item.multiSelectionOptions.filter((section) => {
+        const arr = ctx.parameters[section.id];
+        if (arr && arr.includes(section.value)) {
+          obj = [...obj, section.value];
+        }
+      });
+
+      setSelected(obj);
+    }
     if (props.item.primary != 'Popular filters') {
       if (props.item.multiSelectionOptions.length > 4) {
         setToggleHide(true);
@@ -49,6 +60,7 @@ const MultiSelection = (props) => {
         if (filter.id == 'poi') {
           return;
         }
+
         if (
           props.item.primary != 'Popular filters' &&
           toggleHide &&
