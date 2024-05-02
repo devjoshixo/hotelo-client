@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom/cjs/react-router-dom';
 import QueryContext from './QueryContext';
 
-const DEF_FUNCTION = ['destination', 'startdate', 'endDate'];
+const DEF_FUNCTION = [
+  'destination',
+  'startdate',
+  'endDate',
+  'minPrice',
+  'maxPrice',
+];
 
 const QueryState = (props) => {
   const [parameters, setParameters] = useState({});

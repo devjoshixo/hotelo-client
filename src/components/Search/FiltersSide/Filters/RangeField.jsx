@@ -1,19 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import classes from './RangeField.module.css';
 import useOutsideClick from '../../../../hooks/UseOutsideClick';
+import QueryContext from '../../../../context/QueryContext';
 
 const RangeField = (props) => {
+  const ctx = useContext(QueryContext);
   const MIN = props.item.range.characteristics.min;
   const MAX = props.item.range.characteristics.max;
   const [minPrice, setMinPrice] = useState({
     display: '₹0',
-    value: 0,
+    value: ctx.parameters['minPrice'] || MIN,
     input: 0,
   });
 
   const [maxPrice, setMaxPrice] = useState({
     display: '₹28,000+',
-    value: 28000,
+    value: ctx.parameters['maxPrice'] || MAX,
     input: 0,
   });
   const [minRef, minVisible, SetMinVisible] = useOutsideClick();
@@ -55,27 +57,25 @@ const RangeField = (props) => {
     return '₹' + formattedInteger;
   };
 
-  // //
-  // //// Setting
-  // useEffect(() => {
-  //   setMinPrice((prevState) => {
-  //     return
-  //       {
-  //         display: formatNumberIndian(MIN),
-  //         value: MIN,
-  //       }
+  useEffect(() => {
+    setMinPrice((prevState) => {
+      const value = prevState.value;
+      return {
+        value,
+        display: formatNumberIndian(value),
+        input: 0,
+      };
+    });
 
-  //     };
-  //   );
-  //   setMaxPrice((prevState) => {
-  //     return {
-  //         display: formatNumberIndian(MAX),
-  //         value: MAX,
-  //       }
-  //   });
-  // }, []);
-  // //
-  // ////
+    setMaxPrice((prevState) => {
+      const value = prevState.value;
+      return {
+        value,
+        display: formatNumberIndian(value),
+        input: 0,
+      };
+    });
+  }, []);
 
   useEffect(() => {
     if (minInputRef.current) {
@@ -85,28 +85,39 @@ const RangeField = (props) => {
     }
   }, [minVisible, maxVisible]);
 
-  const changeDisplayValue = (event, setPrice) => {
+  const changeDisplayValue = (event, price, nameTag) => {
     const name = event.target.name;
-    setPrice((prevState) => {
-      let input = parseInt(prevState.input);
+    let input = parseInt(price.input);
 
-      if (name == 'min' && input > maxPrice.value) {
-        return prevState;
-      }
-      if (name == 'max' && input < minPrice.value) {
-        return prevState;
-      }
-      if (name == 'max' && input > 28000) {
-        console.log('first');
-        input = 28000;
-      }
-      console.log(input);
-      return {
-        input,
-        value: input,
-        display: formatNumberIndian(input),
-      };
-    });
+    if (name == 'min' && input > maxPrice.value) {
+      return;
+    }
+    if (name == 'max' && input < minPrice.value) {
+      return;
+    }
+    if (name == 'max' && input > 28000) {
+      return;
+    }
+    props.queryAdder(nameTag, input);
+    // setPrice((prevState) => {
+    //   let input = parseInt(prevState.input);
+
+    //   if (name == 'min' && input > maxPrice.value) {
+    //     return prevState;
+    //   }
+    //   if (name == 'max' && input < minPrice.value) {
+    //     return prevState;
+    //   }
+    //   if (name == 'max' && input > 28000) {
+    //     input = 28000;
+    //   }
+    //   props.queryAdder(nameTag, input);
+    //   return {
+    //     input,
+    //     value: input,
+    //     display: formatNumberIndian(input),
+    //   };
+    // });
   };
 
   const onClickHandler = (name) => {
@@ -175,12 +186,12 @@ const RangeField = (props) => {
               value={minPrice.input}
               onChange={inputDivce}
               onBlur={(event) => {
-                changeDisplayValue(event, setMinPrice);
+                changeDisplayValue(event, minPrice, 'minPrice');
               }}
               onKeyPress={(event) => {
                 if (event.key == 'Enter') {
                   SetMinVisible(false);
-                  changeDisplayValue(event, setMinPrice);
+                  changeDisplayValue(event, minPrice, 'minPrice');
                 }
               }}
               ref={minInputRef}
@@ -210,13 +221,13 @@ const RangeField = (props) => {
               value={maxPrice.input}
               onChange={inputDivce}
               onBlur={(event) => {
-                changeDisplayValue(event, setMaxPrice);
+                changeDisplayValue(event, maxPrice, 'maxPrice');
               }}
               ref={maxInputRef}
               onKeyPress={(event) => {
                 if (event.key == 'Enter') {
                   SetMaxVisible(false);
-                  changeDisplayValue(event, setMaxPrice);
+                  changeDisplayValue(event, maxPrice, 'maxPrice');
                 }
               }}
             />
