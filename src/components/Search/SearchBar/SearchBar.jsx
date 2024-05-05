@@ -108,7 +108,8 @@ const SearchBar = () => {
     const name = event.target.getAttribute('name');
     if (name == 'closer') {
       setDuration(false);
-      parameterReplace('dates', dates[0].startDate);
+      // parameterReplace();
+      formSubmitHandler();
     } else {
       setDuration(true);
     }
@@ -128,8 +129,10 @@ const SearchBar = () => {
   };
 
   const formSubmitHandler = (event) => {
-    event.preventDefault();
+    if (event) event.preventDefault();
+    let search = Object.fromEntries(new URLSearchParams(location.search));
     const obj = {
+      ...search,
       startdate: finalFormatDate(dates[0].startDate),
       endDate: finalFormatDate(dates[0].endDate),
       destination: destination.name,

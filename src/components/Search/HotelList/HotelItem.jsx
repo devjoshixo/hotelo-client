@@ -12,6 +12,7 @@ const HotelItem = (props) => {
   const [saved, setSaved] = useState(false);
   const [loader, setLoader] = useState(false);
   const hotel = props.hotel;
+
   useEffect(() => {
     //
     //Gives word review according to review score
@@ -161,17 +162,24 @@ const HotelItem = (props) => {
     setLoader(false);
   };
 
+  const openToHotel = (event) => {
+    if (event.target.getAttribute('name') == 'heart') return;
+    console.log('clicked');
+
+    window.open('/hotel/' + hotel.id);
+  };
+
   return (
-    <header className={classes.wrapper}>
+    <header className={classes.wrapper} onClick={openToHotel}>
       {loader && <Loader />}
       {/* Hotel Image */}
       <div className={classes.imagediv}>
         <img src={hotel.propertyImage.image.url} draggable='false' />
-        <div className={classes.heart} onClick={propertySaver}>
+        <div className={classes.heart} name='heart' onClick={propertySaver}>
           {saved ? (
-            <i className='fa-solid fa-heart' />
+            <i className='fa-solid fa-heart' name='heart' />
           ) : (
-            <i className='fa-regular fa-heart' />
+            <i className='fa-regular fa-heart' name='heart' />
           )}
         </div>
       </div>

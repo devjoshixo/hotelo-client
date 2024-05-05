@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SearchPage from './pages/SearchPage';
 import HoteloLoader from './components/UI/HoteloLoader';
+import HotelPage from './pages/HotelPage';
 
 function App() {
   const [hidden, setHidden] = useState(false);
@@ -44,6 +45,9 @@ function App() {
         </Route>
         <Route path='/account/login'>
           <LoginPage />
+        </Route>
+        <Route path='/hotel/:id'>
+          <HotelPage />
         </Route>
       </Switch>
       {!hidden && <Footer />}
