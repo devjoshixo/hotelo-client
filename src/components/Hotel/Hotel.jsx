@@ -22,7 +22,10 @@ const Hotel = () => {
     <>
       {hotel && (
         <div className={classes.wrapper}>
-          <Image images={hotel.propertyGallery.images} />
+          <Image
+            images={hotel.propertyGallery.images}
+            title={hotel.summary.name}
+          />
         </div>
       )}
     </>

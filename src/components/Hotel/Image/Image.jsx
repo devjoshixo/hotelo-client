@@ -3,9 +3,15 @@ import classes from './Image.module.css';
 import uniqid from 'uniqid';
 
 const Image = (props) => {
-  const [modal, setModal] = useState(true);
-  const modalToggle = () => {
-    // setModal((prevState) => !prevState);
+  const [modal, setModal] = useState(false);
+  const modalToggle = (event) => {
+    let value = true;
+    if (event.target.getAttribute('name') == 'close') {
+      value = false;
+    }
+    setModal((prevState) => {
+      return value;
+    });
   };
 
   useEffect(() => {}, []);
@@ -27,7 +33,7 @@ const Image = (props) => {
         })}
       </div>
       <div className={classes.imageLength}>
-        <i class='fa-regular fa-images'></i>
+        <i className='fa-regular fa-images'></i>
         {props.images.length - 1}+
       </div>
 
@@ -35,12 +41,18 @@ const Image = (props) => {
       {/* Modal */}
       {modal && (
         <div className={classes.overlay}>
-          <div>
-            <i className='fa-regular fa-circle-xmark'></i>
-          </div>
-
           <div className={classes.modal}>
+            <div className={classes.header}>
+              <h3>{props.title}</h3>
+              <i
+                className={`fa-regular fa-circle-xmark ${classes.icon}`}
+                name='close'
+                onClick={modalToggle}
+              />
+            </div>
+
             {/* Image List */}
+
             <h1 className={classes.imageHeader}>All Photos</h1>
             <section className={classes.imageTile}>
               {props.images.map((image) => {
@@ -52,6 +64,7 @@ const Image = (props) => {
                 );
               })}
             </section>
+
             {/* Image List */}
           </div>
         </div>
