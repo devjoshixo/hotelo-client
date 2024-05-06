@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import uniqid from 'uniqid';
 import getHotelDetails from '../../api/getHotelDetails';
+import classes from './Hotel.module.css';
+import Image from './Image/Image';
 
 const Hotel = () => {
   const [hotel, setHotel] = useState();
@@ -14,19 +16,16 @@ const Hotel = () => {
     };
 
     getHotel();
-    // console.log(hotel.propertyGallery.images);
   }, []);
 
   return (
-    <div>
+    <>
       {hotel && (
-        <div>
-          {hotel.propertyGallery.images.map((image) => {
-            return <img src={image.image.url} alt='' key={uniqid()} />;
-          })}
+        <div className={classes.wrapper}>
+          <Image images={hotel.propertyGallery.images} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

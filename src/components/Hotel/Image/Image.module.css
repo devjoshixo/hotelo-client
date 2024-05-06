@@ -1,0 +1,97 @@
+.imageWrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.largeImage img {
+  width: 32rem;
+  height: 18.4rem;
+  object-fit: fill;
+}
+
+.smallImage {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+}
+
+.smallImage img {
+  width: 15rem;
+  height: 9rem;
+  margin-right: 5px;
+  object-fit: fill;
+}
+
+.imageLength {
+  position: absolute;
+  background-color: rgba(32, 32, 32, 0.598);
+  color: white;
+  top: 80%;
+  right: 12%;
+  width: 6rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  gap: 10px;
+  align-items: center;
+  border-radius: 20px;
+  &:hover {
+    background-color: rgba(32, 32, 32, 0.702);
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: visible;
+  background-color: rgba(0, 0, 0, 0.164);
+}
+
+.modal {
+  position: fixed;
+  width: 70vw;
+  height: 90vh;
+  border-radius: 20px;
+  overflow-y: scroll;
+  z-index: 999;
+  background-color: #ffffff;
+}
+
+.imageTile {
+  margin-top: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  justify-content: center;
+  font-size: 0.9rem;
+  line-height: 2rem;
+}
+
+.imageHeader {
+  font-weight: 500;
+  margin-left: 3rem;
+}
+
+.image {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 1rem;
+}
+
+.image img {
+  width: 34rem;
+  height: 19rem;
+  object-fit: cover;
+}
