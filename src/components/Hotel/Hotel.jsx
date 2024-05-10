@@ -4,6 +4,7 @@ import uniqid from 'uniqid';
 import getHotelDetails from '../../api/getHotelDetails';
 import classes from './Hotel.module.css';
 import Image from './Image/Image';
+import Details from './Details/Details';
 
 const Hotel = () => {
   const [hotel, setHotel] = useState();
@@ -26,6 +27,7 @@ const Hotel = () => {
             images={hotel.propertyGallery.images}
             title={hotel.summary.name}
           />
+          <Details hotel={hotel} />
         </div>
       )}
     </>

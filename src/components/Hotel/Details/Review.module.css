@@ -1,0 +1,13 @@
+.ratingbox {
+  width: 1.9rem;
+  border-radius: 5px;
+  height: 1.3rem;
+  padding: 0.3rem;
+  color: white;
+  text-align: center;
+  background-color: green;
+}
+
+.rating p {
+  margin: 0;
+}

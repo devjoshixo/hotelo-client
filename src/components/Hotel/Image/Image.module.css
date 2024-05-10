@@ -1,28 +1,37 @@
 .imageWrapper {
   display: flex;
-  width: 100%;
   position: relative;
   gap: 5px;
+  width: 100%;
   cursor: pointer;
+}
+
+.largeImage {
+  /* width: 50%; */
 }
 
 .largeImage img {
   width: 32rem;
   height: 18.4rem;
-  object-fit: fill;
+
+  object-fit: cover;
+  background-color: #1668e3;
 }
 
 .smallImage {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
+  /* width: 50%; */
+  /* gap: 1rem; */
 }
 
 .smallImage img {
   width: 15rem;
   height: 9rem;
+
   margin-right: 5px;
-  object-fit: fill;
+  background-color: #1668e3;
 }
 
 .imageLength {
