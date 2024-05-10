@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      {loader && <HoteloLoader />}
+      {/* {loader && <HoteloLoader />} */}
       {!hidden && <Navbar />}
       <Switch>
         <Route path='/' exact>

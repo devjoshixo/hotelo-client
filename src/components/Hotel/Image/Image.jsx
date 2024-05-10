@@ -19,16 +19,22 @@ const Image = (props) => {
   return (
     <div className={classes.imageWrapper} onClick={modalToggle}>
       <div className={classes.largeImage}>
-        <img src={props.images[0].image.url} alt='' key={uniqid()} />
+        <img
+          src={props.images[0].image.url + '&rw=1200'}
+          loading='eager'
+          alt=''
+          key={uniqid()}
+        />
       </div>
       <div className={classes.smallImage}>
         {props.images.map((image, index) => {
+          const url = image.image.url + '&rw=1200';
           if (index > 4) {
             return;
           }
 
           if (index > 0) {
-            return <img src={image.image.url} alt='' key={uniqid()} />;
+            return <img src={url} loading='eager' alt='' key={uniqid()} />;
           }
         })}
       </div>
@@ -56,9 +62,10 @@ const Image = (props) => {
             <h1 className={classes.imageHeader}>All Photos</h1>
             <section className={classes.imageTile}>
               {props.images.map((image) => {
+                const url = image.image.url + '&rw=1200';
                 return (
                   <div className={classes.image}>
-                    <img src={image.image.url} alt='' key={uniqid()} />
+                    <img src={url} loading='eager' alt='' key={uniqid()} />
                     {image.image.description}
                   </div>
                 );
