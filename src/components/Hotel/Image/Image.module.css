@@ -1,10 +1,17 @@
 .imageWrapper {
   display: flex;
-  position: relative;
   gap: 5px;
   width: 100%;
   cursor: pointer;
 }
+
+.imageWrapper img {
+  pointer-events: none;
+}
+
+/* body {
+  overflow: hidden;
+} */
 
 .largeImage {
   /* width: 50%; */
@@ -18,9 +25,15 @@
   background-color: #1668e3;
 }
 
+.smallWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+
 .smallImage {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: flex-start;
   /* width: 50%; */
   /* gap: 1rem; */
@@ -29,17 +42,20 @@
 .smallImage img {
   width: 15rem;
   height: 9rem;
-
   margin-right: 5px;
   background-color: #1668e3;
+}
+
+.lastImage {
+  position: relative;
 }
 
 .imageLength {
   position: absolute;
   background-color: rgba(32, 32, 32, 0.598);
   color: white;
-  top: 80%;
-  right: 12%;
+  top: 60%;
+  right: 5%;
   width: 6rem;
   height: 2.5rem;
   display: flex;
@@ -52,74 +68,4 @@
   &:hover {
     background-color: rgba(32, 32, 32, 0.702);
   }
-}
-
-.overlay {
-  position: fixed;
-  top: 0%;
-  left: 0%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: visible;
-  background-color: rgba(0, 0, 0, 0.464);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  height: 4rem;
-  margin-left: 3rem;
-}
-
-.icon {
-  scale: 2.4;
-  margin: 2rem 2rem 0 0;
-  font-weight: lighter;
-}
-
-.modal {
-  position: fixed;
-  width: 70vw;
-  height: 90vh;
-  border-radius: 20px;
-  z-index: 999;
-  background-color: #ffffff;
-  overflow: hidden;
-}
-
-.imageTile {
-  position: relative;
-  margin-top: 1rem;
-  display: flex;
-  flex-flow: row wrap;
-  gap: 10px;
-  justify-content: center;
-  font-size: 0.9rem;
-  line-height: 2rem;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.imageHeader {
-  /* position: absolute;
-  font-weight: 500;
-  top: -5%;
-  left: 0%; */
-  margin-left: 3rem;
-}
-
-.image {
-  display: flex;
-  flex-flow: column;
-  margin-bottom: 0.5rem;
-}
-
-.image img {
-  width: 34rem;
-  height: 19rem;
-  object-fit: cover;
 }

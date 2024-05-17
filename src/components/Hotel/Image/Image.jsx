@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './Image.module.css';
 import uniqid from 'uniqid';
+import Modal from './Modal/Modal';
 
 const Image = (props) => {
   const [modal, setModal] = useState(false);
@@ -14,7 +15,10 @@ const Image = (props) => {
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const body = document.querySelector('body');
+    body.style.overflow = modal ? 'hidden' : 'auto';
+  }, [modal]);
 
   return (
     <div className={classes.imageWrapper} onClick={modalToggle}>
@@ -26,56 +30,46 @@ const Image = (props) => {
           key={uniqid()}
         />
       </div>
-      <div className={classes.smallImage}>
-        {props.images.map((image, index) => {
-          const url = image.image.url + '&rw=1200';
-          if (index > 4) {
-            return;
-          }
-
-          if (index > 0) {
-            return <img src={url} loading='eager' alt='' key={uniqid()} />;
-          }
-        })}
-      </div>
-      <div className={classes.imageLength}>
-        <i className='fa-regular fa-images'></i>
-        {props.images.length - 1}+
+      <div className={classes.smallWrapper}>
+        <div className={classes.smallImage}>
+          <img
+            src={props.images[1].image.url + '&rw=1200'}
+            loading='eager'
+            alt=''
+            key={uniqid()}
+          />
+          <img
+            src={props.images[2].image.url + '&rw=1200'}
+            loading='eager'
+            alt=''
+            key={uniqid()}
+          />
+        </div>
+        <div className={classes.smallImage}>
+          <img
+            src={props.images[3].image.url + '&rw=1200'}
+            loading='eager'
+            alt=''
+            key={uniqid()}
+          />
+          <div className={classes.lastImage}>
+            <img
+              src={props.images[4].image.url + '&rw=1200'}
+              loading='eager'
+              alt=''
+              key={uniqid()}
+            />
+            <div className={classes.imageLength}>
+              <i className='fa-regular fa-images'></i>
+              {props.images.length - 1}+
+            </div>
+          </div>
+        </div>
       </div>
 
       {/*  */}
       {/* Modal */}
-      {modal && (
-        <div className={classes.overlay}>
-          <div className={classes.modal}>
-            <div className={classes.header}>
-              <h3>{props.title}</h3>
-              <i
-                className={`fa-regular fa-circle-xmark ${classes.icon}`}
-                name='close'
-                onClick={modalToggle}
-              />
-            </div>
-
-            {/* Image List */}
-
-            <h1 className={classes.imageHeader}>All Photos</h1>
-            <section className={classes.imageTile}>
-              {props.images.map((image) => {
-                const url = image.image.url + '&rw=1200';
-                return (
-                  <div className={classes.image}>
-                    <img src={url} loading='eager' alt='' key={uniqid()} />
-                    {image.image.description}
-                  </div>
-                );
-              })}
-            </section>
-
-            {/* Image List */}
-          </div>
-        </div>
-      )}
+      {modal && <Modal images={props.images} modalToggle={modalToggle} />}
       {/* Modal */}
       {/*  */}
     </div>
