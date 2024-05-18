@@ -67,11 +67,15 @@ const Image = (props) => {
         </div>
       </div>
 
-      {/*  */}
       {/* Modal */}
-      {modal && <Modal images={props.images} modalToggle={modalToggle} />}
+      {modal && (
+        <Modal
+          images={props.images}
+          modalToggle={modalToggle}
+          title={props.title}
+        />
+      )}
       {/* Modal */}
-      {/*  */}
     </div>
   );
 };

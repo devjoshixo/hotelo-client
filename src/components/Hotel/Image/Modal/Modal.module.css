@@ -19,6 +19,11 @@
   margin-left: 3rem;
 }
 
+.header h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
 .icon {
   scale: 2.4;
   margin: 2rem 2rem 0 0;
