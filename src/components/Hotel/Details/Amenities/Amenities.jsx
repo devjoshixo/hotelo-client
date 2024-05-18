@@ -11,6 +11,12 @@ const Amenities = (props) => {
     local_parking: <i className='fa-solid fa-car'></i>,
     local_laundry_service: <i className='fa-solid fa-shirt'></i>,
     local_dining: <i className='fa-solid fa-utensils'></i>,
+    local_bar: <i className='fa-solid fa-wine-glass'></i>,
+    fitness_center: <i className='fa-solid fa-dumbbell'></i>,
+    airport_shuttle: <i className='fa-solid fa-bus'></i>,
+    ac_unit: <i className='fa-regular fa-snowflake'></i>,
+    child_friendly: <i className='fa-regular fa-face-smile'></i>,
+    local_convenience_store: <i className='fa-solid fa-square-h'></i>,
   };
 
   const [modal, setModal] = useState(false);

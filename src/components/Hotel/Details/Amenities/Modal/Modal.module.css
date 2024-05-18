@@ -32,45 +32,44 @@
 
 .modal {
   position: fixed;
-  width: 70vw;
+  width: 45vw;
   height: 70vh;
   border-radius: 20px;
   z-index: 999;
   background-color: #ffffff;
   padding-bottom: 10rem;
-  overflow: hidden;
 }
 
 .imageTile {
   position: relative;
   margin-top: 1rem;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   gap: 10px;
+  margin-left: 5rem;
   min-height: 80px;
-  justify-content: center;
   font-size: 0.9rem;
   line-height: 2rem;
   height: 100%;
   overflow-y: scroll;
 }
 
-.imageHeader {
-  /* position: absolute;
-  font-weight: 500;
-  top: -5%;
-  left: 0%; */
-  margin-left: 3rem;
-}
-
-.image {
+.bodywrapper {
   display: flex;
-  flex-flow: column;
-  margin-bottom: 0.5rem;
+  flex-flow: column wrap;
+  height: 15rem;
+  /* width: 4rem; */
 }
 
-.image img {
-  width: 34rem;
-  height: 19rem;
-  object-fit: cover;
+.bodywrapper p {
+  margin: 0;
+}
+
+.amenities {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 10rem;
+  height: 2.2rem;
+  font-size: 1rem;
 }

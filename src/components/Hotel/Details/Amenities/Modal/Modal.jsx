@@ -16,6 +16,7 @@ const Modal = (props) => {
           />
         </div>
         <section className={classes.imageTile}>
+          Popular
           <div className={classes.bodywrapper}>
             {props.amenities.takeover.highlight[0].items.map((item, index) => {
               return (
