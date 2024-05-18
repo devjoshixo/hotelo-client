@@ -1,0 +1,31 @@
+.header {
+  font-weight: 500;
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.bodywrapper {
+  display: flex;
+  flex-flow: column wrap;
+  flex-basis: 50%;
+  height: 7rem;
+}
+
+.amenities {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 2.2rem;
+  width: 12rem;
+  font-size: 1rem;
+}
+
+.link {
+  margin: 0;
+  color: #1668e3;
+  font-size: 0.9rem;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
