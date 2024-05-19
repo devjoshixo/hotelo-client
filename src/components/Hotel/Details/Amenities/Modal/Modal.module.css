@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   height: 4rem;
-  margin-left: 3rem;
+  margin-left: 2.4rem;
 }
 
 .header h3 {
@@ -32,21 +32,21 @@
 
 .modal {
   position: fixed;
-  width: 45vw;
-  height: 70vh;
+  width: 40vw;
+  height: 78vh;
   border-radius: 20px;
   z-index: 999;
   background-color: #ffffff;
-  padding-bottom: 10rem;
+  padding-bottom: 5rem;
 }
 
 .imageTile {
   position: relative;
   margin-top: 1rem;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   gap: 10px;
-  margin-left: 5rem;
+  margin-left: 2.5rem;
   min-height: 80px;
   font-size: 0.9rem;
   line-height: 2rem;
@@ -72,4 +72,19 @@
   min-width: 10rem;
   height: 2.2rem;
   font-size: 1rem;
+}
+
+.property ul {
+  padding: 0;
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.property li {
+  font-size: 1rem;
+}
+
+.heading {
+  margin: 0;
+  height: 2rem;
 }

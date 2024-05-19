@@ -34,9 +34,7 @@ const Amenities = (props) => {
     <div>
       <h3 className={classes.header}>Popular Amenities</h3>
       <div className={classes.bodywrapper}>
-        {props.amenities.takeover.highlight[0].items.map((item, index) => {
-          if (index > 5) return;
-
+        {props.amenities.topAmenities.items.map((item, index) => {
           return (
             <div className={classes.amenities} key={uniqid()}>
               {ICONS[item.icon.id]}
