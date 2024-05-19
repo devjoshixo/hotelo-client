@@ -13,8 +13,8 @@ const Area = (props) => {
         <div className={classes.image}>
           <img
             src={
-              props.location.staticImage.url +
-              '&key=AIzaSyC9tTt9LrnaoixJGy9MG6kcgt_Lv5srPYY'
+              props.location.staticImage.url
+              //   '&key=AIzaSyC9tTt9LrnaoixJGy9MG6kcgt_Lv5srPYY'
             }
             alt=''
           />
