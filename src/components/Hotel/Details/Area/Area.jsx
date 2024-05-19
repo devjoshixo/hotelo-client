@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import React from 'react';
 import classes from './Area.module.css';
 
 const Area = (props) => {
-  const [crop, setCrop] = useState({
-    unit: '%', // Can be 'px' or '%'
-    x: 25,
-    y: 25,
-    width: 50,
-    height: 50,
-  });
+  const ICONS = {
+    'Popular Location': <i className='fa-solid fa-location-dot'></i>,
+    Airport: <i className='fa-solid fa-plane'></i>,
+  };
   return (
     <div className={classes.wrapper}>
       <h3 className={classes.header}>Enjoy the area</h3>
       <div className={classes.imageWrapper}>
         <div className={classes.image}>
-          <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
-            <img src={props.location.staticImage.url} alt='' />
-          </ReactCrop>
+          <img src={props.location.staticImage.url} alt='' />
         </div>
+        <div className={classes.imageCard}>
+          {props.location.address.addressLine}
+          <p className={classes.link}>View in a map</p>
+        </div>
+      </div>
+      <div className={classes.poi}>
+        {props.nearbyPOIs.items.map((place) => {
+          return (
+            <div className={classes.subPoi} key={place.text}>
+              <p>{place.text}</p>
+              <p>{place.moreInfo}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

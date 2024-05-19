@@ -27,7 +27,7 @@ const Details = (props) => {
       <div style={{ width: '40%' }}>
         <Area
           location={props.hotel.summary.location}
-          poi={props.hotel.summary.nearbyPOIs}
+          nearbyPOIs={props.hotel.summary.nearbyPOIs}
         />
       </div>
     </div>
