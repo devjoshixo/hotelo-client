@@ -7,7 +7,7 @@ const Area = (props) => {
       <h3 className={classes.header}>Enjoy the area</h3>
       <div className={classes.imageWrapper}>
         <div className={classes.image}>
-          <img src={props.location.staticImage.url} alt='' />
+          <img src={props.location.staticImage.url + '&size=375x250'} alt='' />
         </div>
       </div>
     </div>
