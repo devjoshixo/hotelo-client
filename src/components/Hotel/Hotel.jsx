@@ -23,11 +23,14 @@ const Hotel = () => {
     <>
       {hotel && (
         <div className={classes.wrapper}>
-          <Image
-            images={hotel.propertyGallery.images}
-            title={hotel.summary.name}
-          />
-          <Details hotel={hotel} />
+          <div className={classes.subwrapper}>
+            {' '}
+            <Image
+              images={hotel.propertyGallery.images}
+              title={hotel.summary.name}
+            />
+            <Details hotel={hotel} />
+          </div>
         </div>
       )}
     </>
