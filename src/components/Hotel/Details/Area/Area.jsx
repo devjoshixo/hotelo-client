@@ -1,10 +1,15 @@
 import React from 'react';
 import classes from './Area.module.css';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import IconButton from '@mui/material/IconButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
 
 const Area = (props) => {
   const ICONS = {
-    'Popular Location': <i className='fa-solid fa-location-dot'></i>,
-    Airport: <i className='fa-solid fa-plane'></i>,
+    place: <i className='fa-solid fa-location-dot'></i>,
+    lob_flights: <i className='fa-solid fa-plane'></i>,
   };
   return (
     <div className={classes.wrapper}>
@@ -25,15 +30,23 @@ const Area = (props) => {
         </div>
       </div>
       <div className={classes.poi}>
-        {props.nearbyPOIs.items.map((place) => {
-          return (
-            <div className={classes.subPoi} key={place.text}>
-              {/* {ICONS[]} */}
-              <p>{place.text}</p>
-              <p>{place.moreInfo}</p>
-            </div>
-          );
-        })}
+        <List>
+          {props.nearbyPOIs.items.map((place) => {
+            return (
+              <div className={classes.subPoi} key={place.text}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <p>{ICONS[place.icon.id]}</p>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={<p className={classes.name}>{place.text}</p>}
+                  />
+                  <ListItemText primary={place.moreInfo} />
+                </ListItem>
+              </div>
+            );
+          })}
+        </List>
       </div>
     </div>
   );

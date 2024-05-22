@@ -45,12 +45,14 @@
   }
 }
 
-.subPoi {
-  display: flex;
-  justify-content: space-between;
-}
-
 .subPoi p {
   margin: 0;
-  font-size: 0.9rem;
+}
+
+.subPoi li {
+  padding: 0;
+}
+
+.name {
+  width: 10rem;
 }

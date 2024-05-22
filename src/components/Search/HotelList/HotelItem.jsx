@@ -164,9 +164,9 @@ const HotelItem = (props) => {
 
   const openToHotel = (event) => {
     if (event.target.getAttribute('name') == 'heart') return;
-    console.log('clicked');
+    console.log(location.search);
 
-    window.open('/hotel/' + hotel.id);
+    window.open('/hotel/' + hotel.id + location.search);
   };
 
   return (

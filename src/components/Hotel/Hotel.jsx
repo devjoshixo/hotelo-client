@@ -5,6 +5,7 @@ import getHotelDetails from '../../api/getHotelDetails';
 import classes from './Hotel.module.css';
 import Image from './Image/Image';
 import Details from './Details/Details';
+import Rooms from './Rooms/Rooms';
 
 const Hotel = () => {
   const [hotel, setHotel] = useState();
@@ -13,7 +14,7 @@ const Hotel = () => {
   useEffect(() => {
     const getHotel = async () => {
       const hotel = await getHotelDetails(location.pathname.split('/')[2]);
-      setHotel(hotel.property);
+      setHotel(hotel);
     };
 
     getHotel();
@@ -26,10 +27,11 @@ const Hotel = () => {
           <div className={classes.subwrapper}>
             {' '}
             <Image
-              images={hotel.propertyGallery.images}
-              title={hotel.summary.name}
+              images={hotel.property.propertyGallery.images}
+              title={hotel.property.summary.name}
             />
-            <Details hotel={hotel} />
+            <Details hotel={hotel.property} />
+            <Rooms rooms={hotel.rooms} />
           </div>
         </div>
       )}
