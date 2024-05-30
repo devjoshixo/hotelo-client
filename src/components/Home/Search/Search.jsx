@@ -8,6 +8,7 @@ import Travellers from './Travellers/Travellers';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import uniqid from 'uniqid';
+import getSearchList from '../../../api/getSearchList';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
@@ -31,6 +32,7 @@ const Search = () => {
   const [error, setError] = useState(null);
 
   const [destination, setDestination] = useState({ name: '', regionId: 3456 });
+  const [searchResults, setSearchResults] = useState([]);
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useHistory();
@@ -39,10 +41,23 @@ const Search = () => {
   const [durationRef, duration, setDuration] = useOutsideClick();
   const [passengerRef, passenger, setPassenger] = useOutsideClick();
 
+  const ICONS = {
+    AIRPORT: (
+      <i
+        class='fa-solid fa-plane-up fa-rotate-by'
+        style={{ '--fa-rotate-angle': '45deg;' }}
+      />
+    ),
+    HOTEL: <i class='fa-solid fa-hotel' style={{ color: '#000000' }}></i>,
+    PLACE: <i class='fa-solid fa-location-dot'></i>,
+  };
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       if (destination.name.trim() !== '') {
-        // console.log(destination);
+        const search = await getSearchList(destination.name);
+        console.log(search);
+        setSearchResults(search);
       }
     }, 500);
 
@@ -71,7 +86,6 @@ const Search = () => {
       inputRef.current.focus();
     }
   }, [search]);
-
   const addingAnotherRoom = () => {
     setRooms((prevState) => {
       const newTravellers = [...prevState.travellers, DEFAULT_ROOM];
@@ -144,14 +158,16 @@ const Search = () => {
                 }
               }}
             >
-              {destination.name.trim() == '' ? (
-                <>
-                  <i className='fa-solid fa-location-dot'></i>Search places,
-                  hotels, and more
-                </>
-              ) : (
-                destination.name
-              )}
+              <div className={classes.textbox}>
+                {destination.name.trim() == '' ? (
+                  <>
+                    <i className='fa-solid fa-location-dot'></i>Search places,
+                    hotels, and more
+                  </>
+                ) : (
+                  destination.name
+                )}
+              </div>
               <p className={classes.error}>{error}</p>
               {search && (
                 <div className={classes.searchfloat} name='search'>
@@ -167,13 +183,50 @@ const Search = () => {
                       })
                     }
                   />
-                  <button
-                    className={classes.destinationbutton}
-                    name='searching'
-                  >
-                    <i className='fa-solid fa-magnifying-glass'></i> Search for
-                    "{destination.name}"
-                  </button>
+                  {destination.name.trim != '' ? (
+                    <div className={classes.searchList}>
+                      {searchResults.map((item, index) => {
+                        if (index > 8) return;
+                        let icon = ICONS['PLACE'];
+                        if (item.type == 'AIRPORT' || item.type == 'HOTEL') {
+                          console.log(item.type);
+                          icon = ICONS[item.type];
+                        }
+                        const primaryplace =
+                          item.regionNames.primaryDisplayName.length < 34
+                            ? item.regionNames.primaryDisplayName
+                            : item.regionNames.primaryDisplayName.substring(
+                                0,
+                                34
+                              );
+                        const secondaryplace =
+                          item.regionNames.secondaryDisplayName.length < 40
+                            ? item.regionNames.secondaryDisplayName
+                            : item.regionNames.secondaryDisplayName.substring(
+                                0,
+                                40
+                              );
+                        return (
+                          <button className={classes.destinationbutton}>
+                            {icon}
+                            <div className={classes.details}>
+                              <h3>{primaryplace}</h3>
+                              <p> {secondaryplace}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                      <button
+                        className={classes.destinationbutton}
+                        name='searching'
+                      >
+                        <i className='fa-solid fa-magnifying-glass'></i> Search
+                        for "{destination.name}"
+                      </button>
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
               )}
             </header>
