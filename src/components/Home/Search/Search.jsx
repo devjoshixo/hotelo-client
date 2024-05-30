@@ -55,11 +55,11 @@ const Search = () => {
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (destination.name.trim() !== '') {
-        const search = await getSearchList(destination.name);
-        if (!search) {
-          return;
-        }
-        setSearchResults(search);
+        //   const search = await getSearchList(destination.name);
+        //   if (!search) {
+        //     return;
+        //   }
+        //   setSearchResults(search);
       }
     }, 500);
 
