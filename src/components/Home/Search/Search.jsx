@@ -56,7 +56,9 @@ const Search = () => {
     const timer = setTimeout(async () => {
       if (destination.name.trim() !== '') {
         const search = await getSearchList(destination.name);
-        console.log(search);
+        if (!search) {
+          return;
+        }
         setSearchResults(search);
       }
     }, 500);
