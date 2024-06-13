@@ -6,6 +6,7 @@ import classes from './Hotel.module.css';
 import Image from './Image/Image';
 import Details from './Details/Details';
 import Rooms from './Rooms/Rooms';
+import NavTitle from './NavTitle/NavTitle';
 
 const Hotel = () => {
   const [hotel, setHotel] = useState();
@@ -25,11 +26,11 @@ const Hotel = () => {
       {hotel && (
         <div className={classes.wrapper}>
           <div className={classes.subwrapper}>
-            {' '}
             <Image
               images={hotel.property.propertyGallery.images}
               title={hotel.property.summary.name}
             />
+            <NavTitle />
             <Details hotel={hotel.property} />
             <Rooms rooms={hotel.rooms} />
           </div>
