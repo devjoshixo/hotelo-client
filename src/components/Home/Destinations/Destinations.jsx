@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import classes from './Destinations.module.css';
 
 const DESTINATION_ARRAY = [
   {
@@ -63,30 +62,42 @@ const Destinations = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className='w-4/6 relative my-8 mx-0 flex flex-col flex-nowrap'>
       <button
-        className={`${classes.icon} ${classes.left}`}
+        className='rounded-[50%] bg-[white] text-[black] w-[2.6rem] h-[2.6rem] z-[999] border absolute top-[45%] left-[1%]'
         name='left'
         onClick={carouselHandler}
       >
         <i className='fa-solid fa-arrow-left' name='left'></i>
       </button>
-      <h1 className={classes.header}>Explore stays in trending destinations</h1>
-      <div className={classes.list} ref={elementRef}>
+      <h1 className='text-[1.8rem] font-thin m-0 py-2 px-0'>
+        Explore stays in trending destinations
+      </h1>
+      <div
+        className='relative flex flex-row flex-nowrap gap-4 pb-4 overflow-x-hidden scroll-smooth'
+        ref={elementRef}
+      >
         {DESTINATION_ARRAY.map((item) => {
           return (
-            <div className={classes.wrapper} key={item.name}>
-              <img src={item.link} alt={item.name} />
-              <div className={classes.name}>
-                <h3>{item.name}</h3>
-                <p>{item.country}</p>
+            <div
+              className='flex flex-col gap-[-2rem] border border-[#22222244] rounded-[20px] cursor-pointer'
+              key={item.name}
+            >
+              <img
+                src={item.link}
+                alt={item.name}
+                className='w-[18rem] h-36 rounded-[20px_20px_0_0]'
+              />
+              <div className='p-[0.6rem_0_0_0.6rem] top-[90%] bg-[white] h-[4.2rem] w-[17.41rem] rounded-[0px_0px_20px_20px]'>
+                <h3 className='m-0 font-medium'>{item.name}</h3>
+                <p className='m-0'>{item.country}</p>
               </div>
             </div>
           );
         })}
       </div>
       <button
-        className={`${classes.icon} ${classes.right}`}
+        className='rounded-[50%] bg-[white] text-[black] w-[2.6rem] h-[2.6rem] z-[999] border absolute top-[45%] left-[95%]'
         name='right'
         onClick={carouselHandler}
       >

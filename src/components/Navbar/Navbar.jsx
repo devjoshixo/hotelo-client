@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import classes from './Navbar.module.css';
 import LogoSection from './Sections/LogoSection';
 import Rewards from './Sections/Rewards';
 import AuthContext from '../../context/AuthContext';
@@ -11,19 +10,25 @@ const Navbar = () => {
   const ctx = useContext(AuthContext);
 
   return (
-    <div className={classes.navbar}>
-      <header className={classes.section}>
+    <div className='max-w-full text-[15px] flex flex-row justify-around items-center px-6 py-2 border-b border-nav-border '>
+      <header className='flex flex-row gap-12 items-center justify-between'>
         <LogoSection />
         <Rewards />
       </header>
 
-      <header className={classes.section}>
-        <p className={classes.rightbar}>
+      <header className='flex flex-row gap-12 items-center justify-between'>
+        <p className='cursor-pointer text-[#2f5b85] hover:text-[black]'>
           <i className='fa-solid fa-earth-americas'></i> English
         </p>
-        <p className={classes.rightbar}>List your property</p>
-        <p className={classes.rightbar}>Support</p>
-        <p className={classes.rightbar}>Trips</p>
+        <p className='cursor-pointer text-[#2f5b85] hover:text-[black]'>
+          List your property
+        </p>
+        <p className='cursor-pointer text-[#2f5b85] hover:text-[black]'>
+          Support
+        </p>
+        <p className='cursor-pointer text-[#2f5b85] hover:text-[black]'>
+          Trips
+        </p>
 
         <div
           onMouseEnter={() => {
@@ -33,7 +38,7 @@ const Navbar = () => {
             setModal(false);
           }}
         >
-          <Account classes={classes.rightbar} />
+          <Account />
         </div>
       </header>
     </div>

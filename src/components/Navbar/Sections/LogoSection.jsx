@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './LogoSection.module.css';
 import { useHistory } from 'react-router-dom';
 
 const LogoSection = () => {
@@ -9,10 +8,13 @@ const LogoSection = () => {
     navigation.push('/');
   };
   return (
-    <div className={classes.heading} onClick={redirectHome}>
-      <i className={`fa-solid fa-hotel ` + classes.icon}></i>
-      <h1 className={classes.heading}>Hotelo</h1>
-      <p className={classes.com}>.com</p>
+    <div
+      className='flex font-[Montserrat] items-center font-bold mt-1 text-[#203e5a] cursor-pointer'
+      onClick={redirectHome}
+    >
+      <i className='fa-solid fa-hotel m-[0rem_0.6rem_0.5rem_0] text-[#2f5b85] scale-[1.7]'></i>
+      <h1 className='text-[1.7rem]'>Hotelo</h1>
+      <p className='text-xs font-light mt-3'>.com</p>
     </div>
   );
 };
