@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import classes from './MultiTile.module.css';
 import uniqid from 'uniqid';
 import QueryContext from '../../../../context/QueryContext';
 
@@ -43,7 +42,7 @@ const MultiTile = (props) => {
     }
   };
   return (
-    <div className={classes.checkList}>
+    <div className='flex flex-col justify-start items-start w-full'>
       {props.item.tileMultiSelectionOptions.map((filter, index) => {
         if (filter.id == 'poi') {
           return;
@@ -56,7 +55,7 @@ const MultiTile = (props) => {
           return;
         }
         return (
-          <div className={classes.checkItem} key={uniqid()}>
+          <div className='flex items-center text-[0.9rem]' key={uniqid()}>
             <Checkbox
               onClick={() => {
                 checkedBox(event, filter);
@@ -64,17 +63,20 @@ const MultiTile = (props) => {
               checked={selected.includes(filter.value)}
               sx={{
                 backgroundColor: 'white',
-                padding: '9px 0',
+                padding: '5px 0',
                 paddingRight: '3px',
                 '& .MuiSvgIcon-root': { fontSize: 23 },
               }}
             />
-            <p>{filter.primary}</p>
+            <p className='m-0'>{filter.primary}</p>
           </div>
         );
       })}
       {showButton && (
-        <div className={classes.buttonText} onClick={onToggleList}>
+        <div
+          className='bg-[white] border-none text-[blue] text-[0.9rem] font-[Arial, Helvetica, sans-serif] ml-4 hover:underline'
+          onClick={onToggleList}
+        >
           {toggleHide ? 'See more' : 'Hide'}
         </div>
       )}

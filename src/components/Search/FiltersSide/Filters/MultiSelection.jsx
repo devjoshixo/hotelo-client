@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import QueryContext from '../../../../context/QueryContext';
-import classes from './MultiSelection.module.css';
 import Checkbox from '@mui/material/Checkbox';
 import uniqid from 'uniqid';
 
@@ -55,7 +54,7 @@ const MultiSelection = (props) => {
   };
 
   return (
-    <div className={classes.checkList}>
+    <div className='flex flex-col justify-start items-start gap-0 w-full'>
       {props.item.multiSelectionOptions.map((filter, index) => {
         if (filter.id == 'poi') {
           return;
@@ -70,7 +69,7 @@ const MultiSelection = (props) => {
         }
 
         return (
-          <div className={classes.checkItem} key={uniqid()}>
+          <div className='flex items-center text-[0.9rem]' key={uniqid()}>
             <Checkbox
               onClick={() => {
                 checkedBox(event, filter);
@@ -78,17 +77,20 @@ const MultiSelection = (props) => {
               checked={selected.includes(filter.value)}
               sx={{
                 backgroundColor: 'white',
-                padding: '9px 0',
+                padding: '4px 0',
                 paddingRight: '3px',
                 '& .MuiSvgIcon-root': { fontSize: 23 },
               }}
             />
-            <p>{filter.primary}</p>
+            <p className='m-0'>{filter.primary}</p>
           </div>
         );
       })}
       {showButton && (
-        <div className={classes.buttonText} onClick={onToggleList}>
+        <div
+          className='bg-[white] border-none text-[blue] text-[0.9rem] font-[Arial, Helvetica, sans-serif] ml-4 hover:underline'
+          onClick={onToggleList}
+        >
           {toggleHide ? 'See more' : 'Hide'}
         </div>
       )}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import uniqid from 'uniqid';
-import classes from './MultiStacked.module.css';
 import QueryContext from '../../../../context/QueryContext';
 
 const MultiStacked = (props) => {
@@ -30,12 +29,14 @@ const MultiStacked = (props) => {
   };
 
   return (
-    <div className={classes.wrapper}>
+    <div className='flex flex-row flex-wrap w-auto gap-[0.3rem] mt-[0.4rem]'>
       {props.item.tileMultiSelectionOptions.map((item) => {
         return (
           <div
-            className={`${classes.box} ${
-              selected.includes(item.value) ? classes.selected : ''
+            className={`border-2 border-[#47474774] p-[0.3rem] px-[0.6rem] text-center text-[0.9rem] rounded-[10px] min-w-[2.2rem] hover:bg-[#ecf4fd] ${
+              selected.includes(item.value)
+                ? 'bg-[#ecf4fd] border-2 border-[black]'
+                : ''
             }`}
             key={uniqid()}
             name={item.value}

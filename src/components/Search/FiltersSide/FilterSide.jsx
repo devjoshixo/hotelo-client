@@ -63,7 +63,7 @@ const FilterSide = (props) => {
           ////
           return (
             <div key={uniqid()}>
-              <p className='text-sm font-semibold m-0'>{item.primary}</p>
+              <p className='text-sm font-semibold m-0 mb-1'>{item.primary}</p>
               {filterNames[item.__typename]}
               <br />
             </div>

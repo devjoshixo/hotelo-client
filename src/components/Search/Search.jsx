@@ -96,7 +96,7 @@ const Search = () => {
   return (
     <section className='flex flex-col flex-nowrap justify-center items-center m-[1rem_auto_2rem_auto]'>
       <SearchBar />
-      <div className='flex flex-row justify-center h-auto g-4'>
+      <div className='flex flex-row justify-center h-auto gap-10'>
         {filter && (
           <FilterSide
             filter={filter}

@@ -6,7 +6,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import classes from './SelectionField.module.css';
 
 const SelectionField = (props) => {
   const [toggleHide, setToggleHide] = useState(true);
@@ -52,7 +51,7 @@ const SelectionField = (props) => {
     props.queryAdder(item.id, item.value);
   };
   return (
-    <div className={classes.wrapper}>
+    <div className='mt-2'>
       <FormControl>
         <RadioGroup
           aria-labelledby='demo-controlled-radio-buttons-group'
@@ -68,7 +67,7 @@ const SelectionField = (props) => {
             }
             return (
               <div
-                className={classes.radio}
+                className='text-[0.9rem] font-normal m-0 flex mb-[0.8rem]'
                 onClick={() => {
                   radioButtonClick(event, items);
                 }}
@@ -78,6 +77,7 @@ const SelectionField = (props) => {
                 <div>
                   <input
                     type='radio'
+                    className='scale-[1.6] mr-[0.6rem]'
                     checked={checkedItem == items.value}
                     name={items.value}
                     readOnly
@@ -91,7 +91,10 @@ const SelectionField = (props) => {
           {/* <FormControlLabel value='male' control={<Radio />} label='Male' /> */}
         </RadioGroup>
         {showButton && (
-          <div className={classes.buttonText} onClick={onToggleList}>
+          <div
+            className='bg-[white] border-none text-[blue] text-[0.9rem font-[Arial, Helvetica, sans-serif] ml-4 hover:underline'
+            onClick={onToggleList}
+          >
             {toggleHide ? 'See more' : 'Hide'}
           </div>
         )}
