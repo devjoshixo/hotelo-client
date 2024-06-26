@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classes from './FilterSide.module.css';
 import uniqid from 'uniqid';
 import MultiStacked from './Filters/MultiStacked';
 import MultiSelection from './Filters/MultiSelection';
@@ -11,9 +10,9 @@ const FilterSide = (props) => {
   const [filter, setFilter] = useState(props.filter[1]);
 
   return (
-    <section className={classes.section}>
-      <header className={classes.header}>{filter.title}</header>
-      <div className={classes.list}>
+    <section className='max-w-[20%] font-normal'>
+      <header className='text-[1.3rem] mb-8'>{filter.title}</header>
+      <div className='flex flex-col gap-4'>
         {/*    */}
         {/* Filter Headers and subcomponent render  */}
         {filter.fields.map((item) => {
@@ -64,7 +63,7 @@ const FilterSide = (props) => {
           ////
           return (
             <div key={uniqid()}>
-              <p className={classes.filterHeading}>{item.primary}</p>
+              <p className='text-sm font-semibold m-0'>{item.primary}</p>
               {filterNames[item.__typename]}
               <br />
             </div>

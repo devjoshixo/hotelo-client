@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import classes from './SearchBar.module.css';
 import useOutsideClick from '../../../hooks/UseOutsideClick';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -149,14 +148,14 @@ const SearchBar = () => {
   }
 
   return (
-    <div className={classes.wrapper}>
-      <header className={classes.section}>
-        <div className={classes.searchbar}>
+    <div className='mt-4 p-[0.7rem_0.5rem_1rem_0.5rem]'>
+      <header className='flex flex-col max-w-[80rem] my-0 mx-auto items-start'>
+        <div className='flex flex-row flex-nowrap gap-4'>
           <div name='search'>
             {/* // */}
             {/* Going to */}
             <header
-              className={`${classes.inputbox} ${classes.searchbox}`}
+              className='flex relative pl-4 justify-start items-center gap-4 bg-[white] w-[21rem] h-[3rem] border-[#00000084] border rounded-[10px] cursor-pointer select-none'
               name='search'
               ref={searchRef}
               onClick={(event) => {
@@ -169,21 +168,25 @@ const SearchBar = () => {
             >
               {destination.name.trim() == '' ? (
                 <>
-                  <i className='fa-solid fa-location-dot'></i>Search places,
-                  hotels, and more
+                  <i className='fa-solid fa-location-dot scale-[1.4]'></i>Search
+                  places, hotels, and more
                 </>
               ) : (
                 <>
-                  <i className='fa-solid fa-location-dot'></i>{' '}
+                  <i className='fa-solid fa-location-dot scale-[1.4]'></i>{' '}
                   {destination.name}
                 </>
               )}
               {search && (
-                <div className={classes.searchfloat} name='search'>
+                <div
+                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.5rem] h-[22rem] z-[99]'
+                  name='search'
+                >
                   {/* Floating Search */}
                   <input
                     type='text'
                     value={destination.name}
+                    className='w-[21.4rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] text-[1.6rem] font-sans font-semibold rounded-[10px_10px_0_0] h-16 outline-none'
                     placeholder='Going to'
                     ref={inputRef}
                     onChange={(e) =>
@@ -193,7 +196,7 @@ const SearchBar = () => {
                     }
                   />
                   <button
-                    className={classes.destinationbutton}
+                    className='flex items-center justify-start gap-4 pl-4 w-full h-12 bg-[white] border-none text-4 text-[black] hover:bg-[#2f5b854f]'
                     name='searching'
                   >
                     <i className='fa-solid fa-magnifying-glass'></i> Search for
@@ -207,19 +210,19 @@ const SearchBar = () => {
 
           {/* Date Picker  */}
           <div
-            className={classes.datePicker}
+            className='flex relative flex-row flex-nowrap items-center w-[19rem] gap-4 border border-[#00000084] cursor-pointer pl-4 rounded-[10px]'
             name='open'
             onClick={closingCalender}
           >
-            <i className='fa-solid fa-calendar-day'></i>
-            <div className={classes.dateFleX}>
-              <h5>Dates</h5>
+            <i className='fa-solid fa-calendar-day scale-[1.4]'></i>
+            <div className='flex flex-col'>
+              <h5 className='m-0'>Dates</h5>
               {dates.map((d) => {
                 const formattedStart = dateFormatter(d.startDate);
                 const formattedEnd = dateFormatter(d.endDate);
                 return (
                   <div key={d.startDate}>
-                    <p>
+                    <p className='m-0'>
                       {formattedStart[1]} {formattedStart[0]} -{' '}
                       {formattedEnd[1]} {formattedEnd[0]}
                     </p>
@@ -229,10 +232,13 @@ const SearchBar = () => {
             </div>
 
             {duration && (
-              <div className={classes.calenderwrapper} ref={durationRef}>
+              <div
+                className='absolute flex flex-col items-end w-[40rem] h-[30rem] top-[-10%] left-[-3%] bg-[white] z-[99] rounded-[20px] shadow-[0px_5px_10px_#00000021]'
+                ref={durationRef}
+              >
                 <DateRange
                   editableDateInputs={true}
-                  className={classes.calender}
+                  className='rounded-[20px_20px_0_0] h-[26rem] w-[40rem] text-sm'
                   dateDisplayFormat='iii, dd MMM'
                   onChange={(item) => setDates([item.selection])}
                   moveRangeOnFirstSelection={false}
@@ -242,7 +248,7 @@ const SearchBar = () => {
                   ranges={dates}
                 />
                 <button
-                  className={classes.calenderbutton}
+                  className='rounded-[30px] w-28 h-12 text-xl font-bold border-none mr-12 bg-[#1668e3] text-[white] hover:bg-[#1655b5]'
                   name='closer'
                   onClick={closingCalender}
                 >
@@ -254,7 +260,7 @@ const SearchBar = () => {
           {/* // */}
 
           <div
-            className={`${classes.inputbox} ${classes.passenger}`}
+            className='bg-[white] w-[21rem] h-[3rem] border-[#00000084] border rounded-[10px] cursor-pointer select-none flex relative flex-row items-center gap-2 pl-4 justify-start'
             onClick={(event) => {
               if (event.target.getAttribute('name') == 'done') {
                 setPassenger(false);
@@ -264,14 +270,17 @@ const SearchBar = () => {
             }}
           >
             <i className='fa-solid fa-user'></i>
-            <div className={classes.subpassenger}>
-              <h5>Travellers</h5>
-              <p>
+            <div className='flex flex-col justify-start'>
+              <h5 className='m-0'>Travellers</h5>
+              <p className='m-0 ml-[0.3rem]'>
                 {rooms.total} travellers, {rooms.totalRooms} room
               </p>
             </div>
             {passenger && (
-              <div className={classes.floatingpassenger} ref={passengerRef}>
+              <div
+                className='bg-[white] absolute width-[17rem] min-h-60 gap-4 shadow[0px_5px_10px_#00000021] top-[120%] left-0 py-0 px-8 rounded-[20px] z-[99]'
+                ref={passengerRef}
+              >
                 {rooms.travellers.map((item, index) => {
                   return (
                     <Travellers
@@ -284,15 +293,28 @@ const SearchBar = () => {
                     />
                   );
                 })}
-                <section className={classes.another}>
-                  <div onClick={addingAnotherRoom}>Add another room</div>
-                  <button name='done'>Done</button>
+                <section className='flex flex-col items-end gap-4 text-[#0c57c6] font-extrabold my-4 mx-0'>
+                  <div
+                    className='rounded-[20px] flex justify-center items-center w-44 h-8 hover:bg-[#1668e32b] hover:text-[#094196]'
+                    onClick={addingAnotherRoom}
+                  >
+                    Add another room
+                  </div>
+                  <button
+                    className='rounded-[30px] w-24 h-12 text-[1.4rem] font-extrabold cursor-pointer border-none bg-[#1668e3] hover:bg-[#1255ba]'
+                    name='done'
+                  >
+                    Done
+                  </button>
                 </section>
               </div>
             )}
           </div>
 
-          <button className={classes.action} onClick={formSubmitHandler}>
+          <button
+            className='rounded-[50%] w-12 text-[1.1rem] font-extrabold text-[white] bg-[#1668e3] border-none hover:bg-[#1655b5]'
+            onClick={formSubmitHandler}
+          >
             <i className='fa-solid fa-magnifying-glass'></i>
           </button>
         </div>

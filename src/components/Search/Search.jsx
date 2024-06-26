@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import getSearch from '../../api/getSearch';
 import Skeleton from '@mui/material/Skeleton';
-import classes from './Search.module.css';
 import HotelItem from './HotelList/HotelItem';
 import uniqid from 'uniqid';
 import AuthContext from '../../context/AuthContext';
@@ -25,11 +24,11 @@ const Search = () => {
   let loaders = [];
   for (let i = 0; i < 5; i++) {
     loaders.push(
-      <div className={classes.loaders} key={uniqid()}>
+      <div className='flex gap-4 w-[50rem] my-4 mx-0' key={uniqid()}>
         <Skeleton variant='rounded' width={300} height={250} />
         <div>
-          <Skeleton width={250} height={25} />
-          <Skeleton width={150} height={25} />
+          <Skeleton width={450} height={25} />
+          <Skeleton width={350} height={25} />
         </div>
       </div>
     );
@@ -95,9 +94,9 @@ const Search = () => {
   };
 
   return (
-    <section className={classes.bodywrapper}>
+    <section className='flex flex-col flex-nowrap justify-center items-center m-[1rem_auto_2rem_auto]'>
       <SearchBar />
-      <div className={classes.wrapper}>
+      <div className='flex flex-row justify-center h-auto g-4'>
         {filter && (
           <FilterSide
             filter={filter}
@@ -105,13 +104,13 @@ const Search = () => {
             queryAdder={queryAdder}
           />
         )}
-        <div className={classes.hotels}>
+        <div className='flex flex-col'>
           <FilterBar
             length={hotels.properties ? hotels.properties.length : false}
             queryAdder={queryAdder}
           />
           {!showLoaders && (
-            <div className={classes.hotellist}>
+            <div className='flex flex-col flex-nowrap gap-6'>
               {hotels.properties.map((hotel) => {
                 return (
                   <HotelItem
@@ -126,7 +125,11 @@ const Search = () => {
               })}
             </div>
           )}
-          {showLoaders && <div className={classes.loaderlist}>{loaders}</div>}
+          {showLoaders && (
+            <div className='flex flex-col g-4 w-[50rem] my-4 mx-0'>
+              {loaders}
+            </div>
+          )}
         </div>
       </div>
     </section>

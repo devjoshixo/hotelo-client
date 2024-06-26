@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './Travellers.module.css';
 
 const child_option = [
   'Under 1',
@@ -112,34 +111,38 @@ const Travellers = (props) => {
     });
   };
   return (
-    <div className={classes.wrapper}>
-      <p className={classes.heading}>Room {props.index}</p>
+    <div className='flex flex-col gap-0 py-4 px-0 border-b'>
+      <p className='m-0 text-[0.9rem]'>Room {props.index}</p>
       {/*  */}
       {/* Adult Selection Row */}
-      <div className={classes.row}>
-        <h4 className={classes.heading}>Adults</h4>
-        <div className={classes.switch}>
+      <div className='flex items-center justify-between gap-4'>
+        <h4 className='m-0 text-[0.9rem]'>Adults</h4>
+        <div className='flex items-center justify-evenly gap-4 mb-4'>
           <div
-            className={`${classes.icon} ${
-              props.rooms.adults > 1 ? '' : classes.hidden
+            className={`border-action-input border rounded-[50%] flex w-8 h-8 items-center justify-center ${
+              props.rooms.adults > 1 ? '' : 'opacity-50 cursor-not-allowed'
             }`}
             onClick={() => {
               changeAdultHandler(-1);
             }}
           >
-            <i className={`fa-solid fa-minus`} />
+            <i className='fa-solid fa-minus scale-[0.6]' />
           </div>
           {/* <div>{props.rooms.adults}</div> */}
-          <input type='text' value={props.rooms.adults} />
+          <input
+            type='text'
+            className='pointer-events-none bg-[white] text-[black] text-[0.9rem] text-center w-4 border-none'
+            value={props.rooms.adults}
+          />
           <div
-            className={`${classes.icon} ${
-              props.rooms.adults > 13 ? classes.hidden : ''
+            className={`border border-action-input rounded-[50%] flex w-8 h-8 justify-center items-center ${
+              props.rooms.adults > 13 ? 'cursor-not-allowed opacity-50' : ''
             }`}
             onClick={() => {
               changeAdultHandler(1);
             }}
           >
-            <i className={`fa-solid fa-plus`} />
+            <i className='fa-solid fa-plus scale-[0.6]' />
           </div>
         </div>
       </div>
@@ -148,41 +151,49 @@ const Travellers = (props) => {
 
       {/*  */}
       {/* Children Row Section */}
-      <div className={classes.row}>
+      <div className='flex items-center justify-between gap-4'>
         <div>
-          <h4 className={classes.heading}>Children</h4>
-          <p className={classes.heading}>Ages 0 to 17</p>
+          <h4 className='m-0 text-[0.9rem]'>Children</h4>
+          <p className='m-0 text-[0.9rem]'>Ages 0 to 17</p>
         </div>
-        <div className={classes.switch}>
+        <div className='flex items-center justify-evenly gap-4 mb-4'>
           <div
-            className={`${classes.icon} ${
-              props.rooms.children.length < 1 ? classes.hidden : ''
+            className={`border-action-input border rounded-[50%] flex w-8 h-8 items-center justify-center ${
+              props.rooms.children.length < 1
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
             }`}
             onClick={() => {
               changeChildrenHandler(-1);
             }}
           >
-            <i className='fa-solid fa-minus' />
+            <i className='fa-solid fa-minus scale-[0.6]' />
           </div>
-          <input type='text' value={props.rooms.children.length} />
+          <input
+            type='text'
+            className='pointer-events-none bg-[white] text-[black] text-[0.9rem] text-center w-4 border-none'
+            value={props.rooms.children.length}
+          />
           <div
-            className={`${classes.icon} ${
-              props.rooms.children.length > 5 ? classes.hidden : ''
+            className={`border-action-input border rounded-[50%] flex w-8 h-8 items-center justify-center ${
+              props.rooms.children.length > 5
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
             }`}
             onClick={() => {
               changeChildrenHandler(1);
             }}
           >
-            <i className='fa-solid fa-plus' />
+            <i className='fa-solid fa-plus scale-[0.6]' />
           </div>
         </div>
       </div>
       {props.rooms.children.length > 0 ? (
-        <div className={classes.childrenbox}>
+        <div className='flex flex-row flex-wrap w-[17rem] min-h-12 gap-2 justify-between'>
           {props.rooms.children.map((child, index) => {
             return (
               <select
-                className={classes.ageselector}
+                className='w-32 h-12 text-[1rem] text-center cursor-pointer rounded-[20px] bg-[white] text-[black] border'
                 key={index}
                 name={index}
                 value={child.age}
@@ -209,8 +220,10 @@ const Travellers = (props) => {
       {/*  */}
 
       {props.totalRooms > 1 ? (
-        <div className={classes.remove} onClick={removeRoom}>
-          <div>Remove room</div>
+        <div className='flex justify-end mt-[0.3rem]' onClick={removeRoom}>
+          <div className='rounded-[20px] flex text-[#1a59b8] font-bold justify-center items-center w-[11rem] h-8 hover:bg-[#1668e32b] hover:text-[#094196]'>
+            Remove room
+          </div>
         </div>
       ) : (
         ''
