@@ -6,11 +6,14 @@ import Destinations from './Destinations/Destinations';
 
 const Home = () => {
   return (
-    <div className='max-w-[100vw] flex flex-col justify-center items-center'>
-      <Search />
-      <Banner />
-      <Lodging />
-      <Destinations />
+    <div className=' flex flex-col justify-center items-center'>
+      <div className='max-w-[75rem] flex flex-col items-center'>
+        {' '}
+        <Search />
+        <Banner />
+        <Lodging />
+        <Destinations />
+      </div>
     </div>
   );
 };

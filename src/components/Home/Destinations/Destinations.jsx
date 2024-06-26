@@ -62,7 +62,7 @@ const Destinations = () => {
   };
 
   return (
-    <div className='w-4/6 relative my-8 mx-0 flex flex-col flex-nowrap'>
+    <div className='w-[90%] relative my-8 mx-0 flex flex-col flex-nowrap'>
       <button
         className='rounded-[50%] bg-[white] text-[black] w-[2.6rem] h-[2.6rem] z-[999] border absolute top-[45%] left-[1%]'
         name='left'

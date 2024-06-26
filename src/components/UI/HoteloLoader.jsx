@@ -4,7 +4,7 @@ import logo from '../../assets/hotel-solid.svg';
 
 const HoteloLoader = () => {
   return (
-    <div className='fixed w-full h-full z-[99999]'>
+    <div className={classes.wrapper}>
       <div className={classes.header}>
         <div className={classes.heading}>
           {/* <i className={`fa-solid fa-hotel ` + classes.icon}></i> */}
