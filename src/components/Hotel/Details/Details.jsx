@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Review from './Review/Review';
-import classes from './Details.module.css';
 import Stars from './Stars';
 import Amenities from './Amenities/Amenities';
 import Area from './Area/Area';
 
 const Details = (props) => {
   return (
-    <div className={classes.wrapper}>
+    <div className='flex flex-row justify-between'>
       <div>
-        <h1 className={classes.title}>{props.hotel.summary.name}</h1>
+        <h1 className='font-medium text-4xl m-0 mb-2'>
+          {props.hotel.summary.name}
+        </h1>
         <Stars
           starRating={props.hotel.summary.overview.propertyRating.rating}
         />
@@ -24,7 +25,7 @@ const Details = (props) => {
           title={props.hotel.summary.name}
         />
       </div>
-      <div style={{ width: '40%' }}>
+      <div className='w-2/5'>
         <Area
           location={props.hotel.summary.location}
           nearbyPOIs={props.hotel.summary.nearbyPOIs}

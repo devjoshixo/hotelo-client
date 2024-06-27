@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import classes from './Image.module.css';
 import uniqid from 'uniqid';
 import Modal from './Modal/Modal';
 
@@ -21,45 +20,50 @@ const Image = (props) => {
   }, [modal]);
 
   return (
-    <div className={classes.imageWrapper} onClick={modalToggle}>
-      <div className={classes.largeImage}>
+    <div className='flex gap-[5px] w-full cursor-pointer' onClick={modalToggle}>
+      <div className='w-1/2'>
         <img
           src={props.images[0].image.url + '&rw=1200'}
           loading='eager'
           alt=''
+          className='w-[32rem] h-[18.4rem] object-cover bg-[#31668e3]'
           key={uniqid()}
         />
       </div>
-      <div className={classes.smallWrapper}>
-        <div className={classes.smallImage}>
+      <div className='w-1/2 flex flex-col gap-1'>
+        <div className='w-full flex flex-row gap-1'>
           <img
             src={props.images[1].image.url + '&rw=1200'}
             loading='eager'
             alt=''
+            className='w-1/2 h-36 bg-[#1668e3]'
             key={uniqid()}
           />
           <img
             src={props.images[2].image.url + '&rw=1200'}
             loading='eager'
             alt=''
+            className='w-1/2 h-36 bg-[#1668e3]'
             key={uniqid()}
           />
         </div>
-        <div className={classes.smallImage}>
+        <div className='w-full flex flex-row gap-1'>
           <img
             src={props.images[3].image.url + '&rw=1200'}
             loading='eager'
             alt=''
+            className='w-1/2 h-36  bg-[#1668e3]'
             key={uniqid()}
           />
-          <div className={classes.lastImage}>
+          <div className='w-1/2 relative'>
             <img
               src={props.images[4].image.url + '&rw=1200'}
               loading='eager'
               alt=''
+              className='w-full h-36  bg-[#1668e3]'
               key={uniqid()}
             />
-            <div className={classes.imageLength}>
+            <div className='absolute bg-[#20202098] text-[white] top-[60%] right-[4%] w-24 h-10 flex justify-center font-bold text-[1.2rem] gap-[10px] items-center rounded-[20px] hover:bg-[#202020b3]'>
               <i className='fa-regular fa-images'></i>
               {props.images.length - 1}+
             </div>

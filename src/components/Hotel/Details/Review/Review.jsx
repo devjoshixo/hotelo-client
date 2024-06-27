@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import classes from './Review.module.css';
 
 const Review = (props) => {
   const [review, setReview] = useState('Loading');
@@ -10,9 +9,11 @@ const Review = (props) => {
     });
   }, []);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      <div className={classes.ratingbox}>{review[0]}</div>
-      <p>{review[1]}</p>
+    <div className='flex items-center gap-2'>
+      <div className='w-[1.9rem] rounded-[5px] h-[1.3rem] p-[0.3rem] text-[white] text-center bg-[green]'>
+        {review[0]}
+      </div>
+      <p className='m-0'>{review[1]}</p>
     </div>
   );
 };

@@ -12,10 +12,10 @@ const Area = (props) => {
     lob_flights: <i className='fa-solid fa-plane'></i>,
   };
   return (
-    <div className={classes.wrapper}>
-      <h3 className={classes.header}>Enjoy the area</h3>
-      <div className={classes.imageWrapper}>
-        <div className={classes.image}>
+    <div className='w-full'>
+      <h3 className='font-normal my-[10px] mx-0'>Enjoy the area</h3>
+      <div>
+        <div className='w-[19rem] h-28 overflow-hidden relative border-[#0000002f]'>
           <img
             src={
               props.location.staticImage.url

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import uniqid from 'uniqid';
 import getHotelDetails from '../../api/getHotelDetails';
-import classes from './Hotel.module.css';
 import Image from './Image/Image';
 import Details from './Details/Details';
 import Rooms from './Rooms/Rooms';
@@ -24,8 +23,8 @@ const Hotel = () => {
   return (
     <>
       {hotel && (
-        <div className={classes.wrapper}>
-          <div className={classes.subwrapper}>
+        <div className='w-full flex justify-center items-center mt-8 mb-40'>
+          <div className='w-[60vw]'>
             <Image
               images={hotel.property.propertyGallery.images}
               title={hotel.property.summary.name}

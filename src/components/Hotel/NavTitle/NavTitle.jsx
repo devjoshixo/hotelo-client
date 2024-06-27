@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classes from './NavTitle.module.css';
 
 const NavTitle = () => {
   const headings = [
@@ -18,13 +17,15 @@ const NavTitle = () => {
   };
 
   return (
-    <div className={classes.wrapper}>
-      <div className={classes.optionwrapper}>
+    <div className='flex border-b border-[#2c2c2c45] mb-4 justify-between items-center px-4'>
+      <div className='flex gap-7'>
         {headings.map((item, index) => {
           return (
             <div
-              className={`${classes.option} ${
-                selected == item ? classes.selected : ''
+              className={`text-4 py-2 px-0 border-b-[transparent] border-b-2 hover:border-b-[black] cursor-pointer ${
+                selected == item
+                  ? 'text-[blue]  border-b-[blue] hover:border-b-[blue]'
+                  : ''
               }`}
               name={item}
               onClick={toggleSelected}
@@ -34,7 +35,9 @@ const NavTitle = () => {
           );
         })}
       </div>
-      <button className={classes.button}>Reserve a room</button>
+      <button className='w-44 rounded-3xl p-[0.6rem] text-[white] font-bold text-[1.1rem] border-none bg-[#1668e3] cursor-pointer hover:brightness-90'>
+        Reserve a room
+      </button>
     </div>
   );
 };
