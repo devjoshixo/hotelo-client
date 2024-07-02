@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import classes from './Password.module.css';
 import AuthContext from '../../../context/AuthContext';
 import useLogin from '../../../hooks/UseLogin';
 import { useHistory } from 'react-router-dom';
@@ -26,25 +25,26 @@ const Password = (props) => {
     setShowLoader(false);
   };
   return (
-    <form className={classes.form} onSubmit={submitEmailHandler}>
-      <h4 className={classes.heading}>Enter your password</h4>
-      <div className={classes.email}>
-        <label>Email</label>
-        <p>{props.formDetails.email}</p>
+    <form
+      className='flex flex-col basis-[25rem] gap-[1.3rem] self-center m-[2rem_auto_0_auto] px-6'
+      onSubmit={submitEmailHandler}
+    >
+      <h4 className='text-4xl text-[#191e3b] mb-[-0.4rem] font-medium leading-10'>
+        Enter your password
+      </h4>
+      <div className='flex mt-5 flex-col flex-nowrap gap-0 pl-4'>
+        <label className='text-[0.75rem] font-bold'>Email</label>
+        <p className='m-0 text-base font-light'>{props.formDetails.email}</p>
       </div>
       <input
         type='password'
         placeholder='Password'
         name='password'
-        className={classes.password}
+        className='h-[2.7rem] bg-[white] rounded-[10px] text-[black] pl-4 border border-[#0000009e]'
         onChange={formDetailChangeHandler}
       />
-      <button className={classes.action}>
-        {showLoader ? (
-          <img src={buttonloader} className={classes.loader} />
-        ) : (
-          ' Continue'
-        )}
+      <button className='h-12 bg-[#1661d1] border-[transparent] border text-[1.2rem] font-medium mt-2 rounded-[25px] hover:bg-[#094aaa] hover:border-[#094aaa]'>
+        {showLoader ? <img src={buttonloader} className='w-16' /> : ' Continue'}
       </button>
     </form>
   );

@@ -1,0 +1,11 @@
+.subPoi p {
+  margin: 0;
+}
+
+.subPoi li {
+  padding: 0;
+}
+
+.name {
+  width: 10rem;
+}

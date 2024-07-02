@@ -1,5 +1,4 @@
 import React, { lazy, useContext, useEffect, useState } from 'react';
-import classes from './Login.module.css';
 import Email from './Email';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import Password from './Existinguser/Password';
@@ -40,9 +39,9 @@ const Login = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className='flex flex-row justify-center mt-16'>
       <i
-        className={`fa-solid fa-arrow-left ${classes.arrow}`}
+        className={`fa-solid fa-arrow-left fixed left-[3%] top-[6%] scale-[1.4] cursor-pointer`}
         onClick={arrowClickHandler}
       />
       {emailPage ? (

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Area.module.css';
+import './Area.css';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
@@ -15,31 +15,34 @@ const Area = (props) => {
     <div className='w-full'>
       <h3 className='font-normal my-[10px] mx-0'>Enjoy the area</h3>
       <div>
-        <div className='w-[19rem] h-28 overflow-hidden relative border-[#0000002f]'>
+        <div className='w-full h-28 overflow-hidden relative border-[#0000002f] border-b-0 rounded-[15px_15px_0_0] cursor-pointer'>
           <img
             src={
               props.location.staticImage.url
               //   '&key=AIzaSyC9tTt9LrnaoixJGy9MG6kcgt_Lv5srPYY'
             }
+            className='object-cover rounded-[15px_15px_0_0] object-center h-full w-full'
             alt=''
           />
         </div>
-        <div className={classes.imageCard}>
+        <div className='w-full border-[#0000002f] border border-t-0 rounded-[0_0_15px_15px] px-3 py-3 text-[0.9rem]'>
           {props.location.address.addressLine}
-          <p className={classes.link}>View in a map</p>
+          <p className='m-0 text-[blue] cursor-pointer hover:underline'>
+            View in a map
+          </p>
         </div>
       </div>
-      <div className={classes.poi}>
+      <div className='subPoi'>
         <List>
           {props.nearbyPOIs.items.map((place) => {
             return (
-              <div className={classes.subPoi} key={place.text}>
+              <div className='' key={place.text}>
                 <ListItem>
                   <ListItemAvatar>
-                    <p>{ICONS[place.icon.id]}</p>
+                    <p className='m-0'>{ICONS[place.icon.id]}</p>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={<p className={classes.name}>{place.text}</p>}
+                    primary={<p className='min-w-[10rem]'>{place.text}</p>}
                   />
                   <ListItemText primary={place.moreInfo} />
                 </ListItem>
