@@ -6,6 +6,7 @@ import Image from './Image/Image';
 import Details from './Details/Details';
 import Rooms from './Rooms/Rooms';
 import NavTitle from './NavTitle/NavTitle';
+import About from './About/About';
 
 const Hotel = () => {
   const [hotel, setHotel] = useState();
@@ -31,7 +32,9 @@ const Hotel = () => {
             />
             <NavTitle />
             <Details hotel={hotel.property} />
-            <Rooms rooms={hotel.rooms} />
+            {/* <Rooms rooms={hotel.rooms} /> */}
+            <hr className='opacity-20 my-10' />
+            <About about={hotel.about} />
           </div>
         </div>
       )}

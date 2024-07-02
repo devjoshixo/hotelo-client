@@ -10,7 +10,7 @@ const Review = (props) => {
   }, []);
   return (
     <div className='flex items-center gap-2'>
-      <div className='w-[1.9rem] rounded-[5px] h-[1.3rem] p-[0.3rem] text-[white] text-center bg-[green]'>
+      <div className='w-[2.5rem] rounded-[5px] py-[0.3rem] text-[white] text-center bg-[green] text-sm'>
         {review[0]}
       </div>
       <p className='m-0'>{review[1]}</p>

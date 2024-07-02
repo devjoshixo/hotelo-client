@@ -22,11 +22,11 @@ const NavTitle = () => {
         {headings.map((item, index) => {
           return (
             <div
-              className={`text-4 py-2 px-0 border-b-[transparent] border-b-2 hover:border-b-[black] cursor-pointer ${
+              className={`text-4 py-2 px-0 border-b-2 hover:border-b-[black] cursor-pointer ${
                 selected == item
                   ? 'text-[blue]  border-b-[blue] hover:border-b-[blue]'
-                  : ''
-              }`}
+                  : 'border-b-[transparent]'
+              } `}
               name={item}
               onClick={toggleSelected}
             >
