@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import uniqid from 'uniqid';
 import RoomItem from './RoomItem/RoomItem';
 
 const Rooms = (props) => {
-  const length = props.rooms.categorizedListings.length;
+  let length = props.rooms.categorizedListings.length;
   return (
     <div className='w-full'>
       <h2 className='text-4xl font-medium'>Choose your room</h2>
