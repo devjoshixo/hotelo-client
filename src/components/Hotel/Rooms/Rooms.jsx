@@ -1,6 +1,6 @@
 import React from 'react';
 import uniqid from 'uniqid';
-import RoomItem from './RoomItem';
+import RoomItem from './RoomItem/RoomItem';
 
 const Rooms = (props) => {
   const length = props.rooms.categorizedListings.length;
@@ -10,8 +10,8 @@ const Rooms = (props) => {
       <p>
         Showing {length} of {length} rooms
       </p>
-      <div className='flex justify-center'>
-        <div className='w-full mt-20 flex gap-2 justify-center items-center flex-wrap'>
+      <div className='flex justify-center items-center'>
+        <div className='w-full mt-20 flex gap-2 justify-start items-center flex-wrap'>
           {props.rooms.categorizedListings.map((room) => {
             return <RoomItem room={room} key={uniqid()} />;
           })}
