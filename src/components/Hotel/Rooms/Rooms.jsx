@@ -1,11 +1,22 @@
 import React from 'react';
+import uniqid from 'uniqid';
+import RoomItem from './RoomItem';
 
 const Rooms = (props) => {
-  console.log(props.rooms.categorizedListings);
+  const length = props.rooms.categorizedListings.length;
   return (
-    <div>
-      <h2>Choose your room</h2>
-      <div></div>
+    <div className='w-full'>
+      <h2 className='text-4xl font-medium'>Choose your room</h2>
+      <p>
+        Showing {length} of {length} rooms
+      </p>
+      <div className='flex justify-center'>
+        <div className='w-full mt-20 flex gap-2 justify-center items-center flex-wrap'>
+          {props.rooms.categorizedListings.map((room) => {
+            return <RoomItem room={room} key={uniqid()} />;
+          })}
+        </div>
+      </div>
     </div>
   );
 };

@@ -24,15 +24,15 @@ const Hotel = () => {
   return (
     <>
       {hotel && (
-        <div className='w-full flex justify-center items-center mt-8 mb-40'>
-          <div className='w-[60vw]'>
+        <div className='w-3/5 mx-auto'>
+          <div className='w-full mt-8 mb-40'>
             <Image
               images={hotel.property.propertyGallery.images}
               title={hotel.property.summary.name}
             />
             <NavTitle />
             <Details hotel={hotel.property} />
-            {/* <Rooms rooms={hotel.rooms} /> */}
+            <Rooms rooms={hotel.rooms} />
             <hr className='opacity-20 my-10' />
             <About about={hotel.about} />
           </div>

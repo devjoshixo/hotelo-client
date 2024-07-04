@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import uniqid from 'uniqid';
 import parse from 'html-react-parser';
 
 const About = (props) => {
@@ -11,19 +12,19 @@ const About = (props) => {
       {/* About this Property  */}
       {about.aboutThisProperty.sections.map((header) => {
         return (
-          <div className='w-full flex flex-row justify-around'>
+          <div className='w-full flex flex-row justify-around' key={uniqid()}>
             <h2 className='text-3xl font-medium'>{header.header.text}</h2>
             <div className='flex flex-col w-3/5 gap-5'>
               {header.bodySubSections.map((body) => {
                 return body.elements.map((elements) => {
                   return (
-                    <div>
+                    <div key={uniqid()}>
                       <p className='text-xl font-medium mb-1'>
                         {elements.header.text}
                       </p>
                       {elements.items.map((items) => {
                         return (
-                          <p className='text-[0.95rem]'>
+                          <p className='text-[0.95rem]' key={uniqid()}>
                             {items.content.text || items.content.primary.value}
                           </p>
                         );
@@ -42,21 +43,26 @@ const About = (props) => {
       {/* Amenities */}
       {about.amenities.sections.map((header) => {
         return (
-          <div className='w-full flex flex-row justify-around'>
+          <div className='w-full flex flex-row justify-around' key={uniqid()}>
             <h2 className='text-3xl font-medium'>{header.header.text}</h2>
             <div className='h-[50rem] flex flex-col w-3/5 gap-5 flex-wrap '>
               {header.bodySubSections.map((body) => {
                 return body.elements.map((elements) => {
                   return (
-                    <div className='w-2/5 flex gap-3 items-start'>
-                      <i className='fa-solid fa-check scale-[1.5]'></i>
+                    <div
+                      className='w-2/5 flex gap-3 items-start justify-start'
+                      key={uniqid()}
+                    >
+                      <div>
+                        <i className='fa-solid fa-check scale-[1.5]'></i>
+                      </div>
                       <div>
                         <p className='text-xl font-medium mb-1'>
                           {elements.header.text}
                         </p>
                         {elements.items.map((items) => {
                           return (
-                            <p className='text-[0.95rem]'>
+                            <p className='text-[0.95rem]' key={uniqid()}>
                               {items.content.text ||
                                 items.content.primary.value}
                             </p>
@@ -77,24 +83,26 @@ const About = (props) => {
       {/* Policies */}
       {about.policies.sections.map((header) => {
         return (
-          <div className='w-full flex flex-row justify-around'>
+          <div className='w-full flex flex-row justify-around' key={uniqid()}>
             <h2 className='text-3xl font-medium'>{header.header.text}</h2>
             <div className='flex flex-col w-3/5 gap-5'>
               {header.bodySubSections.map((body) => {
                 return body.elements.map((elements) => {
                   return (
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2' key={uniqid()}>
                       <p className='text-xl font-medium'>
                         {elements.header.text}
                       </p>
                       {elements.items.map((items) => {
                         if (items.contents) {
                           return items.contents.map((contents) => {
-                            return <p>{contents.primary.value}</p>;
+                            return (
+                              <p key={uniqid()}>{contents.primary.value}</p>
+                            );
                           });
                         } else {
                           return (
-                            <div className='flex'>
+                            <div className='flex' key={uniqid()}>
                               {parse(
                                 items.content.text ||
                                   items.content.primary.value
