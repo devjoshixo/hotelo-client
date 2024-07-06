@@ -17,8 +17,9 @@ const Rooms = (props) => {
       </p>
       <div className='flex justify-center items-center'>
         <div className='w-full mt-20 flex gap-2 justify-start items-center flex-wrap'>
-          {images.map((room) => {
-            return <RoomItem room={room} key={uniqid()} key={uniqid()} />;
+          {images.map((room, index) => {
+            // if (index > 0) return;
+            return <RoomItem room={room} key={uniqid()} />;
           })}
         </div>
       </div>

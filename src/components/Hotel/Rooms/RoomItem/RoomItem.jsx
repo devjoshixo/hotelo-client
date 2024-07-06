@@ -1,53 +1,50 @@
 import React, { useState } from 'react';
-import Image from './Sections/Image';
 import uniqid from 'uniqid';
 import Carousel from 'react-material-ui-carousel';
+import Image from './Sections/Image/Image';
+import Breakfast from './Sections/Breakfast/Breakfast';
+import Price from './Sections/Price/Price';
 
 const RoomItem = (props) => {
-  const galleryLength =
-    props.room.primarySelections[0].propertyUnit.unitGallery.gallery.length;
+  const [breakfast, setBreakfast] = useState(0);
+
+  const toggleBreakfast = (event) => {
+    setBreakfast(event.target.value);
+  };
+  console.log(breakfast);
+  console.log(!breakfast == true ? '1' : '0');
+
   return (
-    <div className='w-[20rem] h-[50rem] bg-[white] rounded-[20px] border border-[#64646441]'>
-      <div className='relative'>
-        <Carousel
-          animate='slide'
-          interval={null}
-          indicators={false}
-          navButtonsAlwaysVisible={true}
-          navButtonsProps={{
-            style: {
-              backgroundColor: 'white',
-              color: 'blue',
-            },
-          }}
-          sx={{ cursor: 'pointer ' }}
-        >
-          {props.room.primarySelections[0].propertyUnit.unitGallery.gallery.map(
-            (imgUrl) => {
+    <div className='w-[20rem] h-[50rem] bg-[white] rounded-[20px] border flex flex-col justify-between pb-3 border-[#64646441]'>
+      <div>
+        <Image room={props.room} />
+        <div className='p-3 pt-2'>
+          <h2 className='font-medium text-lg'>{props.room.header.text}</h2>
+          <div className='flex flex-col mt-4 gap-1'>
+            {props.room.features.map((feature) => {
               return (
-                <img
-                  src={imgUrl.image.url}
-                  className='w-full h-full rounded-t-[10px] '
-                  key={uniqid()}
-                />
+                <div key={uniqid()}>
+                  <p>{feature.text}</p>
+                </div>
               );
-            }
-          )}
-        </Carousel>
-        <div className='absolute z-[999] top-[75%] right-3 w-[5rem] h-10 gap-2 rounded-[20px] text-[white] bg-[#241829a8] hover:bg-[#241829bd] flex items-center justify-center cursor-pointer'>
-          <i className='fa-regular fa-images scale-110'></i>
-          <p className='text-lg font-bold'>{galleryLength}</p>
+            })}
+          </div>
         </div>
+        {props.room.primarySelections[0].secondarySelections ? (
+          <Breakfast
+            details={props.room.primarySelections[0].secondarySelections[0]}
+            toggleBreakfast={toggleBreakfast}
+            breakfast={breakfast}
+          />
+        ) : (
+          ''
+        )}
       </div>
-      <div className='h-[25rem] pl-3 pt-2'>
-        <h2 className='font-medium text-lg'>{props.room.header.text}</h2>
-        <div className='flex flex-col mt-4 gap-3'>
-          {props.room.features.map((feature) => {
-            return <p key={uniqid()}>{feature.text}</p>;
-          })}
-        </div>
-      </div>
-      <hr className='opacity-10' />
+      <Price
+        prices={
+          props.room.primarySelections[0].propertyUnit.ratePlans[breakfast]
+        }
+      />
     </div>
   );
 };
