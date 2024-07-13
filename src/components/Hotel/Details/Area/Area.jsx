@@ -12,8 +12,8 @@ const Area = (props) => {
     lob_flights: <i className='fa-solid fa-plane'></i>,
   };
   return (
-    <div className='w-full'>
-      <h3 className='font-normal my-[10px] mx-0'>Enjoy the area</h3>
+    <div className='w-full flex gap-3 flex-col'>
+      <h3 className='font-normal mx-0'>Enjoy the area</h3>
       <div>
         <div className='w-full h-28 overflow-hidden relative border-[#0000002f] border-b-0 rounded-[15px_15px_0_0] cursor-pointer'>
           <img
@@ -32,24 +32,21 @@ const Area = (props) => {
           </p>
         </div>
       </div>
-      <div className='subPoi'>
-        <List>
-          {props.nearbyPOIs.items.map((place) => {
-            return (
-              <div className='' key={place.text}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <p className='m-0'>{ICONS[place.icon.id]}</p>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={<p className='min-w-[10rem]'>{place.text}</p>}
-                  />
-                  <ListItemText primary={place.moreInfo} />
-                </ListItem>
+
+      <div className='flex flex-col gap-2'>
+        {props.nearbyPOIs.items.map((place) => {
+          return (
+            <div className='flex flex-row gap-2' key={place.text}>
+              <div>
+                <p className='m-0 pr-4 w-4'>{ICONS[place.icon.id]}</p>
               </div>
-            );
-          })}
-        </List>
+              <p className='min-w-[12rem] whitespace-nowrap text-[0.9rem] font-medium mr-2'>
+                {place.text}
+              </p>
+              <div className='whitespace-nowrap'>{place.moreInfo}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

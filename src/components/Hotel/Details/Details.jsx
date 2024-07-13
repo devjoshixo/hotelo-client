@@ -8,7 +8,7 @@ const Details = (props) => {
   return (
     <div className='flex flex-row justify-between'>
       <div>
-        <h1 className='font-medium text-4xl m-0 mb-2'>
+        <h1 className='font-medium text-[2rem] m-0 mb-2 select-text cursor-default'>
           {props.hotel.summary.name}
         </h1>
         <Stars

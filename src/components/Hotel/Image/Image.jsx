@@ -20,8 +20,8 @@ const Image = (props) => {
   }, [modal]);
 
   return (
-    <div className='flex gap-[5px] w-full cursor-pointer' onClick={modalToggle}>
-      <div className='w-1/2'>
+    <div className='flex gap-1 w-full cursor-pointer' onClick={modalToggle}>
+      <div className='w-auto'>
         <img
           src={props.images[0].image.url + '&rw=1200'}
           loading='eager'

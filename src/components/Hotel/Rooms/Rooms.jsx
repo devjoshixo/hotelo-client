@@ -10,13 +10,13 @@ const Rooms = (props) => {
     );
   });
   return (
-    <div className='w-full'>
+    <div className='w-full mt-8'>
       <h2 className='text-4xl font-medium'>Choose your room</h2>
       <p>
         Showing {images.length} of {images.length} rooms
       </p>
       <div className='flex justify-center items-center'>
-        <div className='w-full mt-20 flex gap-2 justify-start items-center flex-wrap'>
+        <div className='w-full mt-8 flex gap-2 justify-start items-center flex-wrap'>
           {images.map((room, index) => {
             // if (index > 0) return;
             return <RoomItem room={room} key={uniqid()} />;
