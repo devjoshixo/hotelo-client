@@ -8,11 +8,20 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import uniqid from 'uniqid';
 import getSearchList from '../../../api/getSearchList';
+import Skeleton from '@mui/material/Skeleton';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
 let newDate = new Date(defaultdate);
 newDate.setDate(defaultdate.getDate() + 2);
+
+const loader = (
+  <div className='flex flex-col gap-6 p-5'>
+    <Skeleton width={200} height={20} sx={{ borderRadius: '20px' }} />
+    <Skeleton width={200} height={20} sx={{ borderRadius: '20px' }} />
+    <Skeleton width={200} height={20} sx={{ borderRadius: '20px' }} />
+  </div>
+);
 
 const Search = () => {
   const [rooms, setRooms] = useState({
@@ -29,6 +38,7 @@ const Search = () => {
   ]);
 
   const [error, setError] = useState(null);
+  const [searchLoader, setSearchLoader] = useState(false);
 
   const [destination, setDestination] = useState({ name: '', regionId: 3456 });
   const [searchResults, setSearchResults] = useState([]);
@@ -52,17 +62,18 @@ const Search = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (destination.name.trim() !== '') {
-        //   const search = await getSearchList(destination.name);
-        //   if (!search) {
-        //     return;
-        //   }
-        //   setSearchResults(search);
-      }
-    }, 500);
-
-    return () => clearTimeout(timer);
+    // setSearchLoader(true);
+    // const timer = setTimeout(async () => {
+    //   if (destination.name.trim() !== '') {
+    //     const search = await getSearchList(destination.name);
+    //     if (!search) {
+    //       return;
+    //     }
+    //     setSearchResults(search);
+    //     setSearchLoader(false);
+    //   }
+    // }, 500);
+    // return () => clearTimeout(timer);
   }, [destination.name]);
 
   const dateFormatter = (date) => {
@@ -115,11 +126,32 @@ const Search = () => {
     } else {
       setError(null);
     }
+    let adults = '';
+    let children = '';
+    rooms.travellers.map((item, index) => {
+      item.children.map((child, childIndex) => {
+        children += index + 1 + '_' + child.age;
+        if (
+          index == rooms.travellers.length - 1 &&
+          childIndex == item.children.length - 1
+        ) {
+          return;
+        }
+        children += ',';
+      });
+      adults += item.adults;
+      if (index == rooms.travellers.length - 1) {
+        return;
+      }
+      adults += ',';
+    });
     const obj = {
       startdate: finalFormatDate(dates[0].startDate),
       endDate: finalFormatDate(dates[0].endDate),
       destination: destination.name,
       regionId: destination.regionId,
+      adults: adults,
+      children: children,
       sort: 'RECOMMENDED',
     };
     // console.log(new URLSearchParams(obj).toString());
@@ -172,7 +204,7 @@ const Search = () => {
               <p className='absolute m-0 top-full text-[#a7183c]'>{error}</p>
               {search && (
                 <div
-                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.3rem] min-h-[26.5rem] z-[9999]'
+                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[23.2rem] min-h-[26.5rem] z-[9999]'
                   name='search'
                 >
                   {/* Floating Search */}
@@ -180,7 +212,7 @@ const Search = () => {
                     type='text'
                     value={destination.name}
                     placeholder='Going to'
-                    className='w-[21.2rem] h-[3.5rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] text-[1.6rem] font-[700] rounded-[10px_10px_0_0] focus:outline-none'
+                    className='w-[23.2rem] h-[3.5rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] text-[1.6rem] font-[700] rounded-[10px_10px_0_0] focus:outline-none'
                     ref={inputRef}
                     onChange={(e) =>
                       setDestination((prevState) => {
@@ -188,53 +220,66 @@ const Search = () => {
                       })
                     }
                   />
-                  {destination.name.trim != '' ? (
-                    <div className='flex flex-col items-start justify-start '>
-                      {searchResults.map((item, index) => {
-                        if (index > 8) return;
-                        let icon = ICONS['PLACE'];
-                        if (item.type == 'AIRPORT' || item.type == 'HOTEL') {
-                          console.log(item.type);
-                          icon = ICONS[item.type];
-                        }
-                        const primaryplace =
-                          item.regionNames.primaryDisplayName.length < 34
-                            ? item.regionNames.primaryDisplayName
-                            : item.regionNames.primaryDisplayName.substring(
-                                0,
-                                34
-                              );
-                        const secondaryplace =
-                          item.regionNames.secondaryDisplayName.length < 40
-                            ? item.regionNames.secondaryDisplayName
-                            : item.regionNames.secondaryDisplayName.substring(
-                                0,
+                  {destination.name.trim() != '' ? (
+                    <div>
+                      {' '}
+                      {searchLoader && loader}
+                      {!searchLoader && (
+                        <div className='flex flex-col items-start justify-start '>
+                          {searchResults &&
+                            searchResults.map((item, index) => {
+                              if (index > 8) return;
+                              let icon = ICONS['PLACE'];
+                              if (
+                                item.type == 'AIRPORT' ||
+                                item.type == 'HOTEL'
+                              ) {
+                                console.log(item.type);
+                                icon = ICONS[item.type];
+                              }
+                              const primaryplace =
+                                item.regionNames.primaryDisplayName.length < 34
+                                  ? item.regionNames.primaryDisplayName
+                                  : item.regionNames.primaryDisplayName.substring(
+                                      0,
+                                      34
+                                    );
+                              const secondaryplace =
+                                item.regionNames.secondaryDisplayName.length <
                                 40
+                                  ? item.regionNames.secondaryDisplayName
+                                  : item.regionNames.secondaryDisplayName.substring(
+                                      0,
+                                      40
+                                    );
+                              return (
+                                <button className='flex items-center justify-start gap-4 pl-4 pr-1 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'>
+                                  {icon}
+                                  <div className='flex w-[90%] flex-col items-start pr-[0rem] text-[0.86rem]'>
+                                    <h3 className='w-[95%] font-bolder m-0 h-5 text-start font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
+                                      {primaryplace}
+                                    </h3>
+                                    <p className='text-[rgba(64, 64, 64, 0.76)]'>
+                                      {secondaryplace}
+                                    </p>
+                                  </div>
+                                </button>
                               );
-                        return (
-                          <button className='flex items-center justify-start gap-4 pl-4 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'>
-                            {icon}
-                            <div className='flex flex-col items-start'>
-                              <h3 className='text-base font-bolder m-0'>
-                                {primaryplace}
-                              </h3>
-                              <p className='text-[0.9rem] text-[rgba(64, 64, 64, 0.76)]'>
-                                {secondaryplace}
-                              </p>
-                            </div>
+                            })}
+                          <button
+                            className='flex items-center justify-start gap-4 pl-4 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'
+                            name='searching'
+                          >
+                            <i className='fa-solid fa-magnifying-glass scale-[0.9]'></i>{' '}
+                            Search for "{destination.name}"
                           </button>
-                        );
-                      })}
-                      <button
-                        className='flex items-center justify-start gap-4 pl-4 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'
-                        name='searching'
-                      >
-                        <i className='fa-solid fa-magnifying-glass scale-[0.9]'></i>{' '}
-                        Search for "{destination.name}"
-                      </button>
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    ''
+                    <div className='text-sm text-center mx-auto my-4'>
+                      Search by destination, accommodation or landmark
+                    </div>
                   )}
                 </div>
               )}

@@ -64,7 +64,7 @@ const Travellers = (props) => {
           let newChildren = item.children;
           if (value > 0) {
             if (item.children.length < 6) {
-              newChildren.push({ age: 0 });
+              newChildren.push({ age: -1 });
             }
           } else {
             if (item.children.length > 0) {
@@ -199,12 +199,14 @@ const Travellers = (props) => {
                 value={child.age}
                 onChange={fillSelectedValue}
               >
-                <option value={0} selected disabled hidden>
+                <option value={-1} selected disabled hidden>
                   Child {index + 1} age
                 </option>
-                {child_option.map((age) => {
+                {child_option.map((age, ageIndex) => {
+                  let value = age;
+                  if (ageIndex == 0) value = 0;
                   return (
-                    <option value={age} key={age}>
+                    <option value={value} key={age}>
                       {age}
                     </option>
                   );

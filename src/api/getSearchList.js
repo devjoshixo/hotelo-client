@@ -1,7 +1,6 @@
 const getSearchList = async (search) => {
   const url =
-    'https://hotels-com-provider.p.rapidapi.com/v2/regions?locale=en_IN&domain=IN&query=' +
-    search;
+    'https://hotels-com-provider.p.rapidapi.com/v2/regions?locale=en_IN&domain=IN&';
   const options = {
     method: 'GET',
     headers: {
@@ -11,7 +10,7 @@ const getSearchList = async (search) => {
   };
 
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url + 'query=' + search, options);
     const result = await response.json();
     return result.data;
   } catch (error) {

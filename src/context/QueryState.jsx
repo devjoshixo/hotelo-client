@@ -8,6 +8,8 @@ const DEF_FUNCTION = [
   'endDate',
   'minPrice',
   'maxPrice',
+  'adults',
+  'children',
 ];
 
 const QueryState = (props) => {

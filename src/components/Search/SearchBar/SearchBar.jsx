@@ -40,6 +40,26 @@ const SearchBar = () => {
   ////States for the search bar
   //
 
+  useEffect(() => {
+    const search = Object.fromEntries(new URLSearchParams(location.search));
+    console.log(search);
+    setDestination((prevState) => {
+      return { ...prevState, name: search.destination };
+    });
+    setRooms((prevState) => {
+      let arr_adults = search.adults.split(',');
+      let arr_children = search.children.split(',');
+      let total = 0;
+      let totalRooms = arr_adults.length;
+      let travellers = arr_adults.map((adults) => {
+        total += parseInt(adults);
+
+        return { adults: parseInt(adults), children: [] };
+      });
+      return { total, totalRooms, travellers };
+    });
+  }, []);
+
   //
   ////Use effect for delaying destination search
   useEffect(() => {
@@ -65,16 +85,10 @@ const SearchBar = () => {
       let countRoom = prevState.travellers.length;
       return { ...prevState, total: count, totalRooms: countRoom };
     });
+    formSubmitHandler();
   }, [rooms.travellers]);
   ////Counting the travellers
   //
-
-  useEffect(() => {
-    const search = Object.fromEntries(new URLSearchParams(location.search));
-    setDestination((prevState) => {
-      return { ...prevState, name: search.destination };
-    });
-  }, []);
 
   //
   ////Date formatting for calender picker display
@@ -107,7 +121,7 @@ const SearchBar = () => {
     const name = event.target.getAttribute('name');
     if (name == 'closer') {
       setDuration(false);
-      // parameterReplace();
+
       formSubmitHandler();
     } else {
       setDuration(true);
@@ -116,16 +130,16 @@ const SearchBar = () => {
   ////Closing calender floater
   //
 
-  const parameterReplace = () => {
-    let search = location.search;
-    const obj = {
-      startdate: finalFormatDate(dates[0].startDate),
-      endDate: finalFormatDate(dates[0].endDate),
-      destination: destination.name,
-      regionId: destination.regionId,
-    };
-    navigate.replace({ search: new URLSearchParams(obj).toString() });
-  };
+  // const parameterReplace = () => {
+  //   let search = location.search;
+  //   const obj = {
+  //     startdate: finalFormatDate(dates[0].startDate),
+  //     endDate: finalFormatDate(dates[0].endDate),
+  //     destination: destination.name,
+  //     regionId: destination.regionId,
+  //   };
+  //   navigate.replace({ search: new URLSearchParams(obj).toString() });
+  // };
 
   const formSubmitHandler = (event) => {
     if (event) event.preventDefault();
