@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import useOutsideClick from '../../../hooks/UseOutsideClick';
+import searchApi from './searchApi';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -8,6 +9,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import uniqid from 'uniqid';
 import getSearchList from '../../../api/getSearchList';
+import Skeleton from '@mui/material/Skeleton';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
@@ -32,6 +34,7 @@ const Search = () => {
 
   const [destination, setDestination] = useState({ name: '', regionId: 3456 });
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useHistory();
@@ -43,25 +46,31 @@ const Search = () => {
   const ICONS = {
     AIRPORT: (
       <i
-        class='fa-solid fa-plane-up fa-rotate-by'
+        className='fa-solid fa-plane-up fa-rotate-by'
         style={{ '--fa-rotate-angle': '45deg;' }}
       />
     ),
-    HOTEL: <i class='fa-solid fa-hotel' style={{ color: '#000000' }}></i>,
-    PLACE: <i class='fa-solid fa-location-dot'></i>,
+    HOTEL: <i className='fa-solid fa-hotel' style={{ color: '#000000' }}></i>,
+    PLACE: <i className='fa-solid fa-location-dot'></i>,
   };
 
   useEffect(() => {
+    setLoading(true);
+    setSearchResults([]);
     const timer = setTimeout(async () => {
       if (destination.name.trim() !== '') {
-        //   const search = await getSearchList(destination.name);
-        //   if (!search) {
-        //     return;
-        //   }
-        //   setSearchResults(search);
-      }
-    }, 500);
+        const search = searchApi;
 
+        // const search = await getSearchList(destination.name);
+
+        if (!search) {
+          setLoading(false);
+          return;
+        }
+        setSearchResults(search);
+        setLoading(false);
+      }
+    }, 2000);
     return () => clearTimeout(timer);
   }, [destination.name]);
 
@@ -81,6 +90,12 @@ const Search = () => {
       return { ...prevState, total: count, totalRooms: countRoom };
     });
   }, [rooms.travellers]);
+
+  useEffect(() => {
+    if (destination.regionId == -2) return;
+    console.log('hello1');
+    setSearch(false);
+  }, [destination.regionId]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -152,6 +167,14 @@ const Search = () => {
               name='search'
               ref={searchRef}
               onClick={(event) => {
+                if (event.target.getAttribute('name') == 'listName') {
+                  setDestination((prevState) => {
+                    return {
+                      name: event.target.children[1].children[0].innerText,
+                      regionId: 3456,
+                    };
+                  });
+                }
                 if (event.target.getAttribute('name') == 'searching') {
                   setSearch(false);
                 } else {
@@ -166,76 +189,161 @@ const Search = () => {
                     hotels, and more
                   </>
                 ) : (
-                  destination.name
+                  destination.name.substring(0, 30)
                 )}
               </div>
               <p className='absolute m-0 top-full text-[#a7183c]'>{error}</p>
               {search && (
                 <div
-                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.3rem] min-h-[26.5rem] z-[9999]'
+                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.3rem]  shadow-xl bg-white rounded-lg z-[9999]'
                   name='search'
                 >
                   {/* Floating Search */}
-                  <input
-                    type='text'
-                    value={destination.name}
-                    placeholder='Going to'
-                    className='w-[21.2rem] h-[3.5rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] text-[1.6rem] font-[700] rounded-[10px_10px_0_0] focus:outline-none'
-                    ref={inputRef}
-                    onChange={(e) =>
-                      setDestination((prevState) => {
-                        return { ...prevState, name: e.target.value };
-                      })
-                    }
-                  />
-                  {destination.name.trim != '' ? (
-                    <div className='flex flex-col items-start justify-start '>
-                      {searchResults.map((item, index) => {
-                        if (index > 8) return;
-                        let icon = ICONS['PLACE'];
-                        if (item.type == 'AIRPORT' || item.type == 'HOTEL') {
-                          console.log(item.type);
-                          icon = ICONS[item.type];
-                        }
-                        const primaryplace =
-                          item.regionNames.primaryDisplayName.length < 34
-                            ? item.regionNames.primaryDisplayName
-                            : item.regionNames.primaryDisplayName.substring(
-                                0,
-                                34
-                              );
-                        const secondaryplace =
-                          item.regionNames.secondaryDisplayName.length < 40
-                            ? item.regionNames.secondaryDisplayName
-                            : item.regionNames.secondaryDisplayName.substring(
-                                0,
-                                40
-                              );
-                        return (
-                          <button className='flex items-center justify-start gap-4 pl-4 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'>
-                            {icon}
-                            <div className='flex flex-col items-start'>
-                              <h3 className='text-base font-bolder m-0'>
-                                {primaryplace}
-                              </h3>
-                              <p className='text-[0.9rem] text-[rgba(64, 64, 64, 0.76)]'>
-                                {secondaryplace}
-                              </p>
-                            </div>
+
+                  <div>
+                    <input
+                      type='text'
+                      value={destination.name}
+                      placeholder='Going to'
+                      className='relative w-[21.2rem] h-[3.5rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] pr-10 text-[1.4rem] font-[700] rounded-[10px_10px_0_0] focus:outline-none'
+                      ref={inputRef}
+                      onChange={(e) =>
+                        setDestination((prevState) => {
+                          return { ...prevState, name: e.target.value };
+                        })
+                      }
+                    />
+                    {destination.name.trim() != '' && (
+                      <div>
+                        <i
+                          className='absolute fa-solid fa-xmark top-[4%] right-[3%] text-[white] bg-[black] text-center w-4 h-4 rounded-[50%] cursor-pointer'
+                          onClick={() => {
+                            setDestination({ name: '', regionId: -2 });
+                          }}
+                        ></i>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className='flex flex-col items-start h-[26rem] justify-start overflow-y-auto'>
+                    {destination.name.trim() != '' ? (
+                      <div className='flex flex-col items-start mt-2 py-2 justify-start w-full h-full'>
+                        {searchResults.map((item, index) => {
+                          if (index > 8) return null;
+                          let icon = ICONS['PLACE'];
+                          if (item.type == 'AIRPORT' || item.type == 'HOTEL') {
+                            icon = ICONS[item.type];
+                          }
+                          const primaryplace =
+                            item.regionNames.primaryDisplayName.length < 34
+                              ? item.regionNames.primaryDisplayName
+                              : item.regionNames.primaryDisplayName.substring(
+                                  0,
+                                  34
+                                );
+                          const secondaryplace =
+                            item.regionNames.secondaryDisplayName.length < 40
+                              ? item.regionNames.secondaryDisplayName
+                              : item.regionNames.secondaryDisplayName.substring(
+                                  0,
+                                  40
+                                );
+                          return (
+                            <button
+                              key={primaryplace + secondaryplace}
+                              className='flex items-center justify-start gap-4 pl-4 py-4 w-full h-[3.7rem] bg-[white] border-none text-[0.9rem] font-medium text-[black] hover:bg-[#6fb8fd1d]'
+                              name='listName'
+                              onClick={(event) => {
+                                setDestination({
+                                  name: primaryplace + ', ' + secondaryplace,
+                                  regionId: item.gaiaId,
+                                });
+                              }}
+                            >
+                              {icon}
+                              <div className='flex flex-col items-start'>
+                                <h3 className='text-sm font-bolder m-0'>
+                                  {primaryplace}
+                                </h3>
+                                <p className='text-xs text-[rgba(47, 47, 47, 0.76)]'>
+                                  {secondaryplace}
+                                </p>
+                              </div>
+                            </button>
+                          );
+                        })}
+                        {!loading && (
+                          <button
+                            className='flex items-center justify-start gap-4 pl-4 py-4 w-full h-[3.7rem] bg-[white] border-none text-[0.8rem] font-medium text-[black] hover:bg-[#6fb8fd31]'
+                            name='searching'
+                          >
+                            <i className='fa-solid fa-magnifying-glass scale-[1.6]'></i>{' '}
+                            Search for "{destination.name}"
                           </button>
-                        );
-                      })}
-                      <button
-                        className='flex items-center justify-start gap-4 pl-4 w-full h-[3.7rem] bg-[white] border-none text-base text-[black] hover:bg-[#2f5b854f]'
-                        name='searching'
-                      >
-                        <i className='fa-solid fa-magnifying-glass scale-[0.9]'></i>{' '}
-                        Search for "{destination.name}"
-                      </button>
-                    </div>
-                  ) : (
-                    ''
-                  )}
+                        )}
+                        {loading && (
+                          <div className='w-full flex flex-col gap-3 pl-4'>
+                            <div className='flex items-center gap-2'>
+                              <Skeleton
+                                sx={{ bgcolor: 'grey.300' }}
+                                width={25}
+                                height={55}
+                              />
+                              <div>
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={170}
+                                />
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={70}
+                                  height={15}
+                                />
+                              </div>
+                            </div>
+                            <div className='flex items-center gap-2'>
+                              <Skeleton
+                                sx={{ bgcolor: 'grey.300' }}
+                                width={25}
+                                height={55}
+                              />
+                              <div>
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={170}
+                                />
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={70}
+                                  height={15}
+                                />
+                              </div>
+                            </div>
+                            <div className='flex items-center gap-2'>
+                              <Skeleton
+                                sx={{ bgcolor: 'grey.300' }}
+                                width={25}
+                                height={55}
+                              />
+                              <div>
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={170}
+                                />
+                                <Skeleton
+                                  sx={{ bgcolor: 'grey.300' }}
+                                  width={70}
+                                  height={15}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </div>
               )}
             </header>

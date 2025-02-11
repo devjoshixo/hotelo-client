@@ -29,7 +29,7 @@ const SearchBar = () => {
     },
   ]);
 
-  const [destination, setDestination] = useState({ name: '', regionId: 3456 });
+  const [destination, setDestination] = useState({ name: '' });
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useHistory();
@@ -75,6 +75,13 @@ const SearchBar = () => {
       return { ...prevState, name: search.destination };
     });
   }, []);
+  console.log(destination);
+
+  // useEffect(() => {
+  //   if (destination.regionId == -2) return;
+  //   console.log('hello1');
+  //   setSearch(false);
+  // }, [destination.regionId]);
 
   //
   ////Date formatting for calender picker display
