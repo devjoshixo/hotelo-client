@@ -93,7 +93,9 @@ const Search = () => {
 
   useEffect(() => {
     if (destination.regionId == -2) return;
-    console.log('hello1');
+
+    //
+    //// if the regionId is not -2 then it means the user has selected a destination
     setSearch(false);
   }, [destination.regionId]);
 

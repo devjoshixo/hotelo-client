@@ -7,6 +7,7 @@ import Travellers from './Travellers/Travellers';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import uniqid from 'uniqid';
+import searchApi from '../../Home/Search/searchApi';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
@@ -30,6 +31,7 @@ const SearchBar = () => {
   ]);
 
   const [destination, setDestination] = useState({ name: '' });
+  const [searchResults, setSearchResults] = useState([]);
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useHistory();
@@ -75,7 +77,6 @@ const SearchBar = () => {
       return { ...prevState, name: search.destination };
     });
   }, []);
-  console.log(destination);
 
   // useEffect(() => {
   //   if (destination.regionId == -2) return;
@@ -202,13 +203,17 @@ const SearchBar = () => {
                       })
                     }
                   />
-                  <button
-                    className='flex items-center justify-start gap-4 pl-4 w-full h-12 bg-[white] border-none text-4 text-[black] hover:bg-[#2f5b854f]'
-                    name='searching'
-                  >
-                    <i className='fa-solid fa-magnifying-glass'></i> Search for
-                    "{destination.name}"
-                  </button>
+                  {destination.name.trim() !== '' && (
+                    <div className='flex flex-col gap-2'>
+                      <button
+                        className='flex items-center justify-start gap-4 pl-4 w-full h-12 bg-[white] border-none text-4 text-[black] hover:bg-[#2f5b854f]'
+                        name='searching'
+                      >
+                        <i className='fa-solid fa-magnifying-glass'></i> Search
+                        for "{destination.name}"
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </header>
