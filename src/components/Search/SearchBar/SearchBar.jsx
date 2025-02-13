@@ -5,35 +5,43 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
 import { useLocation, useHistory } from 'react-router-dom';
+import getSearchList from '../../../api/getSearchList';
 
 import uniqid from 'uniqid';
 import searchApi from '../../Home/Search/searchApi';
+import SearchSkeleton from '../../UI/SearchSkeleton';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
 let newDate = new Date(defaultdate);
-newDate.setDate(defaultdate.getDate() + 2);
+newDate.setDate(defaultdate.getDate() + 1);
 
 const SearchBar = () => {
   //
   ////States for the search bar
-  const [rooms, setRooms] = useState({
-    travellers: [{ adults: 1, children: [] }],
-    total: 1,
-    totalRooms: 1,
-  });
+  const [rooms, setRooms] = useState({});
+  const location = useLocation();
+
+  let searchForDate = Object.fromEntries(new URLSearchParams(location.search));
+  const startDate = searchForDate.startDate;
+  const endDate = searchForDate.endDate;
+  if (startDate == endDate) {
+    const newDate = new Date(endDate);
+    endDate.setDate(newDate.getDate() + 1);
+  }
   const [dates, setDates] = useState([
     {
-      startDate: defaultdate,
-      endDate: newDate,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
       key: 'selection',
     },
   ]);
 
-  const [destination, setDestination] = useState({ name: '' });
+  const [destination, setDestination] = useState({ name: '', regionId: 0 });
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef();
-  const location = useLocation();
+
   const navigate = useHistory();
 
   const [searchRef, search, setSearch] = useOutsideClick();
@@ -42,12 +50,88 @@ const SearchBar = () => {
   ////States for the search bar
   //
 
+  const ICONS = {
+    AIRPORT: (
+      <i
+        className='fa-solid fa-plane-up fa-rotate-by'
+        style={{ '--fa-rotate-angle': '45deg;' }}
+      />
+    ),
+    HOTEL: <i className='fa-solid fa-hotel' style={{ color: '#000000' }}></i>,
+    PLACE: <i className='fa-solid fa-location-dot'></i>,
+  };
+
+  //
+  ////
+  useEffect(() => {
+    const search = Object.fromEntries(new URLSearchParams(location.search));
+
+    //
+    ////
+    setDestination((prevState) => {
+      return { regionId: search.regionId, name: search.destination };
+    });
+
+    setDates([
+      {
+        startDate: new Date(search.startDate),
+        endDate: new Date(search.endDate),
+        key: 'selection',
+      },
+    ]);
+
+    //
+    ////
+    setRooms(() => {
+      let adults = search.adults.split(',');
+      let children = search.children.split(',') || [];
+      let rooms = [];
+      let totalAdults = 0;
+
+      for (let i = 0; i < adults.length; i++) {
+        let childrens = [];
+        children.forEach((child) => {
+          let [roomIndex, age] = child.split('_');
+          if (parseInt(roomIndex) === i + 1) {
+            childrens.push({ age: parseInt(age) });
+          }
+        });
+        totalAdults += parseInt(adults[i]);
+        rooms.push({ adults: parseInt(adults[i]), children: childrens });
+      }
+
+      return {
+        travellers: rooms,
+        total: totalAdults,
+        totalRooms: adults.length,
+      };
+    });
+  }, []);
+  useEffect(() => {
+    const search = Object.fromEntries(new URLSearchParams(location.search));
+    setDates(() => {
+      const startDate = new Date(search.startDate);
+      const endDate = new Date(search.endDate);
+
+      if (startDate.getTime() === endDate.getTime()) {
+        endDate.setDate(endDate.getDate() + 1);
+      }
+
+      return [
+        {
+          startDate: startDate,
+          endDate: endDate,
+          key: 'selection',
+        },
+      ];
+    });
+  }, [duration]);
+
   //
   ////Use effect for delaying destination search
   useEffect(() => {
     const timer = setTimeout(() => {
       if (destination.name.trim() !== '') {
-        // console.log(destination);
       }
     }, 500);
 
@@ -72,17 +156,45 @@ const SearchBar = () => {
   //
 
   useEffect(() => {
-    const search = Object.fromEntries(new URLSearchParams(location.search));
-    setDestination((prevState) => {
-      return { ...prevState, name: search.destination };
-    });
-  }, []);
+    if (destination.regionId == -2 || destination.regionId == 0) return;
+    //
+    //// if the regionId is not -2 then it means the user has selected a destination
 
-  // useEffect(() => {
-  //   if (destination.regionId == -2) return;
-  //   console.log('hello1');
-  //   setSearch(false);
-  // }, [destination.regionId]);
+    setSearch(false);
+  }, [destination.regionId]);
+
+  useEffect(() => {
+    setSearchResults([]);
+    setLoading(true);
+
+    const timer = setTimeout(async () => {
+      if (destination.name.trim() !== '') {
+        const search = searchApi;
+
+        // const search = await getSearchList(destination.name);
+
+        if (!search) {
+          setLoading(false);
+          return;
+        }
+        setSearchResults(search);
+
+        setLoading(false);
+      }
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [destination.name]);
+
+  useEffect(() => {
+    if (destination.regionId == -2 || destination.regionId == 0) return;
+
+    //
+    //// if the regionId is not -2 then it means the user has selected a destination
+    setSearch(false);
+    formSubmitHandler();
+  }, [destination.regionId]);
 
   //
   ////Date formatting for calender picker display
@@ -114,9 +226,10 @@ const SearchBar = () => {
   const closingCalender = (event) => {
     const name = event.target.getAttribute('name');
     if (name == 'closer') {
-      setDuration(false);
       // parameterReplace();
       formSubmitHandler();
+
+      setDuration(false);
     } else {
       setDuration(true);
     }
@@ -127,7 +240,7 @@ const SearchBar = () => {
   const parameterReplace = () => {
     let search = location.search;
     const obj = {
-      startdate: finalFormatDate(dates[0].startDate),
+      startDate: finalFormatDate(dates[0].startDate),
       endDate: finalFormatDate(dates[0].endDate),
       destination: destination.name,
       regionId: destination.regionId,
@@ -138,14 +251,50 @@ const SearchBar = () => {
   const formSubmitHandler = (event) => {
     if (event) event.preventDefault();
     let search = Object.fromEntries(new URLSearchParams(location.search));
-    const obj = {
+
+    let adults = '';
+    let children = '';
+
+    //processing traveller data
+    rooms.travellers.map((item, index) => {
+      adults += `${item.adults}`;
+      if (index < rooms.travellers.length - 1) {
+        adults += ',';
+      }
+      item.children.map((child, child_index) => {
+        children += `${index + 1}_${child.age}`;
+
+        //if not last element then we add a comma
+        if (child_index < item.children.length - 1) {
+          children += ',';
+        }
+      });
+
+      // Add a comma between different rooms' children if not the last room
+      if (index < rooms.travellers.length - 1 && item.children.length > 0) {
+        children += ',';
+      }
+    });
+
+    let startDate = finalFormatDate(dates[0].startDate);
+    let endDate = finalFormatDate(dates[0].endDate);
+
+    if (startDate == endDate) {
+      const newEndDate = new Date(dates[0].endDate);
+      newEndDate.setDate(newEndDate.getDate() + 1);
+      endDate = finalFormatDate(newEndDate);
+    }
+
+    const newSearch = {
       ...search,
-      startdate: finalFormatDate(dates[0].startDate),
-      endDate: finalFormatDate(dates[0].endDate),
+      startDate: startDate,
+      endDate: endDate,
       destination: destination.name,
       regionId: destination.regionId,
+      adults: adults,
+      children: children,
     };
-    navigate.replace({ search: new URLSearchParams(obj).toString() });
+    navigate.replace({ search: new URLSearchParams(newSearch).toString() });
   };
 
   function finalFormatDate(date) {
@@ -167,10 +316,19 @@ const SearchBar = () => {
               name='search'
               ref={searchRef}
               onClick={(event) => {
-                if (event.target.getAttribute('name') == 'searching') {
-                  setSearch(false);
+                if (event.target.getAttribute('name') == 'listName') {
+                  setDestination((prevState) => {
+                    return {
+                      name: event.target.children[1].children[0].innerText,
+                      regionId: 0,
+                    };
+                  });
                 } else {
-                  setSearch(true);
+                  if (event.target.getAttribute('name') == 'searching') {
+                    setSearch(false);
+                  } else {
+                    setSearch(true);
+                  }
                 }
               }}
             >
@@ -182,38 +340,107 @@ const SearchBar = () => {
               ) : (
                 <>
                   <i className='fa-solid fa-location-dot scale-[1.4]'></i>{' '}
-                  {destination.name}
+                  {destination.name.substring(0, 30)}
                 </>
               )}
               {search && (
                 <div
-                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.5rem] h-[22rem] z-[99]'
+                  className='absolute top-[-4%] left-[-1%] bg-[white] rounded-[10px] w-[21.5rem] h-[30rem] z-[99]'
                   name='search'
                 >
                   {/* Floating Search */}
-                  <input
-                    type='text'
-                    value={destination.name}
-                    className='w-[21.4rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] text-[1.6rem] font-sans font-semibold rounded-[10px_10px_0_0] h-16 outline-none'
-                    placeholder='Going to'
-                    ref={inputRef}
-                    onChange={(e) =>
-                      setDestination((prevState) => {
-                        return { ...prevState, name: e.target.value };
-                      })
-                    }
-                  />
-                  {destination.name.trim() !== '' && (
-                    <div className='flex flex-col gap-2'>
-                      <button
-                        className='flex items-center justify-start gap-4 pl-4 w-full h-12 bg-[white] border-none text-4 text-[black] hover:bg-[#2f5b854f]'
-                        name='searching'
-                      >
-                        <i className='fa-solid fa-magnifying-glass'></i> Search
-                        for "{destination.name}"
-                      </button>
-                    </div>
-                  )}
+                  <div>
+                    <input
+                      type='text'
+                      value={destination.name}
+                      className='relative w-[21.2rem] h-[3.5rem] text-[black] border border-[#3d3d3d1f] bg-[white] pl-[20px] pr-10 text-[1.4rem] font-[700] rounded-[10px_10px_0_0] focus:outline-none'
+                      placeholder='Going to'
+                      ref={inputRef}
+                      onChange={(e) =>
+                        setDestination((prevState) => {
+                          return {
+                            regionId: 0,
+                            name: e.target.value,
+                          };
+                        })
+                      }
+                    />
+                    {destination.name.trim() != '' && (
+                      <div>
+                        <i
+                          className='absolute fa-solid fa-xmark top-[4%] right-[3%] text-[white] bg-[black] text-center w-4 h-4 rounded-[50%] cursor-pointer'
+                          onClick={() => {
+                            setDestination({ name: '', regionId: -2 });
+                          }}
+                        ></i>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className='flex flex-col items-start h-[26rem] justify-start overflow-y-auto'>
+                    {destination.name.trim() != '' ? (
+                      <div className='flex flex-col items-start mt-2 py-2 justify-start w-full h-full'>
+                        {searchResults.map((item, index) => {
+                          if (loading) return null;
+                          if (index > 8) return null;
+                          let icon = ICONS['PLACE'];
+                          if (item.type == 'AIRPORT' || item.type == 'HOTEL') {
+                            icon = ICONS[item.type];
+                          }
+                          const primaryplace =
+                            item.regionNames.primaryDisplayName.length < 34
+                              ? item.regionNames.primaryDisplayName
+                              : item.regionNames.primaryDisplayName.substring(
+                                  0,
+                                  34
+                                );
+                          const secondaryplace =
+                            item.regionNames.secondaryDisplayName.length < 40
+                              ? item.regionNames.secondaryDisplayName
+                              : item.regionNames.secondaryDisplayName.substring(
+                                  0,
+                                  40
+                                );
+                          return (
+                            <button
+                              key={primaryplace + secondaryplace}
+                              className='flex items-center justify-start gap-4 pl-4 py-4 w-full h-[3.7rem] bg-[white] border-none text-[0.9rem] font-medium text-[black] hover:bg-[#6fb8fd1d]'
+                              name='listName'
+                              onClick={(event) => {
+                                event.preventDefault();
+                                setDestination({
+                                  name: primaryplace + ', ' + secondaryplace,
+                                  regionId: item.gaiaId,
+                                });
+                              }}
+                            >
+                              {icon}
+                              <div className='flex flex-col items-start'>
+                                <h3 className='text-sm font-bolder m-0'>
+                                  {primaryplace}
+                                </h3>
+                                <p className='text-xs text-[rgba(47, 47, 47, 0.76)]'>
+                                  {secondaryplace}
+                                </p>
+                              </div>
+                            </button>
+                          );
+                        })}
+                        {!loading && (
+                          <button
+                            className='flex items-center justify-start gap-4 pl-4 py-4 w-full h-[3.7rem] bg-[white] border-none text-[0.8rem] font-medium text-[black] hover:bg-[#6fb8fd31]'
+                            name='searching'
+                          >
+                            <i className='fa-solid fa-magnifying-glass scale-[1.6]'></i>{' '}
+                            Search for "{destination.name.substring(0, 30)}"
+                          </button>
+                        )}
+                        {loading && <SearchSkeleton />}
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </div>
               )}
             </header>
@@ -252,7 +479,9 @@ const SearchBar = () => {
                   editableDateInputs={true}
                   className='rounded-[20px_20px_0_0] h-[26rem] w-[40rem] text-sm'
                   dateDisplayFormat='iii, dd MMM'
-                  onChange={(item) => setDates([item.selection])}
+                  onChange={(item) => {
+                    setDates([item.selection]);
+                  }}
                   moveRangeOnFirstSelection={false}
                   months={2}
                   minDate={new Date()}
@@ -260,7 +489,7 @@ const SearchBar = () => {
                   ranges={dates}
                 />
                 <button
-                  className='rounded-[30px] w-28 h-12 text-xl font-bold border-none mr-12 bg-[#1668e3] text-[white] hover:bg-[#1655b5]'
+                  className='rounded-[30px] w-28 h-[2.7rem] text-base font-[600] bg-[#1668e3] border-none text-[white] mr-6 hover:bg-[#1655b5]'
                   name='closer'
                   onClick={closingCalender}
                 >
@@ -313,7 +542,7 @@ const SearchBar = () => {
                     Add another room
                   </div>
                   <button
-                    className='rounded-[30px] w-24 h-12 text-[1.4rem] font-extrabold cursor-pointer border-none bg-[#1668e3] hover:bg-[#1255ba]'
+                    className='rounded-[30px] w-24 h-12 text-base font-medium cursor-pointer border-none text-[white] bg-[#1668e3] hover:bg-[#1255ba]'
                     name='done'
                   >
                     Done

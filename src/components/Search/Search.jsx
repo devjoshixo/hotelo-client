@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import getSearch from '../../api/getSearch';
 import Skeleton from '@mui/material/Skeleton';
 import HotelItem from './HotelList/HotelItem';
@@ -20,6 +20,7 @@ const Search = () => {
   const history = useHistory();
   const location = useLocation();
   const logout = UseLogout();
+  const initialRender = useRef(true);
   const ctx = useContext(AuthContext);
   let loaders = [];
   for (let i = 0; i < 5; i++) {
@@ -35,6 +36,7 @@ const Search = () => {
   }
 
   useEffect(() => {
+    console.log('done');
     // let search = Object.fromEntries(new URLSearchParams(location.search));
     let search = new URLSearchParams(location.search);
 
@@ -48,7 +50,8 @@ const Search = () => {
           login: ctx.login.loggedIn,
         };
       }
-      const hotelsData = await getSearch(details.token, details.login);
+      const hotelsData = await getSearch(details.token, details.login, search);
+
       if (hotelsData.error) {
         logout();
       }
@@ -59,6 +62,7 @@ const Search = () => {
       setShowLoaders(false);
     };
     getSearchHotel();
+    initialRender.current = false;
   }, [location.search]);
 
   //
@@ -108,6 +112,9 @@ const Search = () => {
           <FilterBar
             length={hotels.properties ? hotels.properties.length : false}
             queryAdder={queryAdder}
+            selectedSort={
+              Object.fromEntries(new URLSearchParams(location.search)).sort
+            }
           />
           {!showLoaders && (
             <div className='flex flex-col flex-nowrap gap-6'>

@@ -1,4 +1,4 @@
-const getSearch = async (token, login) => {
+const getSearch = async (token, login, query) => {
   var requestOptions = {
     method: 'GET',
     headers: {
@@ -8,9 +8,8 @@ const getSearch = async (token, login) => {
     },
     redirect: 'follow',
   };
-
   const data = await fetch(
-    import.meta.env.VITE_REACT_APP_API_URL + '/api/hotels/search',
+    import.meta.env.VITE_REACT_APP_API_URL + '/api/hotels/search?' + query,
     requestOptions
   );
   if (data.status == 401) {

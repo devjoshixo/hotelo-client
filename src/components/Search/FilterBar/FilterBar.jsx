@@ -18,6 +18,7 @@ const FilterBar = (props) => {
         <select
           className='w-[17rem] h-[3.3rem] border border-[#00000050] rounded-[12px] text-[black] text-[16px] bg-[white] p-[1rem_0_0_0.7rem]'
           onChange={changeValueGetter}
+          defaultValue={props.selectedSort}
         >
           <option value='RECOMMENDED'>Recommended</option>
           <option value='PRICE_LOW_TO_HIGH'>Price: low to high</option>

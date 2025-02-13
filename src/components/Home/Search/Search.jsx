@@ -6,10 +6,9 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import Travellers from './Travellers/Travellers';
 import { useLocation, useHistory } from 'react-router-dom';
-
 import uniqid from 'uniqid';
 import getSearchList from '../../../api/getSearchList';
-import Skeleton from '@mui/material/Skeleton';
+import SearchSkeleton from '../../UI/SearchSkeleton';
 
 const DEFAULT_ROOM = { adults: 1, children: [] };
 let defaultdate = new Date();
@@ -59,8 +58,9 @@ const Search = () => {
     setSearchResults([]);
     const timer = setTimeout(async () => {
       if (destination.name.trim() !== '') {
-        const search = searchApi;
-
+        const randomIndex = Math.floor(Math.random() * 3) + 7; // Generates 7, 8, or 9
+        const search = searchApi.slice(0, randomIndex);
+        console.log('first');
         // const search = await getSearchList(destination.name);
 
         if (!search) {
@@ -68,8 +68,8 @@ const Search = () => {
           return;
         }
         setSearchResults(search);
-        setLoading(false);
       }
+      setLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, [destination.name]);
@@ -92,7 +92,7 @@ const Search = () => {
   }, [rooms.travellers]);
 
   useEffect(() => {
-    if (destination.regionId == -2) return;
+    if (destination.regionId == -2 || destination.regionId == 0) return;
 
     //
     //// if the regionId is not -2 then it means the user has selected a destination
@@ -132,11 +132,36 @@ const Search = () => {
     } else {
       setError(null);
     }
+    let adults = '';
+    let children = '';
+
+    //processing traveller data
+    rooms.travellers.map((item, index) => {
+      adults += `${item.adults}`;
+      if (index < rooms.travellers.length - 1) {
+        adults += ',';
+      }
+      item.children.map((child, child_index) => {
+        children += `${index + 1}_${child.age}`;
+
+        //if not last element then we add a comma
+        if (child_index < item.children.length - 1) {
+          children += ',';
+        }
+      });
+
+      // Add a comma between different rooms' children if not the last room
+      if (index < rooms.travellers.length - 1 && item.children.length > 0) {
+        children += ',';
+      }
+    });
     const obj = {
-      startdate: finalFormatDate(dates[0].startDate),
+      startDate: finalFormatDate(dates[0].startDate),
       endDate: finalFormatDate(dates[0].endDate),
       destination: destination.name,
       regionId: destination.regionId,
+      adults: adults,
+      children: children,
       sort: 'RECOMMENDED',
     };
     // console.log(new URLSearchParams(obj).toString());
@@ -169,14 +194,14 @@ const Search = () => {
               name='search'
               ref={searchRef}
               onClick={(event) => {
-                if (event.target.getAttribute('name') == 'listName') {
-                  setDestination((prevState) => {
-                    return {
-                      name: event.target.children[1].children[0].innerText,
-                      regionId: 3456,
-                    };
-                  });
-                }
+                // if (event.target.getAttribute('name') == 'listName') {
+                //   setDestination((prevState) => {
+                //     return {
+                //       name: event.target.children[1].children[0].innerText,
+                //       regionId: 3456,
+                //     };
+                //   });
+                // }
                 if (event.target.getAttribute('name') == 'searching') {
                   setSearch(false);
                 } else {
@@ -211,7 +236,7 @@ const Search = () => {
                       ref={inputRef}
                       onChange={(e) =>
                         setDestination((prevState) => {
-                          return { ...prevState, name: e.target.value };
+                          return { regionId: 0, name: e.target.value };
                         })
                       }
                     />
@@ -283,64 +308,7 @@ const Search = () => {
                             Search for "{destination.name}"
                           </button>
                         )}
-                        {loading && (
-                          <div className='w-full flex flex-col gap-3 pl-4'>
-                            <div className='flex items-center gap-2'>
-                              <Skeleton
-                                sx={{ bgcolor: 'grey.300' }}
-                                width={25}
-                                height={55}
-                              />
-                              <div>
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={170}
-                                />
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={70}
-                                  height={15}
-                                />
-                              </div>
-                            </div>
-                            <div className='flex items-center gap-2'>
-                              <Skeleton
-                                sx={{ bgcolor: 'grey.300' }}
-                                width={25}
-                                height={55}
-                              />
-                              <div>
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={170}
-                                />
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={70}
-                                  height={15}
-                                />
-                              </div>
-                            </div>
-                            <div className='flex items-center gap-2'>
-                              <Skeleton
-                                sx={{ bgcolor: 'grey.300' }}
-                                width={25}
-                                height={55}
-                              />
-                              <div>
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={170}
-                                />
-                                <Skeleton
-                                  sx={{ bgcolor: 'grey.300' }}
-                                  width={70}
-                                  height={15}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                        {loading && <SearchSkeleton />}
                       </div>
                     ) : (
                       ''
