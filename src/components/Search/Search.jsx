@@ -49,6 +49,7 @@ const Search = () => {
         };
       }
       const hotelsData = await getSearch(details.token, details.login);
+      console.log(hotelsData);
       if (hotelsData.error) {
         logout();
       }
@@ -60,7 +61,6 @@ const Search = () => {
     };
     getSearchHotel();
   }, [location.search]);
-
   //
   //To like a hotel and save it
   const propertySaver = async (hotel) => {

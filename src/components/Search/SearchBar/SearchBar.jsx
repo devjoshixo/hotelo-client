@@ -42,7 +42,6 @@ const SearchBar = () => {
 
   useEffect(() => {
     const search = Object.fromEntries(new URLSearchParams(location.search));
-    console.log(search);
     setDestination((prevState) => {
       return { ...prevState, name: search.destination };
     });

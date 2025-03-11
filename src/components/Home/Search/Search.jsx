@@ -40,7 +40,10 @@ const Search = () => {
   const [error, setError] = useState(null);
   const [searchLoader, setSearchLoader] = useState(false);
 
-  const [destination, setDestination] = useState({ name: '', regionId: 3456 });
+  const [destination, setDestination] = useState({
+    name: 'Singapore',
+    regionId: 3456,
+  });
   const [searchResults, setSearchResults] = useState([]);
   const inputRef = useRef();
   const location = useLocation();
@@ -278,7 +281,7 @@ const Search = () => {
                     </div>
                   ) : (
                     <div className='text-sm text-center mx-auto my-4'>
-                      Search by destination, accommodation or landmark
+                      API is hardcoded for Singapore Result
                     </div>
                   )}
                 </div>
