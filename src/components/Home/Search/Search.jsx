@@ -274,7 +274,7 @@ const Search = () => {
                             name='searching'
                           >
                             <i className='fa-solid fa-magnifying-glass scale-[0.9]'></i>{' '}
-                            Search for "{destination.name}"
+                            API is hardcoded for singapore searches
                           </button>
                         </div>
                       )}
